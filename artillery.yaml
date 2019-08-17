@@ -1,0 +1,13 @@
+config:
+  target: 'http://localhost:5000'
+  phases:
+    - duration: 600
+      arrivalRate: 240
+scenarios:
+  - flow:
+      - post:
+          url: "/user"
+          json:
+            firstname: "world"
+            lastname: "hi"
+            email: "helloworld@email.com"
