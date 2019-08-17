@@ -1,0 +1,272 @@
+#%RAML 1.0
+title: puncho API
+version: 0.1
+baseUri: http://ec2-13-59-134-56.us-east-2.compute.amazonaws.com
+documentation:
+  - title: Welcome
+    content: |
+      Welcome to the puncho API Documentation.
+
+/users: # optional resource
+  description: This is the top level description for /users.
+
+  get: # HTTP method declaration
+    responses: # declare a response
+      200: # HTTP status code
+        body: # declare content of response
+          application/json: # media type
+            type: | # structural definition of a response (schema or type)
+              {
+                "title": "get collection of all users",
+                "type": "array"
+              }
+            example: # example how a response looks like
+              {
+                "users":
+                [
+                    {
+                        "firstname": "user1",
+                        "lastname": "user1",
+                        "gender": "male",
+                        "tokens": 0,
+                        "total_force": 0,
+                        "punch_count": 0,
+                        "id": 0
+                    },
+                    ...
+                ]
+              }
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    get:
+        responses:
+            200:
+                body:
+                    application/json:
+                        type:
+                            {
+                                "title": "get user with specific user id",
+                                "type": "object"
+                            }
+                        example:
+                            {
+                              "firstname": "user1",
+                              "lastname": "user1",
+                              "gender": "male",
+                              "tokens": 0,
+                              "total_force": 0,
+                              "punch_count": 0,
+                              "id": 0
+                          }
+  /new:
+    uriParameters:
+      user:
+        type: object
+        description: json representing the user, with user data as properties
+    post:
+        body:
+          application/json:
+            properties:
+              name:
+                description: user object
+                type: object
+                example:
+                  {
+                      "firstname": "user1",
+                      "lastname": "user1",
+                      "gender": "male",
+                      "tokens": 0,
+                      "total_force": 0,
+                      "punch_count": 0,
+                      "id": 0
+                  }
+  /update:
+    uriParameters:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    put:
+      body:
+          application/json:
+            properties:
+              name:
+                description: user object
+                type: object
+                example:
+                  {
+                      "firstname": "user1",
+                      "lastname": "user1",
+                      "gender": "male",
+                      "tokens": 0,
+                      "total_force": 0,
+                      "punch_count": 0,
+                      "id": 0
+                  }
+
+/workouts:
+  description: This is the top level description for /workouts.
+
+  get: # HTTP method declaration
+    responses: # declare a response
+      200: # HTTP status code
+        body: # declare content of response
+          application/json: # media type
+            type: | # structural definition of a response (schema or type)
+              {
+                "title": "get collection of all workouts",
+                "type": "array"
+              }
+            example: # example how a response looks like
+              {
+                "workouts":
+                [
+                    {
+                      "id": 0,
+                      "title": "some_title",
+                      "description": "some_description",
+                      "start_time": 2019/8/8/14:00 - this is prone to change,
+                      "max_users": 20
+                    },
+                    ...
+                ]
+              }
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    get:
+        responses:
+            200:
+                body:
+                    application/json:
+                        type:
+                            {
+                                "title": "get workout with specific workout id",
+                                "type": "object"
+                            }
+                        example:
+                            {
+                              "id": 0,
+                              "title": "some_title",
+                              "description": "some_description",
+                              "start_time": 2019/8/8/14:00 - this is prone to change,
+                              "max_users": 20
+                            }
+  /new:
+    uriParameters:
+      user:
+        type: object
+        description: json representing the user, with user data as properties
+    post:
+        body:
+          application/json:
+            properties:
+              name:
+                description: user object
+                type: object
+                example:
+                  {
+                    "id": 0,
+                    "title": "some_title",
+                    "description": "some_description",
+                    "start_time": 2019/8/8/14:00 - this is prone to change,
+                    "max_users": 20
+                  }
+/bookings:
+  /user/{id}:
+    uriParameters:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    get:
+        responses:
+            200:
+                body:
+                    array:
+                        type:
+                            {
+                                "title": "get list of all workout ids for specific user id - list of ids of all workouts the user is registered to",
+                                "type": "array"
+                            }
+                        example:
+                            [
+                              {
+                                'id': 0
+                              },
+                              {
+                                'id': 1
+                              }
+                            ]
+  /new:
+    uriParameters:
+      booking:
+        type: object
+        description: json with user id and workout id as its properties
+    post:
+        body:
+          application/json:
+            properties:
+              user_id:
+                description: user id
+                type: string
+              workout_id:
+                description: workout id
+                type: string
+            example:
+              {
+                "user_id": 0,
+                "workout_id": 1
+              }
+
+/punches:
+  /new:
+    uriParameters:
+      punch:
+        type: object
+        description: json object with bag id and punch data as its parameters
+    post:
+        body:
+          application/json:
+            properties:
+              bag_id:
+                type: string
+                description: id of punching bag
+              punch:
+                type: object
+                description: object with punch data as its properties
+                properties:
+                  force:
+                    type: string
+                    description: force generated by punch
+                  timestamp:
+                    type: datetime
+                  etc:
+                    ...
+                example:
+                  {
+                    force: '5',
+                    timestamp: 2019/9/9/12:12,
+                    etc: '...'
+                  }
+            example:
+              {
+                bag_id: '123',
+                punch: 
+                  {
+                    force: '5',
+                    timestamp: 2019/9/9/12:12,
+                    etc: '...'
+                  }
+              }
