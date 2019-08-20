@@ -21,21 +21,26 @@ ma = Marshmallow(app)
 from models.user import User
 from models.punch import Punch
 
+# Base Schema
+class Schema(ma.Schema):
+    def __init__(self, strict=True, **kwargs):
+        super(Schema, self).__init__(strict=True, **kwargs)
+
 # User Schema
-class UserSchema(ma.Schema):
+class UserSchema(Schema):
     class Meta:
         fields = ('id', 'firstname', 'lastname', 'email')
 
 # Punch Schema
-class PunchSchema(ma.Schema):
+class PunchSchema(Schema):
     class Meta:
         fields = ('id', 'user_id', 'force')
 
 # Init schema
-user_schema = UserSchema(strict=True)
-users_schema = UserSchema(many=True, strict=True)
-punch_schema = PunchSchema(strict=True)
-punches_schema = PunchSchema(many=True, strict=True)
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
+punch_schema = PunchSchema()
+punches_schema = PunchSchema(many=True)
 
 # Create a User
 @app.route('/user', methods=['POST'])
