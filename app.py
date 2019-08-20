@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
-from models.user import User
 import time
 
 # Init app
@@ -10,23 +9,33 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database-1.cluster-c4rbwipspsxn.us-east-2.rds.amazonaws.com/Test'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+#    os.path.join(basedir, 'test.db')
+    
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
 # Init ma
 ma = Marshmallow(app)
 
+from models.user import User
+from models.punch import Punch
+
 # User Schema
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'firstname', 'lastname', 'email')
 
+# Punch Schema
+class PunchSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'user_id', 'force')
 
 # Init schema
 user_schema = UserSchema(strict=True)
 users_schema = UserSchema(many=True, strict=True)
-
-bulk = []
+punch_schema = PunchSchema(strict=True)
+punches_schema = PunchSchema(many=True, strict=True)
 
 # Create a User
 @app.route('/user', methods=['POST'])
@@ -36,17 +45,10 @@ def add_user():
     email = request.json['email']
 
     usr = User(firstname, lastname, email)
-
-    global bulk
-
-    bulk.append(usr)
-
-    print(len(bulk))
-    if len(bulk) > 10:
-        db.session.add_all(bulk)
-        bulk = []
-        db.session.commit()
-
+    
+    db.session.add(usr)
+    db.session.commit()
+    
     return user_schema.jsonify(usr)
 
 # Get All users
@@ -96,6 +98,29 @@ def get_user_count():
     user_count = len(users)
     print(user_count)
     return str(user_count)
+
+
+bulk = []
+
+# Add Punch
+@app.route('/punch', methods=['POST'])
+def add_punch():
+    user_id = request.json['user_id']
+    force = request.json['force']
+
+    punch = Punch(force, user_id)
+
+    global bulk
+
+    bulk.append(punch)
+
+    print(len(bulk))
+    if len(bulk) > 10:
+        db.session.add_all(bulk)
+        bulk = []
+        db.session.commit()
+
+    return punch_schema.jsonify(usr)
 
 # Run Server
 if __name__ == '__main__':
