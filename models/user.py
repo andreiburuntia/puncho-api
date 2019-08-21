@@ -7,9 +7,9 @@ class User(db.Model):
     __tablename__ = 'users'
     
     id = Column(Integer, primary_key=True)
-    firstname = Column(String)
-    lastname = Column(String)
-    email = Column(String)
+    firstname = Column(String(30))
+    lastname = Column(String(30))
+    email = Column(String(30))
     punches = relationship("Punch")
     
     def __init__(self, firstname, lastname, email):

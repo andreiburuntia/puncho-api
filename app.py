@@ -125,7 +125,7 @@ def add_punch():
         bulk = []
         db.session.commit()
 
-    return punch_schema.jsonify(usr)
+    return punch_schema.jsonify(punch)
 
 # Run Server
 if __name__ == '__main__':
