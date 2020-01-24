@@ -65,17 +65,13 @@ def get_users():
     result = users_schema.dump(all_users)
     return jsonify(result.data)
 
-# Get Single users
-@app.route('/user/<email>', methods=['GET'])
-def get_user(email):
-    user = User.query().filter_by(email=email).first()
-    return user_schema.jsonify(user)
-
 # Login
-@app.route('/user/login/', methods=['GET'])
+@app.route('/user/login', methods=['GET', 'POST'])
 def login(email, password):
-    user = User.query().filter_by(email=email).first()
-    # rest
+    email = request.args.get('email')
+    password = request.args.get('password')
+    user = user.query().filter_by(email=email).first()
+    return user_schema.jsonify(user)
 
 # Update a user
 @app.route('/user/<id>', methods=['PUT'])
