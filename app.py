@@ -67,7 +67,7 @@ def get_users():
 
 # Login
 @app.route('/user/login', methods=['GET', 'POST'])
-def login(email, password):
+def login():
     email = request.args.get('email')
     password = request.args.get('password')
     user = user.query().filter_by(email=email).first()
