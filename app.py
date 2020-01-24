@@ -8,9 +8,9 @@ import time
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database-1.cluster-c4rbwipspsxn.us-east-2.rds.amazonaws.com/Test'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-#    os.path.join(basedir, 'test.db')
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database-1.cluster-c4rbwipspsxn.us-east-2.rds.amazonaws.com/Test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+    os.path.join(basedir, 'test.db')
     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
@@ -42,6 +42,8 @@ users_schema = UserSchema(many=True)
 punch_schema = PunchSchema()
 punches_schema = PunchSchema(many=True)
 
+# ------------ USER ----------------------
+
 # Create a User
 @app.route('/user', methods=['POST'])
 def add_user():
@@ -64,10 +66,16 @@ def get_users():
     return jsonify(result.data)
 
 # Get Single users
-@app.route('/user/<id>', methods=['GET'])
-def get_user(id):
-    user = User.query.get(id)
+@app.route('/user/<email>', methods=['GET'])
+def get_user(email):
+    user = User.query().filter_by(email=email).first()
     return user_schema.jsonify(user)
+
+# Login
+@app.route('/user/login/', methods=['GET'])
+def login(email, password):
+    user = User.query().filter_by(email=email).first()
+    # rest
 
 # Update a user
 @app.route('/user/<id>', methods=['PUT'])
@@ -86,15 +94,6 @@ def update_user(id):
 
     return user_schema.jsonify(user)
 
-# Delete user
-@app.route('/user/<id>', methods=['DELETE'])
-def delete_user(id):
-    user = User.query.get(id)
-    db.session.delete(user)
-    db.session.commit()
-
-    return user_schema.jsonify(user)
-
 # Get user count
 @app.route('/user/count', methods=['GET'])
 def get_user_count():
@@ -103,6 +102,8 @@ def get_user_count():
     user_count = len(users)
     print(user_count)
     return str(user_count)
+
+# ------------ PUNCH ----------------------
 
 
 bulk = []
@@ -122,10 +123,19 @@ def add_punch():
     print(len(bulk))
     if len(bulk) > 10:
         db.session.add_all(bulk)
-        bulk = []
+        bulk = [] 
         db.session.commit()
 
     return punch_schema.jsonify(punch)
+
+# Get Punches for specific User
+@app.route('/punch/<user_id>', methods=['GET'])
+def get_punches_for_user(user_id):
+    qry =  Punch.query.join(User).filter(User.id == user_id)
+    #print(qry)
+    return punches_schema.jsonify(qry)
+    
+
 
 # Run Server
 if __name__ == '__main__':

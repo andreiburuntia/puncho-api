@@ -1,13 +1,13 @@
 #%RAML 1.0
 title: puncho API
 version: 0.1
-baseUri: http://ec2-13-59-134-56.us-east-2.compute.amazonaws.com
+baseUri: http://ec2-3-15-172-128.us-east-2.compute.amazonaws.com
 documentation:
   - title: Welcome
     content: |
       Welcome to the puncho API Documentation.
 
-/users: # optional resource
+/user: # optional resource
   description: This is the top level description for /users.
 
   get: # HTTP method declaration
@@ -27,20 +27,16 @@ documentation:
                     {
                         "firstname": "user1",
                         "lastname": "user1",
-                        "gender": "male",
-                        "tokens": 0,
-                        "total_force": 0,
-                        "punch_count": 0,
-                        "id": 0
+                        "email": "a@b.c"
                     },
                     ...
                 ]
               }
-  /{id}:
+  /{email}:
     uriParameters:
       id:
         type: string
-        description: account identifier
+        description: email
         minLength: 1
         maxLength: 10
     get:
@@ -50,18 +46,14 @@ documentation:
                     application/json:
                         type:
                             {
-                                "title": "get user with specific user id",
+                                "title": "get user with specific email",
                                 "type": "object"
                             }
                         example:
                             {
                               "firstname": "user1",
                               "lastname": "user1",
-                              "gender": "male",
-                              "tokens": 0,
-                              "total_force": 0,
-                              "punch_count": 0,
-                              "id": 0
+                              "email": "a@b.c"
                           }
   /new:
     uriParameters:
@@ -79,11 +71,7 @@ documentation:
                   {
                       "firstname": "user1",
                       "lastname": "user1",
-                      "gender": "male",
-                      "tokens": 0,
-                      "total_force": 0,
-                      "punch_count": 0,
-                      "id": 0
+                      "email": "a@b.c"
                   }
   /update:
     uriParameters:
@@ -103,11 +91,7 @@ documentation:
                   {
                       "firstname": "user1",
                       "lastname": "user1",
-                      "gender": "male",
-                      "tokens": 0,
-                      "total_force": 0,
-                      "punch_count": 0,
-                      "id": 0
+                      "email": "a@b.c"
                   }
 
 /workouts:
