@@ -70,7 +70,7 @@ def get_users():
 def login():
     email = request.args.get('email')
     password = request.args.get('password')
-    user = user.query().filter_by(email=email).first()
+    user = User.query().filter_by(email=email).first()
     return user_schema.jsonify(user)
 
 # Update a user
