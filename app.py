@@ -68,8 +68,8 @@ def get_users():
 # Login
 @app.route('/user/login', methods=['GET', 'POST'])
 def login():
-    email = request.json('email')
-    password = request.json('password')
+    email = request.json['email']
+    password = request.json['password']
     user = {}
     users = User.query.all()
     for u in users:
