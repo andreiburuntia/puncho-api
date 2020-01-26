@@ -70,8 +70,11 @@ def get_users():
 def login():
     email = request.args.get('email')
     password = request.args.get('password')
-    user_q = meta.Session.query(model.User).filter_by(name=user_name).first()
-    user = user_q.get()
+    user = {}
+    users = User.query.all()
+    for u in users:
+        if u.email == email:
+            user = u
     return user_schema.jsonify(user)
 
 # Update a user
