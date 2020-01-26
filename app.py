@@ -66,7 +66,7 @@ def get_users():
     return jsonify(result.data)
 
 # Login
-@app.route('/user/login', methods=['GET', 'POST'])
+@app.route('/user/login', methods=['POST'])
 def login():
     email = request.json['email']
     password = request.json['password']

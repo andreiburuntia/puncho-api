@@ -46,7 +46,24 @@ documentation:
                     "email": "a@b.c"
                 }
   /login:
-    body:
+    uriParameters:
+      login:
+        type: object
+        description: json with user email and pwd
+    post:
+      body:
+        application/json:
+          properties:
+            name:
+              description: user object
+              type: object
+              example:
+                {
+                    "email": "a@b.c",
+                    "password": "hashxyz"
+                }
+    get:
+      body:
         application/json:
           properties:
             name:
