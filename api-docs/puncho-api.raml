@@ -32,67 +32,31 @@ documentation:
                     ...
                 ]
               }
-  /{email}:
-    uriParameters:
-      id:
-        type: string
-        description: email
-        minLength: 1
-        maxLength: 10
-    get:
-        responses:
-            200:
-                body:
-                    application/json:
-                        type:
-                            {
-                                "title": "get user with specific email",
-                                "type": "object"
-                            }
-                        example:
-                            {
-                              "firstname": "user1",
-                              "lastname": "user1",
-                              "email": "a@b.c"
-                          }
-  /new:
-    uriParameters:
-      user:
-        type: object
-        description: json representing the user, with user data as properties
-    post:
-        body:
-          application/json:
-            properties:
-              name:
-                description: user object
-                type: object
-                example:
-                  {
-                      "firstname": "user1",
-                      "lastname": "user1",
-                      "email": "a@b.c"
-                  }
-  /update:
-    uriParameters:
-      id:
-        type: string
-        description: account identifier
-        minLength: 1
-        maxLength: 10
-    put:
+  post:
       body:
-          application/json:
-            properties:
-              name:
-                description: user object
-                type: object
-                example:
-                  {
-                      "firstname": "user1",
-                      "lastname": "user1",
-                      "email": "a@b.c"
-                  }
+        application/json:
+          properties:
+            name:
+              description: user object
+              type: object
+              example:
+                {
+                    "firstname": "user1",
+                    "lastname": "user1",
+                    "email": "a@b.c"
+                }
+  /login:
+    body:
+        application/json:
+          properties:
+            name:
+              description: user object
+              type: object
+              example:
+                {
+                    "email": "a@b.c",
+                    "password": "hashxyz"
+                }
 
 /workouts:
   description: This is the top level description for /workouts.

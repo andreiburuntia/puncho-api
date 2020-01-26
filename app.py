@@ -68,30 +68,13 @@ def get_users():
 # Login
 @app.route('/user/login', methods=['GET', 'POST'])
 def login():
-    email = request.args.get('email')
-    password = request.args.get('password')
+    email = request.json('email')
+    password = request.json('password')
     user = {}
     users = User.query.all()
     for u in users:
         if u.email == email:
             user = u
-    return user_schema.jsonify(user)
-
-# Update a user
-@app.route('/user/<id>', methods=['PUT'])
-def update_user(id):
-    user = User.query.get(id)
-
-    firstname = request.json['firstname']
-    lastname = request.json['lastname']
-    email = request.json['email']
-
-    user.firstname = firstname
-    user.lastname = lastname
-    user.email = email
-
-    db.session.commit()
-
     return user_schema.jsonify(user)
 
 # Get user count
