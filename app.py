@@ -66,7 +66,7 @@ def get_users():
     return jsonify(result.data)
 
 # Login
-@app.route('/user/login', methods=['POST'])
+@app.route('/user/login', methods=['GET', 'POST'])
 def login():
     email = request.json['email']
     password = request.json['password']
@@ -75,6 +75,7 @@ def login():
     for u in users:
         if u.email == email:
             user = u
+            break
     return user_schema.jsonify(user)
 
 # Get user count
