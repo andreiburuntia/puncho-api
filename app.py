@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
@@ -41,6 +41,10 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 punch_schema = PunchSchema()
 punches_schema = PunchSchema(many=True)
+
+@app.route('/doc', methods=['GET'])
+def get_docs():
+    return send_from_directory(os.path.join('.', 'api-docs'), 'puncho-api.html')
 
 # ------------ USER ----------------------
 
