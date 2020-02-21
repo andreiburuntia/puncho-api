@@ -122,13 +122,17 @@ def get_punches_for_user(user_id):
 # ------------------ DOCS ----------------
 
 @app.route('/doc', methods=['GET'])
-def get_docs():
+def get_doc():
     f = open('./puncho-api.html')
     return f.read()
 
-@app.route('/a', methods=['GET'])
-def a():
-    return 'a'
+@app.route('/docs', methods=['GET'])
+def get_docs():
+    script_dir = os.path.dirname(__file__)
+    rel_path = "api-docs/puncho-api.html"
+    abs_file_path = os.path.join(script_dir, rel_path)
+    f = open(abs_file_path)
+    return f.read()
 
 # Run Server
 if __name__ == '__main__':
