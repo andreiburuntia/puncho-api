@@ -44,7 +44,8 @@ punches_schema = PunchSchema(many=True)
 
 @app.route('/doc', methods=['GET'])
 def get_docs():
-    return send_from_directory(os.path.join('.', 'api-docs'), 'puncho-api.html')
+    f = open('./puncho-api.html')
+    return f.read()
 
 # ------------ USER ----------------------
 
