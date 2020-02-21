@@ -126,6 +126,9 @@ def get_docs():
     f = open('./puncho-api.html')
     return f.read()
 
+@app.route('/a', methods=['GET'])
+def a():
+    return 'a'
 
 # Run Server
 if __name__ == '__main__':
