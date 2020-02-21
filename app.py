@@ -42,11 +42,6 @@ users_schema = UserSchema(many=True)
 punch_schema = PunchSchema()
 punches_schema = PunchSchema(many=True)
 
-@app.route('/doc', methods=['GET'])
-def get_docs():
-    f = open('./puncho-api.html')
-    return f.read()
-
 # ------------ USER ----------------------
 
 # Create a User
@@ -118,12 +113,23 @@ def add_punch():
     return punch_schema.jsonify(punch)
 
 # Get Punches for specific User
+@app.route('/doc', methods=['GET'])
+def get_docs():
+    f = open('./puncho-api.html')
+    return f.read()
+
 @app.route('/punch/<user_id>', methods=['GET'])
 def get_punches_for_user(user_id):
     qry =  Punch.query.join(User).filter(User.id == user_id)
     #print(qry)
     return punches_schema.jsonify(qry)
-    
+
+# ------------ DOCS ----------------------
+
+@app.route('/docs', methods=['GET'])
+def get_docs():
+    f = open('./puncho-api.html')
+    return f.read()
 
 
 # Run Server
