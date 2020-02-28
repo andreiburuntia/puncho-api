@@ -22,6 +22,9 @@ ma = Marshmallow(app)
 from models.user import User
 from models.punch import Punch
 
+db.create_all()
+db.session.commit()
+
 # Base Schema
 class Schema(ma.Schema):
     def __init__(self, strict=True, **kwargs):
