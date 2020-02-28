@@ -9,9 +9,9 @@ import time
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Database
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database-1.cluster-c4rbwipspsxn.us-east-2.rds.amazonaws.com/Test'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-    os.path.join(basedir, 'test.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database-1.cluster-c4rbwipspsxn.us-east-2.rds.amazonaws.com/Test'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+#    os.path.join(basedir, 'test.db')
     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
