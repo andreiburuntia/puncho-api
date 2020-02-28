@@ -83,6 +83,8 @@ def login():
             break
     if user.password_hash == password_hash:
         return user_schema.jsonify(user)
+    else if user == {}:
+        return 'user not found', status.HTTP_401_UNAUTHORIZED
     else:
         return 'bad credentials', status.HTTP_401_UNAUTHORIZED
 
