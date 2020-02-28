@@ -81,11 +81,11 @@ def login():
         if u.email == email:
             user = u
             break
-    if user.password_hash == password_hash:
-        return user_schema.jsonify(user)
+    if user == {}:
+        return 'user not found', status.HTTP_401_UNAUTHORIZED
     else:
-        if user == {}:
-            return 'user not found', status.HTTP_401_UNAUTHORIZED
+        if user.password_hash == password_hash:
+            return user_schema.jsonify(user)
         else:
             return 'bad credentials', status.HTTP_401_UNAUTHORIZED
 
