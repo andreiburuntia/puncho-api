@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify, send_from_directory, status
+from flask import Flask, request, jsonify, send_from_directory
+from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
