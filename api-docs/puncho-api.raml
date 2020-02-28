@@ -10,29 +10,8 @@ documentation:
 /user: # optional resource
   description: This is the top level description for /users.
 
-  get: # HTTP method declaration
-    responses: # declare a response
-      200: # HTTP status code
-        body: # declare content of response
-          application/json: # media type
-            type: | # structural definition of a response (schema or type)
-              {
-                "title": "get collection of all users",
-                "type": "array"
-              }
-            example: # example how a response looks like
-              {
-                "users":
-                [
-                    {
-                        "firstname": "user1",
-                        "lastname": "user1",
-                        "email": "a@b.c"
-                    },
-                    ...
-                ]
-              }
   post:
+      description: create a new user
       body:
         application/json:
           properties:
