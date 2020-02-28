@@ -57,11 +57,21 @@ def add_user():
     password_hash = request.json['password_hash']
 
     usr = User(firstname, lastname, email, password_hash)
+
+    found = False
+    users = User.query.all()
+    for u in users:
+        if u.email == email:
+            found = True
+            break
+    
+    if found:
+        return 'email registered already', status.HTTP_409_CONFLICT
     
     db.session.add(usr)
     db.session.commit()
     
-    return user_schema.jsonify(usr)
+    return user_schema.jsonify(usr), status.HTTP_201_CREATED
 
 # Get All users
 @app.route('/user', methods=['GET'])
