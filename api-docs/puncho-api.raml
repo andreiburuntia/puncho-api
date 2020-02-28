@@ -25,6 +25,25 @@ documentation:
                     "email": "a@b.c",
                     "password_hash": "hashxyz"
                 }
+        responses:
+          201: #USER CREATED
+            body:
+              application/json:
+                properties:
+                  name:
+                    description: user object
+                    type: object
+                    example:
+                      {
+                          "firstname": "user1",
+                          "lastname": "user1",
+                          "email": "a@b.c",
+                          "password_hash": "hashxyz"
+                      }
+          409: #EMAIL EXISTS
+            body:
+              text/plain:
+                example: "email exists already"
   /login:
     description: login user
     uriParameters:
