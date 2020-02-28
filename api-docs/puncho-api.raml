@@ -22,13 +22,15 @@ documentation:
                 {
                     "firstname": "user1",
                     "lastname": "user1",
-                    "email": "a@b.c"
+                    "email": "a@b.c",
+                    "password_hash": "hashxyz"
                 }
   /login:
+    description: login user
     uriParameters:
       login:
         type: object
-        description: json with user email and pwd
+        description: json with user email and pre-hashed pwd
     post:
       body:
         application/json:
@@ -39,7 +41,7 @@ documentation:
               example:
                 {
                     "email": "a@b.c",
-                    "password": "hashxyz"
+                    "password_hash": "hashxyz"
                 }
     get:
       body:
@@ -51,7 +53,7 @@ documentation:
               example:
                 {
                     "email": "a@b.c",
-                    "password": "hashxyz"
+                    "password_hash": "hashxyz"
                 }
 
 /workouts:
