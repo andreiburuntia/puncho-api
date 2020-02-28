@@ -25,25 +25,24 @@ documentation:
                     "email": "a@b.c",
                     "password_hash": "hashxyz"
                 }
-        responses:
-          201: #USER CREATED
-            body:
-              application/json:
-                properties:
-                  name:
-                    description: user object
-                    type: object
-                    example:
-                      {
-                          "firstname": "user1",
-                          "lastname": "user1",
-                          "email": "a@b.c",
-                          "password_hash": "hashxyz"
-                      }
-          409: #EMAIL EXISTS
-            body:
-              text/plain:
-                example: "email exists already"
+      responses:
+        201: #USER CREATED
+          body:
+            application/json:
+              properties:
+                name:
+                  description: user object
+                  type: object
+                  example:
+                    {
+                        "firstname": "user1",
+                        "lastname": "user1",
+                        "email": "a@b.c"
+                    }
+        409: #EMAIL EXISTS
+          body:
+            text/plain:
+              example: "email exists already"
   /login:
     description: login user
     uriParameters:
@@ -62,6 +61,29 @@ documentation:
                     "email": "a@b.c",
                     "password_hash": "hashxyz"
                 }
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                name:
+                  description: user object
+                  type: object
+                  example:
+                    {
+                        "firstname": "user1",
+                        "lastname": "user1",
+                        "email": "a@b.c"
+                    }
+        401:
+          body:
+            text/plain:
+              example: "bad credentials"
+        401:
+          body:
+            text/plain:
+              example: "email not found"
+
     get:
       body:
         application/json:
@@ -74,6 +96,28 @@ documentation:
                     "email": "a@b.c",
                     "password_hash": "hashxyz"
                 }
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                name:
+                  description: user object
+                  type: object
+                  example:
+                    {
+                        "firstname": "user1",
+                        "lastname": "user1",
+                        "email": "a@b.c"
+                    }
+        401:
+          body:
+            text/plain:
+              example: "bad credentials"
+        401:
+          body:
+            text/plain:
+              example: "email not found"
 
 /workouts:
   description: This is the top level description for /workouts.
