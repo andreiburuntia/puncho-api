@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, status
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
@@ -50,8 +50,9 @@ def add_user():
     firstname = request.json['firstname']
     lastname = request.json['lastname']
     email = request.json['email']
+    password_hash = request.json['password_hash']
 
-    usr = User(firstname, lastname, email)
+    usr = User(firstname, lastname, email, password_hash)
     
     db.session.add(usr)
     db.session.commit()
@@ -69,14 +70,17 @@ def get_users():
 @app.route('/user/login', methods=['GET', 'POST'])
 def login():
     email = request.json['email']
-    password = request.json['password']
+    password_hash = request.json['password_hash']
     user = {}
     users = User.query.all()
     for u in users:
         if u.email == email:
             user = u
             break
-    return user_schema.jsonify(user)
+    if u.password_hash == password_hash:
+        return user_schema.jsonify(u)
+    else:
+        return 'bad credentials', status.HTTP_401_UNAUTHORIZED
 
 # Get user count
 @app.route('/user/count', methods=['GET'])
