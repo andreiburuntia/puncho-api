@@ -12,4 +12,4 @@ class Booking(db.Model):
     
     def __init__(self, workout_id, user_id):
         self.workout_id = workout_id
-        self.workout_id = user_id
+        self.user_id = user_id
