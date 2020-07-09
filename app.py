@@ -243,7 +243,7 @@ def add_weigh_in():
 
     return punch_schema.jsonify(hr)
 
-# Get Latest Hr
+# Get weigh ins
 @app.route('/weigh_in/<user_id>', methods=['GET'])
 def get_weigh_ins(user_id):
     qry =  Hr.query.join(User).filter(User.id == user_id)
@@ -281,8 +281,8 @@ def get_wourkouts():
 # Add Booking
 @app.route('/booking', methods=['POST'])
 def add_booking():
-    workout_id = request.json['workout_id']
-    user_id = request.json['user_id']
+    workout_id = request.json['user_id']
+    user_id = request.json['workout_id']
 
     b = Booking(workout_id, user_id)
     print(workout_id, user_id)

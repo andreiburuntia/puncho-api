@@ -119,7 +119,7 @@ documentation:
             text/plain:
               example: "email not found"
 
-/workouts:
+/workout:
   description: This is the top level description for /workouts.
 
   get: # HTTP method declaration
@@ -140,59 +140,13 @@ documentation:
                       "id": 0,
                       "title": "some_title",
                       "description": "some_description",
-                      "start_time": 2019/8/8/14:00 - this is prone to change,
-                      "max_users": 20
+                      "start_time": 2019/8/8/14:00 - this is prone to change
                     },
                     ...
                 ]
               }
-  /{id}:
-    uriParameters:
-      id:
-        type: string
-        description: account identifier
-        minLength: 1
-        maxLength: 10
-    get:
-        responses:
-            200:
-                body:
-                    application/json:
-                        type:
-                            {
-                                "title": "get workout with specific workout id",
-                                "type": "object"
-                            }
-                        example:
-                            {
-                              "id": 0,
-                              "title": "some_title",
-                              "description": "some_description",
-                              "start_time": 2019/8/8/14:00 - this is prone to change,
-                              "max_users": 20
-                            }
-  /new:
-    uriParameters:
-      user:
-        type: object
-        description: json representing the user, with user data as properties
-    post:
-        body:
-          application/json:
-            properties:
-              name:
-                description: user object
-                type: object
-                example:
-                  {
-                    "id": 0,
-                    "title": "some_title",
-                    "description": "some_description",
-                    "start_time": 2019/8/8/14:00 - this is prone to change,
-                    "max_users": 20
-                  }
-/bookings:
-  /user/{id}:
+/booking:
+  /{user_id}:
     uriParameters:
       id:
         type: string
@@ -212,10 +166,10 @@ documentation:
                         example:
                             [
                               {
-                                'id': 0
+                                "id": 0
                               },
                               {
-                                'id': 1
+                                "id": 1
                               }
                             ]
   /new:
@@ -240,42 +194,132 @@ documentation:
               }
 
 /punches:
-  /new:
+  /{user_id}:
     uriParameters:
-      punch:
-        type: object
-        description: json object with bag id and punch data as its parameters
-    post:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    get:
+        responses:
+            200:
+                body:
+                    array:
+                        type:
+                            {
+                                "title": "get list of all punchesfor specific user id",
+                                "type": "array"
+                            }
+                        example:
+                            [
+                              {
+                                "force": 0
+                              },
+                              {
+                                "force": 1
+                              }
+                            ]
+  /score/{user_id}:
+    uriParameters:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    get:
+        responses:
+            200:
+                body:
+                    string:
+                        example:
+                            "1000"
+/hr:
+  /{user_id}:
+    uriParameters:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    get:
+        descrpiption: get instantaneous heart rate
+        responses:
+            200:
+                body:
+                    string:
+                        example:
+                            "100"
+  /avg/{user_id}:
+    uriParameters:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    get:
+        description: get current average heart rate
+        responses:
+            200:
+                body:
+                    string:
+                        example:
+                            "100"
+/weigh_in:
+  /{user_id}:
+    uriParameters:
+      id:
+        type: string
+        description: account identifier
+        minLength: 1
+        maxLength: 10
+    get:
+        responses:
+            200:
+                body:
+                    array:
+                        type:
+                            {
+                                "title": "get list of all weigh ins specific user id",
+                                "type": "array"
+                            }
+                        example:
+                            [
+                              {
+                                "data": "TBD"
+                              },
+                              {
+                                "data": "TBD"
+                              }
+                            ]
+/booking:
+  post:
+    description: create a new user
+    body:
+      application/json:
+        properties:
+          name:
+            description: booking object
+            type: object
+            example:
+              {
+                  "user_id": "1",
+                  "workout_id": "1"
+              }
+    responses:
+      201: #BOOKING CREATED
         body:
           application/json:
             properties:
-              bag_id:
-                type: string
-                description: id of punching bag
-              punch:
+              name:
+                description: booking object
                 type: object
-                description: object with punch data as its properties
-                properties:
-                  force:
-                    type: string
-                    description: force generated by punch
-                  timestamp:
-                    type: datetime
-                  etc:
-                    ...
                 example:
                   {
-                    force: '5',
-                    timestamp: 2019/9/9/12:12,
-                    etc: '...'
+                      "user_id": "1",
+                      "workout_id": "1"
                   }
-            example:
-              {
-                bag_id: '123',
-                punch: 
-                  {
-                    force: '5',
-                    timestamp: 2019/9/9/12:12,
-                    etc: '...'
-                  }
-              }
+      409: #BOOKING FAILED
+        body:
+          text/plain:
+            example: "workout full"
