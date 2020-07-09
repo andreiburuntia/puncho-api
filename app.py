@@ -205,9 +205,9 @@ def get_avg_hr_for_user(user_id):
 
 # ---------- WEIGH IN -------------
 
-# Add Hr
-@app.route('/hr', methods=['POST'])
-def add_hr():
+# Add weigh in
+@app.route('/weigh_in', methods=['POST'])
+def add_weigh_in():
     user_id = request.json['user_id']
     rate = request.json['hr']
 
@@ -226,20 +226,12 @@ def add_hr():
     return punch_schema.jsonify(hr)
 
 # Get Latest Hr
-@app.route('/hr/latest/<user_id>', methods=['GET'])
-def get_latest_hr_for_user(user_id):
+@app.route('/weigh_in/<user_id>', methods=['GET'])
+def get_weigh_ins(user_id):
     qry =  Hr.query.join(User).filter(User.id == user_id)
     # return last in collection
     #print(qry)
-    return 100
-
-# Get Avg Hr
-@app.route('/hr/avg/<user_id>', methods=['GET'])
-def get_avg_hr_for_user(user_id):
-    qry =  Hr.query.join(User).filter(User.id == user_id)
-    # return avg in collection
-    #print(qry)
-    return 100
+    return "{collection of weigh ins}"
 
 # ------------------ DOCS ----------------
 
