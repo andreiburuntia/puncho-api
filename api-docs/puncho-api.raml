@@ -172,26 +172,36 @@ documentation:
                                 "id": 1
                               }
                             ]
-  /new:
-    uriParameters:
-      booking:
-        type: object
-        description: json with user id and workout id as its properties
-    post:
+  post:
+    description: create a new booking
+    body:
+      application/json:
+        properties:
+          name:
+            description: booking object
+            type: object
+            example:
+              {
+                  "user_id": "1",
+                  "workout_id": "1"
+              }
+    responses:
+      201: #BOOKING CREATED
         body:
           application/json:
             properties:
-              user_id:
-                description: user id
-                type: string
-              workout_id:
-                description: workout id
-                type: string
-            example:
-              {
-                "user_id": 0,
-                "workout_id": 1
-              }
+              name:
+                description: booking object
+                type: object
+                example:
+                  {
+                      "user_id": "1",
+                      "workout_id": "1"
+                  }
+      409: #BOOKING FAILED
+        body:
+          text/plain:
+            example: "workout full"
 
 /punches:
   /{user_id}:
@@ -292,34 +302,3 @@ documentation:
                                 "data": "TBD"
                               }
                             ]
-/booking:
-  post:
-    description: create a new user
-    body:
-      application/json:
-        properties:
-          name:
-            description: booking object
-            type: object
-            example:
-              {
-                  "user_id": "1",
-                  "workout_id": "1"
-              }
-    responses:
-      201: #BOOKING CREATED
-        body:
-          application/json:
-            properties:
-              name:
-                description: booking object
-                type: object
-                example:
-                  {
-                      "user_id": "1",
-                      "workout_id": "1"
-                  }
-      409: #BOOKING FAILED
-        body:
-          text/plain:
-            example: "workout full"

@@ -227,21 +227,14 @@ def get_avg_hr_for_user(user_id):
 @app.route('/weigh_in', methods=['POST'])
 def add_weigh_in():
     user_id = request.json['user_id']
-    rate = request.json['hr']
+    data = request.json['data']
 
-    hr = Hr(rate, user_id)
+    w = Weigh_In(data, user_id)
 
-    global bulk
+    db.session.add(w)
+    db.session.commit()
 
-    bulk.append(hr)
-
-    print(len(bulk))
-    if len(bulk) > 10:
-        db.session.add_all(bulk)
-        bulk = [] 
-        db.session.commit()
-
-    return punch_schema.jsonify(hr)
+    return punch_schema.jsonify(w)
 
 # Get weigh ins
 @app.route('/weigh_in/<user_id>', methods=['GET'])
