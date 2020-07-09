@@ -274,8 +274,8 @@ def get_wourkouts():
 # Add Booking
 @app.route('/booking', methods=['POST'])
 def add_booking():
-    workout_id = request.json['user_id']
-    user_id = request.json['workout_id']
+    workout_id = request.json['workout_id']
+    user_id = request.json['user_id']
 
     b = Booking(workout_id, user_id)
     print(workout_id, user_id)
