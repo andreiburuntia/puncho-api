@@ -23,6 +23,8 @@ from models.user import User
 from models.punch import Punch
 from models.hr import Hr
 from models.weigh_in import Weigh_In
+from models.workout import Workout
+from models.booking import Booking
 
 db.create_all()
 db.session.commit()
@@ -53,6 +55,18 @@ class Weigh_InSchema(Schema):
     class Meta:
         fields = ('id', 'user_id', 'data')
 
+
+# Workout Schema
+class WorkoutSchema(Schema):
+    class Meta:
+        fields = ('id', 'description', 'name', 'start_time', 'end_time')
+
+
+# Workout Schema
+class BookingSchema(Schema):
+    class Meta:
+        fields = ('id', 'workout_id', 'user_id')
+
 # Init schema
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
@@ -62,6 +76,10 @@ hr_schema = HrSchema()
 hrs_schema = HrSchema(many=True)
 weigh_in_schema = Weigh_InSchema()
 weigh_ins_schema = Weigh_InSchema(many=True)
+workout_schema = WorkoutSchema()
+workouts_schema = WorkoutSchema(many=True)
+booking_schema = BookingSchema()
+bookings_schema = BookingSchema(many=True)
 
 # ------------ USER ----------------------
 
@@ -232,6 +250,56 @@ def get_weigh_ins(user_id):
     # return last in collection
     #print(qry)
     return "{collection of weigh ins}"
+
+
+# --------- WORKOUTS ------------
+
+# Add Workout
+@app.route('/workout', methods=['POST'])
+def add_workout():
+    description = request.json['description']
+    name = request.json['name']
+    start_time = request.json['start_time']
+    end_time = request.json['end_time']
+
+    w = Workout(description, name, start_time, end_time)
+
+    db.session.add(w)
+    db.session.commit()
+
+    return workout_schema.jsonify(w)
+
+# Get Workouts
+@app.route('/workout', methods=['GET'])
+def get_wourkouts():
+    qry =  Workout.query.all()
+    #print(qry)
+    return workouts_schema.jsonify(qry)
+
+
+# ---------- BOOKINGS ------------
+
+# Add Booking
+@app.route('/booking', methods=['POST'])
+def add_booking():
+    workout_id = request.json['workout_id']
+    user_id = request.json['user_id']
+
+    b = Booking(workout_id, user_id)
+
+    db.session.add(b)
+    db.session.commit()
+
+    return booking_schema.jsonify(b)
+
+# Get Workouts for User
+@app.route('/workout/<user_id>', methods=['GET'])
+def get_bookings_for_user(user_id):
+    qry =  Booking.query.join(User).filter(User.id == user_id)
+    # return last in collection
+    #print(qry)
+    return bookings_schema.jsonify(qry)
+
 
 # ------------------ DOCS ----------------
 
