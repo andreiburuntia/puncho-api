@@ -21,6 +21,8 @@ ma = Marshmallow(app)
 
 from models.user import User
 from models.punch import Punch
+from models.hr import Hr
+from models.weigh_in import Weigh_In
 
 db.create_all()
 db.session.commit()
@@ -40,11 +42,26 @@ class PunchSchema(Schema):
     class Meta:
         fields = ('id', 'user_id', 'force')
 
+# Hr Schema
+class HrSchema(Schema):
+    class Meta:
+        fields = ('id', 'user_id', 'hr')
+
+        
+# Weigh_In Schema
+class Weigh_InSchema(Schema):
+    class Meta:
+        fields = ('id', 'user_id', 'data')
+
 # Init schema
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 punch_schema = PunchSchema()
 punches_schema = PunchSchema(many=True)
+hr_schema = HrSchema()
+hrs_schema = HrSchema(many=True)
+weigh_in_schema = Weigh_InSchema()
+weigh_ins_schema = Weigh_InSchema(many=True)
 
 # ------------ USER ----------------------
 
@@ -139,6 +156,90 @@ def get_punches_for_user(user_id):
     qry =  Punch.query.join(User).filter(User.id == user_id)
     #print(qry)
     return punches_schema.jsonify(qry)
+
+# Get Punch Score
+@app.route('/punch/score/<user_id>', methods=['GET'])
+def get_punch_score_for_user(user_id):
+    qry =  Punch.query.join(User).filter(User.id == user_id)
+    #print(qry)
+    return 1000
+
+# ------------ HR ---------------
+
+# Add Hr
+@app.route('/hr', methods=['POST'])
+def add_hr():
+    user_id = request.json['user_id']
+    rate = request.json['hr']
+
+    hr = Hr(rate, user_id)
+
+    global bulk
+
+    bulk.append(hr)
+
+    print(len(bulk))
+    if len(bulk) > 10:
+        db.session.add_all(bulk)
+        bulk = [] 
+        db.session.commit()
+
+    return punch_schema.jsonify(hr)
+
+# Get Latest Hr
+@app.route('/hr/latest/<user_id>', methods=['GET'])
+def get_latest_hr_for_user(user_id):
+    qry =  Hr.query.join(User).filter(User.id == user_id)
+    # return last in collection
+    #print(qry)
+    return 100
+
+# Get Avg Hr
+@app.route('/hr/avg/<user_id>', methods=['GET'])
+def get_avg_hr_for_user(user_id):
+    qry =  Hr.query.join(User).filter(User.id == user_id)
+    # return avg in collection
+    #print(qry)
+    return 100
+
+
+# ---------- WEIGH IN -------------
+
+# Add Hr
+@app.route('/hr', methods=['POST'])
+def add_hr():
+    user_id = request.json['user_id']
+    rate = request.json['hr']
+
+    hr = Hr(rate, user_id)
+
+    global bulk
+
+    bulk.append(hr)
+
+    print(len(bulk))
+    if len(bulk) > 10:
+        db.session.add_all(bulk)
+        bulk = [] 
+        db.session.commit()
+
+    return punch_schema.jsonify(hr)
+
+# Get Latest Hr
+@app.route('/hr/latest/<user_id>', methods=['GET'])
+def get_latest_hr_for_user(user_id):
+    qry =  Hr.query.join(User).filter(User.id == user_id)
+    # return last in collection
+    #print(qry)
+    return 100
+
+# Get Avg Hr
+@app.route('/hr/avg/<user_id>', methods=['GET'])
+def get_avg_hr_for_user(user_id):
+    qry =  Hr.query.join(User).filter(User.id == user_id)
+    # return avg in collection
+    #print(qry)
+    return 100
 
 # ------------------ DOCS ----------------
 
