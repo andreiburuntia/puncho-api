@@ -293,7 +293,7 @@ def add_booking():
     return booking_schema.jsonify(b)
 
 # Get Workouts for User
-@app.route('/workout/<user_id>', methods=['GET'])
+@app.route('/booking/<user_id>', methods=['GET'])
 def get_bookings_for_user(user_id):
     qry =  Booking.query.join(User).filter(User.id == user_id)
     # return last in collection
