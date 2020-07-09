@@ -285,7 +285,8 @@ def add_booking():
     user_id = request.json['user_id']
 
     b = Booking(workout_id, user_id)
-
+    print(workout_id, user_id)
+    print(booking_schema.jsonify(b))
     db.session.add(b)
     db.session.commit()
 
