@@ -171,7 +171,7 @@ def add_punch():
 # Get Punches for specific User
 @app.route('/punch/<user_id>', methods=['GET'])
 def get_punches_for_user(user_id):
-    qry =  Punch.query.join(User).filter(User.id == user_id)
+    qry =  Punch.query.filetr(Punch.user_id == user_id)
     #print(qry)
     return punches_schema.jsonify(qry)
 
@@ -207,7 +207,7 @@ def add_hr():
 # Get Latest Hr
 @app.route('/hr/latest/<user_id>', methods=['GET'])
 def get_latest_hr_for_user(user_id):
-    qry =  Hr.query.join(User).filter(User.id == user_id)
+    qry =  Hr.query.filetr(Hr.user_id == user_id)
     # return last in collection
     #print(qry)
     return "100"
@@ -215,7 +215,7 @@ def get_latest_hr_for_user(user_id):
 # Get Avg Hr
 @app.route('/hr/avg/<user_id>', methods=['GET'])
 def get_avg_hr_for_user(user_id):
-    qry =  Hr.query.join(User).filter(User.id == user_id)
+    qry =  Hr.query.filetr(Hr.user_id == user_id)
     # return avg in collection
     #print(qry)
     return "100"
@@ -234,15 +234,15 @@ def add_weigh_in():
     db.session.add(w)
     db.session.commit()
 
-    return punch_schema.jsonify(w)
+    return weigh_in_schema.jsonify(w)
 
 # Get weigh ins
 @app.route('/weigh_in/<user_id>', methods=['GET'])
 def get_weigh_ins(user_id):
-    qry =  Hr.query.join(User).filter(User.id == user_id)
+    qry =  Weigh_In.query.filetr(Weigh_In.user_id == user_id)
     # return last in collection
     #print(qry)
-    return "{collection of weigh ins}"
+    return weigh_ins_schema.jsonify(qry)
 
 
 # --------- WORKOUTS ------------
@@ -285,10 +285,10 @@ def add_booking():
 
     return booking_schema.jsonify(b)
 
-# Get Workouts for User
+# Get Bookings for User
 @app.route('/booking/<user_id>', methods=['GET'])
 def get_bookings_for_user(user_id):
-    qry =  Booking.query.filter(Booking.user_id=user_id)
+    qry =  Booking.query.filter(Booking.user_id==user_id)
     # return last in collection
     #print(qry)
     return bookings_schema.jsonify(qry)
