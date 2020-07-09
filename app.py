@@ -59,7 +59,7 @@ class Weigh_InSchema(Schema):
 # Workout Schema
 class WorkoutSchema(Schema):
     class Meta:
-        fields = ('id', 'name', 'description', 'start_time', 'end_time')
+        fields = ('id', 'name', 'description', 'start_time')
 
 
 # Workout Schema
@@ -260,9 +260,8 @@ def add_workout():
     description = request.json['description']
     name = request.json['name']
     start_time = request.json['start_time']
-    end_time = request.json['end_time']
 
-    w = Workout(description, name, start_time, end_time)
+    w = Workout(description, name, start_time)
 
     db.session.add(w)
     db.session.commit()
