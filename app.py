@@ -171,7 +171,7 @@ def add_punch():
 # Get Punches for specific User
 @app.route('/punch/<user_id>', methods=['GET'])
 def get_punches_for_user(user_id):
-    qry =  Punch.query.filter(Punch.user_id == user_id)
+    qry =  Punch.query.filter(Punch.user_id == user_id).all()
     #print(qry)
     return punches_schema.jsonify(qry)
 
@@ -239,7 +239,7 @@ def add_weigh_in():
 # Get weigh ins
 @app.route('/weigh_in/<user_id>', methods=['GET'])
 def get_weigh_ins(user_id):
-    qry =  Weigh_In.query.filter(Weigh_In.user_id == user_id)
+    qry =  Weigh_In.query.filter(Weigh_In.user_id == user_id).all()
     # return last in collection
     #print(qry)
     return weigh_ins_schema.jsonify(qry)
@@ -288,7 +288,7 @@ def add_booking():
 # Get Bookings for User
 @app.route('/booking/<user_id>', methods=['GET'])
 def get_bookings_for_user(user_id):
-    qry =  Booking.query.filter(Booking.user_id==user_id)
+    qry =  Booking.query.filter(Booking.user_id==user_id).all()
     # return last in collection
     #print(qry)
     return bookings_schema.jsonify(qry)
