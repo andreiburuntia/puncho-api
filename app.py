@@ -307,7 +307,7 @@ def get_docs():
 # ------------------ WEB ----------------
 
 @app.route('/web', methods=['GET'])
-def get_docs():
+def get_web():
     script_dir = os.path.dirname(__file__)
     rel_path = "web/Home_After.html"
     abs_file_path = os.path.join(script_dir, rel_path)
