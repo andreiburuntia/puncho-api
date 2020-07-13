@@ -309,7 +309,7 @@ def get_docs():
 @app.route('/web', methods=['GET'])
 def get_web():
     script_dir = os.path.dirname(__file__)
-    rel_path = "web/Home_After.html"
+    rel_path = "Home_After.html"
     abs_file_path = os.path.join(script_dir, rel_path)
     f = open(abs_file_path)
     return f.read()
