@@ -304,6 +304,17 @@ def get_docs():
     f = open(abs_file_path)
     return f.read()
 
+# ------------------ WEB ----------------
+
+@app.route('/web', methods=['GET'])
+def get_docs():
+    script_dir = os.path.dirname(__file__)
+    rel_path = "web/Home_After.html"
+    abs_file_path = os.path.join(script_dir, rel_path)
+    f = open(abs_file_path)
+    return f.read()
+
+
 # Run Server
 if __name__ == '__main__':
     app.run(debug=True)
