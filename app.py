@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -308,11 +308,7 @@ def get_docs():
 
 @app.route('/web', methods=['GET'])
 def get_web():
-    script_dir = os.path.dirname(__file__)
-    rel_path = "Home_After.html"
-    abs_file_path = os.path.join(script_dir, rel_path)
-    f = open(abs_file_path)
-    return f.read()
+    return render_template('Home_After.html')
 
 
 # Run Server
