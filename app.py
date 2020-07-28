@@ -210,7 +210,7 @@ def get_latest_hr_for_user(user_id):
     qry =  Hr.query.filter(Hr.user_id == user_id)
     # return last in collection
     #print(qry)
-    return "100"
+    return '{"hr": "100", "kcals": "22"}'
 
 # Get Avg Hr
 @app.route('/hr/avg/<user_id>', methods=['GET'])
@@ -218,7 +218,7 @@ def get_avg_hr_for_user(user_id):
     qry =  Hr.query.filter(Hr.user_id == user_id)
     # return avg in collection
     #print(qry)
-    return "100"
+    return "99"
 
 
 # ---------- WEIGH IN -------------
@@ -267,6 +267,16 @@ def get_wourkouts():
     qry =  Workout.query.all()
     #print(qry)
     return workouts_schema.jsonify(qry)
+
+# Get Workout Summary
+@app.route('/workout/summary', methods=['GET'])
+def get_avg_hr_for_user():
+    user_id = request.json['user_id']
+    workout_id = request.json['workout_id']
+    qry =  Hr.query.filter(Hr.user_id == user_id)
+    # return avg in collection
+    #print(qry)
+    return '{"avg_hr": "101", "max_hr": "149", "kcals": "774", "punch_score": "99912"}'
 
 
 # ---------- BOOKINGS ------------
