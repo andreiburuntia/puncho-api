@@ -45,10 +45,6 @@ documentation:
               example: "email exists already"
   /login:
     description: login user
-    uriParameters:
-      login:
-        type: object
-        description: json with user email and pre-hashed pwd
     post:
       body:
         application/json:
@@ -147,12 +143,6 @@ documentation:
               }
 /booking:
   /{user_id}:
-    uriParameters:
-      id:
-        type: string
-        description: account identifier
-        minLength: 1
-        maxLength: 10
     get:
         responses:
             200:
@@ -205,12 +195,6 @@ documentation:
 
 /punches:
   /{user_id}:
-    uriParameters:
-      id:
-        type: string
-        description: account identifier
-        minLength: 1
-        maxLength: 10
     get:
         responses:
             200:
@@ -231,12 +215,6 @@ documentation:
                               }
                             ]
   /score/{user_id}:
-    uriParameters:
-      id:
-        type: string
-        description: account identifier
-        minLength: 1
-        maxLength: 10
     get:
         responses:
             200:
@@ -245,28 +223,23 @@ documentation:
                         example:
                             "1000"
 /hr:
-  /{user_id}:
-    uriParameters:
-      id:
-        type: string
-        description: account identifier
-        minLength: 1
-        maxLength: 10
+  /latest/{user_id}:
     get:
         descrpiption: get instantaneous heart rate
         responses:
-            200:
-                body:
-                    string:
-                        example:
-                            "100"
+          200:
+            body:
+              application/json:
+                properties:
+                  name:
+                    description: object with hr data
+                    type: object
+                    example:
+                      {
+                          "hr": "100",
+                          "kcals": "30"
+                      }
   /avg/{user_id}:
-    uriParameters:
-      id:
-        type: string
-        description: account identifier
-        minLength: 1
-        maxLength: 10
     get:
         description: get current average heart rate
         responses:
@@ -275,14 +248,37 @@ documentation:
                     string:
                         example:
                             "100"
+
+  /summary:
+    get:
+        body:
+          application/json:
+            properties:
+              name:
+                description: object with user_id and workout_id
+                type: object
+                example:
+                  {
+                      "user_id": "1",
+                      "workout_id": "1"
+                  }
+        description: get summary of some user's specific workout
+        responses:
+            200:
+              body:
+                application/json:
+                  properties:
+                    name:
+                      description: summary object
+                      type: object
+                      example:
+                        {
+                            "avg_hr": "99",
+                            "max_hr": "150",
+                            "kcals": "339"
+                        }
 /weigh_in:
   /{user_id}:
-    uriParameters:
-      id:
-        type: string
-        description: account identifier
-        minLength: 1
-        maxLength: 10
     get:
         responses:
             200:
