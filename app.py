@@ -270,7 +270,7 @@ def get_wourkouts():
 
 # Get Workout Summary
 @app.route('/workout/summary', methods=['GET'])
-def get_avg_hr_for_user():
+def get_workout_summary():
     user_id = request.json['user_id']
     workout_id = request.json['workout_id']
     qry =  Hr.query.filter(Hr.user_id == user_id)
