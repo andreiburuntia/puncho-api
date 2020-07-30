@@ -116,7 +116,7 @@ def get_users():
     return jsonify(result.data)
 
 # Login
-@app.route('/user/login', methods=['GET', 'POST'])
+@app.route('/user/login', methods=['POST'])
 def login():
     email = request.json['email']
     password_hash = request.json['password_hash']
@@ -133,6 +133,21 @@ def login():
             return user_schema.jsonify(user)
         else:
             return 'bad credentials', status.HTTP_401_UNAUTHORIZED
+
+# Get user details
+@app.route('/user/details/<user_id>', methods=['GET'])
+def login(user_id):
+    user_id = user_id
+    user = {}
+    users = User.query.all()
+    for u in users:
+        if u.id == user_id:
+            user = u
+            break
+    if user == {}:
+        return 'user not found', status.HTTP_401_UNAUTHORIZED
+    user.password_hash = 'hidden'
+    return user_schema.json(user)
 
 # Get user count
 @app.route('/user/count', methods=['GET'])
@@ -273,8 +288,8 @@ def get_wourkouts():
 # Get Workout Summary
 @app.route('/workout/summary', methods=['GET'])
 def get_workout_summary():
-    user_id = request.json['user_id']
-    workout_id = request.json['workout_id']
+    user_id = request.args.get('user_id')
+    workout_id = request.args.get('workout_id')
     qry =  Hr.query.filter(Hr.user_id == user_id)
     # return avg in collection
     #print(qry)

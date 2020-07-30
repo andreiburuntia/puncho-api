@@ -80,40 +80,24 @@ documentation:
             text/plain:
               example: "email not found"
 
-    get:
-      body:
-        application/json:
-          properties:
-            name:
-              description: user object
-              type: object
-              example:
-                {
-                    "email": "a@b.c",
-                    "password_hash": "hashxyz"
-                }
-      responses:
-        200:
-          body:
-            application/json:
-              properties:
-                name:
-                  description: user object
-                  type: object
-                  example:
-                    {
-                        "firstname": "user1",
-                        "lastname": "user1",
-                        "email": "a@b.c"
-                    }
-        401:
-          body:
-            text/plain:
-              example: "bad credentials"
-        401:
-          body:
-            text/plain:
-              example: "email not found"
+  /details:
+    /{user_id}:
+      get:
+        responses:
+            200:
+              body:
+                application/json:
+                  properties:
+                    name:
+                      description: user object
+                      type: object
+                      example:
+                        {
+                            "firstname": "user1",
+                            "lastname": "user1",
+                            "email": "a@b.c"
+                        }
+
 
 /workout:
   description: This is the top level description for /workouts.
@@ -145,17 +129,17 @@ documentation:
               }
   /summary:
     get:
-        body:
-          application/json:
-            properties:
-              name:
-                description: object with user_id and workout_id
-                type: object
-                example:
-                  {
-                      "user_id": "1",
-                      "workout_id": "1"
-                  }
+        uriParameters:
+          user_id:
+            type: string
+            description: user id
+            minLength: 1
+            maxLength: 10
+          workout_id:
+            type: string
+            description: workout id
+            minLength: 1
+            maxLength: 10
         description: get summary of some user's specific workout
         responses:
             200:
