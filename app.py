@@ -140,7 +140,7 @@ def get_details(user_id):
     user_id = user_id
     user = User.query.get(int(user_id))
     user.password_hash = 'hidden'
-    return user_schema.json(user)
+    return user_schema.jsonify(user)
 
 # Get user count
 @app.route('/user/count', methods=['GET'])
