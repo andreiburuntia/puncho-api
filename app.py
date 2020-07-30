@@ -136,7 +136,7 @@ def login():
 
 # Get user details
 @app.route('/user/details/<user_id>', methods=['GET'])
-def login(user_id):
+def get_details(user_id):
     user_id = user_id
     user = {}
     users = User.query.all()
