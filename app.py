@@ -138,14 +138,7 @@ def login():
 @app.route('/user/details/<user_id>', methods=['GET'])
 def get_details(user_id):
     user_id = user_id
-    user = {}
-    users = User.query.all()
-    for u in users:
-        if u.id == user_id:
-            user = u
-            break
-    if user == {}:
-        return 'user not found', status.HTTP_401_UNAUTHORIZED
+    user = User.query.get(int(user_id))
     user.password_hash = 'hidden'
     return user_schema.json(user)
 
