@@ -203,7 +203,9 @@ pre code {
       "id": 0,
       "title": "some_title",
       "description": "some_description",
-      "start_time": "2019/8/8/14:00 - this is prone to change"
+      "start_time": "2019/8/8/14:00",
+      "end_time": "2019/8/8/15:00",
+      "w_type": "punchbag"
     },
     "..."
   ]
@@ -211,6 +213,9 @@ pre code {
   "user_id": "1",
   "workout_id": "1"
 }</code></pre></div></li></ul></div><div class="tab-pane" id="workout_summary_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>name</strong>: <em><span class="required">required</span>(object)</em><p>summary object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "name": "workout x",
+  "start_time": "2019/8/8/14:00",
+  "w_type": "punchbag",
   "avg_hr": "99",
   "max_hr": "150",
   "kcals": "339",

@@ -136,7 +136,9 @@ documentation:
                       "id": 0,
                       "title": "some_title",
                       "description": "some_description",
-                      "start_time": 2019/8/8/14:00 - this is prone to change
+                      "start_time": "2019/8/8/14:00",
+                      "end_time": "2019/8/8/15:00",
+                      "w_type": "punchbag"
                     },
                     ...
                 ]
@@ -165,6 +167,9 @@ documentation:
                       type: object
                       example:
                         {
+                            "name": "workout x",
+                            "start_time": "2019/8/8/14:00",
+                            "w_type": "punchbag",
                             "avg_hr": "99",
                             "max_hr": "150",
                             "kcals": "339",

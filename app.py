@@ -59,10 +59,10 @@ class Weigh_InSchema(Schema):
 # Workout Schema
 class WorkoutSchema(Schema):
     class Meta:
-        fields = ('id', 'name', 'description', 'start_time')
+        fields = ('id', 'name', 'description', 'start_time', 'end_time', 'w_type')
 
 
-# Workout Schema
+# Booking Schema
 class BookingSchema(Schema):
     class Meta:
         fields = ('id', 'workout_id', 'user_id')
@@ -253,8 +253,10 @@ def add_workout():
     description = request.json['description']
     name = request.json['name']
     start_time = request.json['start_time']
+    end_time = request.json['end_time']
+    w_type = request.json['w_type']
 
-    w = Workout(description, name, start_time)
+    w = Workout(description, name, start_time, end_time, w_type)
 
     db.session.add(w)
     db.session.commit()
@@ -276,7 +278,7 @@ def get_workout_summary():
     qry =  Hr.query.filter(Hr.user_id == user_id)
     # return avg in collection
     #print(qry)
-    return '{"avg_hr": "101", "max_hr": "149", "kcals": "774", "punch_score": "99912"}'
+    return '{"name" = "workout x", "start_time" = "2019/8/8/14:00", "type" = "muscle", "avg_hr": "101", "max_hr": "149", "kcals": "774", "punch_score": "99912"}'
 
 
 # ---------- BOOKINGS ------------
