@@ -286,7 +286,7 @@ def get_workout_summary():
     qry =  Hr.query.filter(Hr.user_id == user_id)
     # return avg in collection
     #print(qry)
-    return '{"name" = "workout x", "start_time" = "2019/8/8/14:00", "type" = "muscle", "avg_hr": "101", "max_hr": "149", "kcals": "774", "punch_score": "99912"}'
+    return '{"name": "workout x", "start_time": "2019/8/8/14:00", "type": "muscle", "avg_hr": "101", "max_hr": "149", "kcals": "774", "punch_score": "99912"}'
 
 
 # ---------- BOOKINGS ------------
