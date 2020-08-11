@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 import os
 import time
 
 # Init app
 app = Flask(__name__)
+cors = CORS(app)
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database-1.cluster-c4rbwipspsxn.us-east-2.rds.amazonaws.com/Test'
@@ -14,6 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database
 #    os.path.join(basedir, 'test.db')
     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 # Init db
 db = SQLAlchemy(app)
 # Init ma
