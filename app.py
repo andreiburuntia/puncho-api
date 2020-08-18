@@ -191,7 +191,7 @@ def get_punches_for_user(user_id):
 def get_punch_score_for_user(user_id):
     qry =  Punch.query.join(User).filter(User.id == user_id)
     #print(qry)
-    return "1000"
+    return '{"score": "1001", "punch_count": "43"}'
 
 # ------------ HR ---------------
 

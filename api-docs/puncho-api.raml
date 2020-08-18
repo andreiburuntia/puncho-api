@@ -213,7 +213,7 @@ documentation:
           text/plain:
             example: "workout full"
 
-/punches:
+/punch:
   /{user_id}:
     get:
         responses:
@@ -239,9 +239,17 @@ documentation:
         responses:
             200:
                 body:
-                    string:
+                    application/json:
+                        type:
+                            {
+                                "title": "object with latest score and punch count for specific user id",
+                                "type": "object"
+                            }
                         example:
-                            "1000"
+                            {
+                              "score": "1001",
+                              "punch_count": "43"
+                            }
 /hr:
   /latest/{user_id}:
     get:
