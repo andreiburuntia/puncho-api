@@ -187,11 +187,19 @@ def get_punches_for_user(user_id):
     return punches_schema.jsonify(qry)
 
 # Get Punch Score
-@app.route('/punch/score/<user_id>', methods=['GET'])
+@app.route('/punch/latest/<user_id>', methods=['GET'])
 def get_punch_score_for_user(user_id):
     qry =  Punch.query.join(User).filter(User.id == user_id)
     #print(qry)
     return '{"score": "1001", "punch_count": "43"}'
+
+
+# Get Punch Score and HR data
+@app.route('/punch/latest-with-hr/<user_id>', methods=['GET'])
+def get_punch_score_with_hr_for_user(user_id):
+    qry =  Punch.query.join(User).filter(User.id == user_id)
+    #print(qry)
+    return '{"score": "1001", "punch_count": "43", "hr": "100", "kcals": "2213"}'
 
 # ------------ HR ---------------
 
