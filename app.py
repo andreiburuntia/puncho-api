@@ -270,7 +270,7 @@ def add_hr():
     #    bulk = [] 
     #    db.session.commit()
 
-    return punch_schema.jsonify(hr)
+    return hr_schema.jsonify(hr)
 
 # Get Latest Hr
 @app.route('/hr/latest/<user_id>', methods=['GET'])
