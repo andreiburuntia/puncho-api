@@ -257,15 +257,18 @@ def add_hr():
 
     hr = Hr(rate, user_id, "1234")
 
-    global bulk
+    db.session.add(hr)
+    db.session.commit()
 
-    bulk.append(hr)
+    #global bulk
 
-    print(len(bulk))
-    if len(bulk) > 10:
-        db.session.add_all(bulk)
-        bulk = [] 
-        db.session.commit()
+    #bulk.append(hr)
+
+    #print(len(bulk))
+    #if len(bulk) > 10:
+    #    db.session.add_all(bulk)
+    #    bulk = [] 
+    #    db.session.commit()
 
     return punch_schema.jsonify(hr)
 
