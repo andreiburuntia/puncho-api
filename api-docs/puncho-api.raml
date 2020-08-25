@@ -128,39 +128,39 @@ documentation:
                 ]
               }
   /summary:
+    uriParameters:
+      user_id:
+        type: string
+        description: user id
+        minLength: 1
+        maxLength: 10
+      workout_id:
+        type: string
+        description: workout id
+        minLength: 1
+        maxLength: 10
     get:
-        uriParameters:
-          user_id:
-            type: string
-            description: user id
-            minLength: 1
-            maxLength: 10
-          workout_id:
-            type: string
-            description: workout id
-            minLength: 1
-            maxLength: 10
-        description: get summary of some user's specific workout
-        responses:
-            200:
-              body:
-                application/json:
-                  properties:
-                    name:
-                      description: summary object
-                      type: object
-                      example:
-                        {
-                            "name": "workout x",
-                            "start_time": "2019/8/8/14:00",
-                            "start_time": "2019/8/8/15:00",
-                            "w_type": "punchbag",
-                            "avg_hr": "99",
-                            "max_hr": "150",
-                            "kcals": "339",
-                            "punch_score": "12341",
-                            "punch_count": "1291"
-                        }
+      description: get summary of some user's specific workout
+      responses:
+          200:
+            body:
+              application/json:
+                properties:
+                  name:
+                    description: summary object
+                    type: object
+                    example:
+                      {
+                          "name": "workout x",
+                          "start_time": "2019/8/8/14:00",
+                          "start_time": "2019/8/8/15:00",
+                          "w_type": "punchbag",
+                          "avg_hr": "99",
+                          "max_hr": "150",
+                          "kcals": "339",
+                          "punch_score": "12341",
+                          "punch_count": "1291"
+                      }
 /booking:
   /{user_id}:
     get:
@@ -316,3 +316,32 @@ documentation:
                                 "data": "TBD"
                               }
                             ]
+
+/link_bag:
+  uriParameters:
+        user_id:
+          type: string
+          description: user id
+          minLength: 1
+          maxLength: 10
+        bag_id:
+          type: string
+          description: workout id
+          minLength: 1
+          maxLength: 10
+  get:
+    description: link specific user to specific bag
+    responses:
+      200:
+        body:
+          string:
+            example: "OK"
+
+/end_session:
+  /{user_id}:
+    post:
+      responses:
+        200:
+          body:
+            string:
+              example: "OK"

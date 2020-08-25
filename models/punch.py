@@ -7,9 +7,9 @@ class Punch(db.Model):
     __tablename__ = 'punches'
     
     id = Column(Integer, primary_key=True)
-    force = Column(Integer)
+    score = Column(Integer)
     user_id = Column(Integer, ForeignKey('users.id'))
     
-    def __init__(self, force, user_id):
-        self.force = force
+    def __init__(self, score, user_id):
+        self.score = score
         self.user_id = user_id

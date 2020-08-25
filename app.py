@@ -45,12 +45,12 @@ class UserSchema(Schema):
 # Punch Schema
 class PunchSchema(Schema):
     class Meta:
-        fields = ('id', 'user_id', 'force')
+        fields = ('id', 'user_id', 'score')
 
 # Hr Schema
 class HrSchema(Schema):
     class Meta:
-        fields = ('id', 'user_id', 'hr')
+        fields = ('id', 'user_id', 'hr', 'kcals')
 
         
 # Weigh_In Schema
@@ -83,6 +83,39 @@ workout_schema = WorkoutSchema()
 workouts_schema = WorkoutSchema(many=True)
 booking_schema = BookingSchema()
 bookings_schema = BookingSchema(many=True)
+
+# BAG - USER ID MAP
+bag_map = {
+    "001": "",
+    "002": "",
+    "003": "",
+    "004": "",
+    "005": "",
+    "006": "",
+    "007": "",
+    "008": "",
+    "009": "",
+    "010": "",
+    "011": "",
+    "012": "",
+    "013": "",
+    "014": "",
+    "015": "",
+    "016": "",
+    "017": "",
+    "018": "",
+    "019": "",
+    "020": ""    
+}
+
+def clear_bag_map():
+    for key in bag_map:
+        bag_map[key]=""
+        
+def remove_user_from_bag_map(user_id):
+    for key in bag_map:
+        if bag_map[key] == user_id:
+            bag_map[key] = ""
 
 # ------------ USER ----------------------
 
@@ -162,20 +195,28 @@ bulk = []
 # Add Punch
 @app.route('/punch', methods=['POST'])
 def add_punch():
-    user_id = request.json['user_id']
-    force = request.json['force']
+    bag_id = request.json['bag_id']
+    score = request.json['score']
 
-    punch = Punch(force, user_id)
+    if bag_map[bag_id] == "":
+        return "no user registered to this bag: " + bag_id
 
-    global bulk
+    user_id = bag_map[bag_id]
 
-    bulk.append(punch)
+    punch = Punch(score, user_id)
 
-    print(len(bulk))
-    if len(bulk) > 10:
-        db.session.add_all(bulk)
-        bulk = [] 
-        db.session.commit()
+    db.session.add(punch)
+    db.session.commit()
+
+    #global bulk
+
+    #bulk.append(punch)
+
+    #print(len(bulk))
+    #if len(bulk) > 10:
+    #    db.session.add_all(bulk)
+    #    bulk = [] 
+    #    db.session.commit()
 
     return punch_schema.jsonify(punch)
 
@@ -206,10 +247,15 @@ def get_punch_score_with_hr_for_user(user_id):
 # Add Hr
 @app.route('/hr', methods=['POST'])
 def add_hr():
-    user_id = request.json['user_id']
+    bag_id = request.json['bag_id']
     rate = request.json['hr']
 
-    hr = Hr(rate, user_id)
+    if bag_map[bag_id] == "":
+        return "no user registered to this bag: " + bag_id
+
+    user_id = bag_map[bag_id]
+
+    hr = Hr(rate, user_id, "1234")
 
     global bulk
 
@@ -324,6 +370,22 @@ def get_bookings_for_user(user_id):
     #print(qry)
     return bookings_schema.jsonify(qry)
 
+# ------------- BAG LINK ---------------
+
+# Link Bag
+@app.route('/link_bag', methods=['POST'])
+def link_bag():
+    user_id = request.args.get('user_id')
+    bag_id = request.args.get('bag_id')
+    bag_map[bag_id] = user_id
+    return 'OK'
+    
+
+# ----------- END SESSION ------------
+@app.route('/end_session/<user_id>', methods=['POST'])
+def end_session(user_id):
+    remove_user_from_bag_map(user_id)
+    return 'OK'
 
 # ------------------ DOCS ----------------
 

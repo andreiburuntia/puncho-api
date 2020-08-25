@@ -8,8 +8,10 @@ class Hr(db.Model):
     
     id = Column(Integer, primary_key=True)
     hr = Column(Integer)
+    kcals = Column(Integer)
     user_id = Column(Integer, ForeignKey('users.id'))
     
-    def __init__(self, hr, user_id):
+    def __init__(self, hr, user_id, kcals):
         self.hr = hr
+        self.kcals = kcals
         self.user_id = user_id
