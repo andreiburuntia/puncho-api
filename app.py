@@ -230,8 +230,8 @@ def get_punches_for_user(user_id):
 # Get Punch Score
 @app.route('/punch/latest/<user_id>', methods=['GET'])
 def get_punch_score_for_user(user_id):
-    qry =  Punch.query.join(User).filter(User.id == user_id)
-    #print(qry)
+    qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
+    print(qry)
     return '{"score": "1001", "punch_count": "43"}'
 
 
