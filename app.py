@@ -47,12 +47,12 @@ class UserSchema(Schema):
 # Punch Schema
 class PunchSchema(Schema):
     class Meta:
-        fields = ('id', 'user_id', 'score', 'count', 'timestamp')
+        fields = ('id', 'user_id', 'score', 'count')
 
 # Hr Schema
 class HrSchema(Schema):
     class Meta:
-        fields = ('id', 'user_id', 'hr', 'kcals', 'timestamp')
+        fields = ('id', 'user_id', 'hr', 'kcals')
 
         
 # Weigh_In Schema
