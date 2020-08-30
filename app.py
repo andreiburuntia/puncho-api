@@ -249,7 +249,7 @@ def get_punch_score_with_hr_for_user(user_id):
     
     res_json = json.dumps(res)
     
-    return flask.jsonify(res_json)
+    return jsonify(res_json)
 
 # ------------ HR ---------------
 
