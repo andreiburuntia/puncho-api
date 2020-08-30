@@ -265,7 +265,7 @@ def add_hr():
 
     user_id = bag_map[bag_id]
 
-    hr = Hr(rate, user_id, "1234")
+    hr = Hr(rate, user_id, "1234", datetime.datetime.now())
 
     db.session.add(hr)
     db.session.commit()
