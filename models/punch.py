@@ -8,8 +8,10 @@ class Punch(db.Model):
     
     id = Column(Integer, primary_key=True)
     score = Column(Integer)
+    count = Column(Integer)
     user_id = Column(Integer, ForeignKey('users.id'))
     
-    def __init__(self, score, user_id):
+    def __init__(self, score, count, user_id):
         self.score = score
+        self.count = count
         self.user_id = user_id

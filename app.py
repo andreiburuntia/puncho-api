@@ -45,7 +45,7 @@ class UserSchema(Schema):
 # Punch Schema
 class PunchSchema(Schema):
     class Meta:
-        fields = ('id', 'user_id', 'score')
+        fields = ('id', 'user_id', 'score', 'count')
 
 # Hr Schema
 class HrSchema(Schema):
@@ -197,13 +197,14 @@ bulk = []
 def add_punch():
     bag_id = request.json['bag_id']
     score = request.json['score']
+    count = request.json['count']
 
     if bag_map[bag_id] == "":
         return "no user registered to this bag: " + bag_id
 
     user_id = bag_map[bag_id]
 
-    punch = Punch(score, user_id)
+    punch = Punch(score, count, user_id)
 
     db.session.add(punch)
     db.session.commit()
@@ -232,8 +233,7 @@ def get_punches_for_user(user_id):
 def get_punch_score_for_user(user_id):
     qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
     print(qry)
-    return '{"score": "1001", "punch_count": "43"}'
-
+    return punch_schema.jsonify(qry)
 
 # Get Punch Score and HR data
 @app.route('/punch/latest-with-hr/<user_id>', methods=['GET'])
