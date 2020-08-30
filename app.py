@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 import os
 import time
+import json
 
 # Init app
 app = Flask(__name__)
@@ -225,22 +226,28 @@ def add_punch():
 @app.route('/punch/<user_id>', methods=['GET'])
 def get_punches_for_user(user_id):
     qry =  Punch.query.filter(Punch.user_id == user_id).all()
-    #print(qry)
+    
     return punches_schema.jsonify(qry)
 
 # Get Punch Score
 @app.route('/punch/latest/<user_id>', methods=['GET'])
 def get_punch_score_for_user(user_id):
     qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
-    print(qry)
+    
     return punch_schema.jsonify(qry)
 
 # Get Punch Score and HR data
 @app.route('/punch/latest-with-hr/<user_id>', methods=['GET'])
 def get_punch_score_with_hr_for_user(user_id):
-    qry =  Punch.query.join(User).filter(User.id == user_id)
-    #print(qry)
-    return '{"score": "1001", "punch_count": "43", "hr": "100", "kcals": "2213"}'
+    p_qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
+    hr_qry = Hr.query.filter(Hr.user_id == user_id).order_by(Hr.id.desc()).first()
+    
+    p_dict = json.loads(p_qry)
+    hr_dict = json.loads(hr_qry)
+    res = {key: value for (key, value) in (p_dict.items() + hr_dict.items())}
+    res_json = json.dumps(res)
+    
+    return res_json
 
 # ------------ HR ---------------
 
