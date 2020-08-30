@@ -10,8 +10,10 @@ class Hr(db.Model):
     hr = Column(Integer)
     kcals = Column(Integer)
     user_id = Column(Integer, ForeignKey('users.id'))
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
     
-    def __init__(self, hr, user_id, kcals):
+    def __init__(self, hr, user_id, kcals, timestamp):
         self.hr = hr
         self.kcals = kcals
         self.user_id = user_id
+        self.timestamp = timestamp

@@ -284,10 +284,10 @@ def add_hr():
 # Get Latest Hr
 @app.route('/hr/latest/<user_id>', methods=['GET'])
 def get_latest_hr_for_user(user_id):
-    qry =  Hr.query.filter(Hr.user_id == user_id)
+    qry =  Hr.query.filter(Hr.user_id == user_id).order_by(Hr.id.desc()).first()
     # return last in collection
     #print(qry)
-    return '{"hr": "100", "kcals": "22"}'
+    return hr_schema.jsonify(qry)
 
 # Get Avg Hr
 @app.route('/hr/avg/<user_id>', methods=['GET'])
