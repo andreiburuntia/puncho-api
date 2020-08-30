@@ -6,6 +6,7 @@ from flask_marshmallow import Marshmallow
 import os
 import time
 import json
+import datetime
 
 # Init app
 app = Flask(__name__)
@@ -46,12 +47,12 @@ class UserSchema(Schema):
 # Punch Schema
 class PunchSchema(Schema):
     class Meta:
-        fields = ('id', 'user_id', 'score', 'count')
+        fields = ('id', 'user_id', 'score', 'count', 'timestamp')
 
 # Hr Schema
 class HrSchema(Schema):
     class Meta:
-        fields = ('id', 'user_id', 'hr', 'kcals')
+        fields = ('id', 'user_id', 'hr', 'kcals', 'timestamp')
 
         
 # Weigh_In Schema
@@ -275,7 +276,7 @@ def add_hr():
 
     #print(len(bulk))
     #if len(bulk) > 10:
-    #    db.session.add_all(bulk)
+    #    db.session.add_all(bulk)DateTime
     #    bulk = [] 
     #    db.session.commit()
 
@@ -286,12 +287,13 @@ def add_hr():
 def get_latest_hr_for_user(user_id):
     qry =  Hr.query.filter(Hr.user_id == user_id).order_by(Hr.id.desc()).first()
     # return last in collection
-    #print(qry)
+    # COMPUTE KCAL!?
     return hr_schema.jsonify(qry)
 
 # Get Avg Hr
 @app.route('/hr/avg/<user_id>', methods=['GET'])
 def get_avg_hr_for_user(user_id):
+    time_1h_ago = datetime.datetime.now() - datetime.timedelta(hours=1.5)
     qry =  Hr.query.filter(Hr.user_id == user_id)
     # return avg in collection
     #print(qry)
