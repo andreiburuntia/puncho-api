@@ -242,8 +242,8 @@ def get_punch_score_with_hr_for_user(user_id):
     p_qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
     hr_qry = Hr.query.filter(Hr.user_id == user_id).order_by(Hr.id.desc()).first()
     
-    p_dict = json.loads(p_qry)
-    hr_dict = json.loads(hr_qry)
+    p_dict = json.loads(punch_schema.jsonify(p_qry))
+    hr_dict = json.loads(hr_schema.jsonify(hr_qry))
     res = {key: value for (key, value) in (p_dict.items() + hr_dict.items())}
     res_json = json.dumps(res)
     
