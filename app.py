@@ -244,10 +244,8 @@ def get_punch_score_with_hr_for_user(user_id):
     
     p_dict = json.loads(punch_schema.dumps(p_qry)[0])
     hr_dict = json.loads(hr_schema.dumps(hr_qry)[0])
-    print(type(p_dict))
-    print(hr_dict)
     
-    res = {key: value for (key, value) in (p_dict.items() + hr_dict.items())}
+    res = {**p_dict, **hr_dict}
     
     res_json = json.dumps(res)
     
