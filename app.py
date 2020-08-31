@@ -364,7 +364,7 @@ def get_workout_summary():
     user_id = request.args.get('user_id')
     workout_id = request.args.get('workout_id')
     
-    w_qry= Workout.query.filter(Workout.id == workout_id)
+    w_qry= Workout.query.filter(Workout.id == workout_id).first()
     
     w_start_time = w_qry.start_time
     w_end_time = w_qry.end_time
