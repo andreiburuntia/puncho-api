@@ -294,7 +294,7 @@ def get_latest_hr_for_user(user_id):
 @app.route('/hr/avg/<user_id>', methods=['GET'])
 def get_avg_hr_for_user(user_id):
     time_1h_ago = datetime.datetime.now() - datetime.timedelta(hours=1.5)
-    qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp < time_1h_ago).order_by(Hr.id.desc())
+    qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp > time_1h_ago).order_by(Hr.id.desc())
     sum = 0
     cnt = 0
     max = 0
