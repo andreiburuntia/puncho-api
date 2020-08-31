@@ -206,7 +206,7 @@ def add_punch():
 
     user_id = bag_map[bag_id]
 
-    punch = Punch(score, count, user_id)
+    punch = Punch(score, count, user_id, datetime.datetime.now())
 
     db.session.add(punch)
     db.session.commit()
@@ -294,7 +294,9 @@ def get_latest_hr_for_user(user_id):
 @app.route('/hr/avg/<user_id>', methods=['GET'])
 def get_avg_hr_for_user(user_id):
     time_1h_ago = datetime.datetime.now() - datetime.timedelta(hours=1.5)
-    qry =  Hr.query.filter(Hr.user_id == user_id)
+    qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp < time_1h_ago).order_by(Hr.id.desc())
+    for h in qry:
+        print(h)
     # return avg in collection
     #print(qry)
     return "99"
