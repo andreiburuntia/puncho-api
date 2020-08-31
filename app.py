@@ -295,11 +295,18 @@ def get_latest_hr_for_user(user_id):
 def get_avg_hr_for_user(user_id):
     time_1h_ago = datetime.datetime.now() - datetime.timedelta(hours=1.5)
     qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp < time_1h_ago).order_by(Hr.id.desc())
+    sum = 0
+    cnt = 0
+    max = 0
     for h in qry:
-        print(h)
+        sum = sum + h.hr
+        cnt = cnt + 1
+        if max < h.hr:
+            max = h.hr
+    avg = sum/cnt
     # return avg in collection
     #print(qry)
-    return "99"
+    return jsonify({'avg': avg, 'max': max, 'kcals': 1991})
 
 
 # ---------- WEIGH IN -------------
