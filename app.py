@@ -363,10 +363,33 @@ def get_wourkouts():
 def get_workout_summary():
     user_id = request.args.get('user_id')
     workout_id = request.args.get('workout_id')
-    qry =  Hr.query.filter(Hr.user_id == user_id)
-    # return avg in collection
-    #print(qry)
-    return '{"name": "workout x", "start_time": "2019/8/8/14:00", "end_time": "2019/8/8/15:00", "type": "muscle", "avg_hr": "101", "max_hr": "149", "kcals": "774", "punch_score": "99912", "punch_count": "1281"}'
+    
+    w_qry= Workout.query.filter(Workout.id == workout_id)
+    
+    w_start_time = w_qry.start_time
+    w_end_time = w_qry.end_time
+    
+    p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
+    hr_qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp > w_start_time, Hr.timestamp < w_end_time).order_by(Hr.id.desc())
+    sum = 0
+    cnt = 0
+    max = 0
+    for h in hr_qry:
+        sum = sum + h.hr
+        cnt = cnt + 1
+        if max < h.hr:
+            max = h.hr
+    avg = sum/cnt
+    
+    w_name = w_qry.name
+    w_type = w_qry.w_type
+    
+    p_score = p_qry.score
+    p_count = p_qry.count
+    
+    
+    return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
+    #return '{"name": "workout x", "start_time": "2019/8/8/14:00", "end_time": "2019/8/8/15:00", "type": "muscle", "avg_hr": "101", "max_hr": "149", "kcals": "774", "punch_score": "99912", "punch_count": "1281"}'
 
 
 # ---------- BOOKINGS ------------
