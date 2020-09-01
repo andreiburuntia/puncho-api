@@ -447,15 +447,12 @@ def link_bag():
 @app.route('/end_session', methods=['POST'])
 def end_session():
     user_id = request.json['user_id']
-    print(user_id.type)
-    print(bag_map["001"].type)
-    for key in bag_map:
-        print(key)
-        if bag_map[key] == user_id:
-            print('HERE')
-            used_bags.remove(key)
-
+    bag_id = request.json['bag_id']
+    
     remove_user_from_bag_map(user_id)
+    used_bags.remove(bag_id)
+    
+    
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 
 # ------------------ DOCS ----------------
