@@ -429,7 +429,11 @@ def get_bookings_for_user(user_id):
 def link_bag():
     user_id = request.json['user_id']
     bag_id = request.json['bag_id']
+    
+    if bag_id not in bag_map.keys():
+        return json.dumps({'success':False}), 409, {'ContentType':'application/json'}
     bag_map[bag_id] = user_id
+    
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
     
 # ----------- END SESSION ------------
