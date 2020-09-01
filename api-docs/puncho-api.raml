@@ -127,6 +127,29 @@ documentation:
                     ...
                 ]
               }
+  /upcoming:
+    description: Get upcoming workout
+
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type:
+                {
+                  "title": "json object of upcoming wokrout"
+                  "type": application/json
+                }
+              example:
+                {
+                  "description": "workout x",
+                  "end_time": "2020-09-02T11:31:26+00:00",
+                  "id": 9,
+                  "name": "asdasd",
+                  "start_time": "2020-09-02T10:31:26+00:00",
+                  "w_type": "asdasdasd"
+                }
+
   /summary:
     uriParameters:
       user_id:
