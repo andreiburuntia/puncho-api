@@ -449,7 +449,9 @@ def end_session():
     user_id = request.json['user_id']
     remove_user_from_bag_map(user_id)
     for key in bag_map:
+        print(key)
         if bag_map[key] == user_id:
+            print('HERE')
             used_bags.remove(key)
             
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
