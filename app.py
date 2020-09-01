@@ -447,6 +447,7 @@ def link_bag():
 @app.route('/end_session', methods=['POST'])
 def end_session():
     user_id = request.json['user_id']
+    print(user_id)
     for key in bag_map:
         print(key)
         if bag_map[key] == user_id:
