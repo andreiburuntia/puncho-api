@@ -432,7 +432,7 @@ def link_bag():
     if bag_map[bag_id] == "":
         bag_map[bag_id] = user_id
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
-    else
+    else:
         return json.dumps({'success':False}), 409, {'ContentType':'application/json'} 
 
 # ----------- END SESSION ------------
