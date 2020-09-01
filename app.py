@@ -380,7 +380,7 @@ def get_workout_summary():
     p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
     hr_qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp > w_start_time, Hr.timestamp < w_end_time).order_by(Hr.id.desc())
     sum = 0
-    cnt = 0
+    cnt = 1
     max = 0
     for h in hr_qry:
         sum = sum + h.hr
