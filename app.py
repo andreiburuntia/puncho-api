@@ -118,6 +118,8 @@ def remove_user_from_bag_map(user_id):
     for key in bag_map:
         if bag_map[key] == user_id:
             bag_map[key] = ""
+            
+used_bags = []
 
 # ------------ USER ----------------------
 
@@ -432,15 +434,25 @@ def link_bag():
     
     if bag_id not in bag_map.keys():
         return json.dumps({'success':False}), 409, {'ContentType':'application/json'}
+    
+    if bag_id in used_bags:
+        return json.dumps({'success':False}), 409, {'ContentType':'application/json'}
+    
+    used_bags.append(bag_id)
     bag_map[bag_id] = user_id
     
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
     
 # ----------- END SESSION ------------
-@app.route('/end_session/<user_id>', methods=['POST'])
+@app.route('/end_session', methods=['POST'])
 def end_session(user_id):
+    user_id = request.json['user_id']
     remove_user_from_bag_map(user_id)
-    return 'OK'
+    for key in bag_map:
+        if bag_map[key] == user_id:
+            used_bags.remove(key)
+            
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 
 # ------------------ DOCS ----------------
 
