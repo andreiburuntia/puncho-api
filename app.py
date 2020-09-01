@@ -375,7 +375,9 @@ def get_workout_summary():
     w_qry= Workout.query.filter(Workout.id == workout_id).first()
     
     w_start_time = w_qry.start_time
+    print(w_start_time)
     w_end_time = w_qry.end_time
+    print(w_end_time)
     
     p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
     print(punch_schema.jsonify(p_qry))
