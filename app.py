@@ -445,7 +445,7 @@ def link_bag():
     
 # ----------- END SESSION ------------
 @app.route('/end_session', methods=['POST'])
-def end_session(user_id):
+def end_session():
     user_id = request.json['user_id']
     remove_user_from_bag_map(user_id)
     for key in bag_map:
