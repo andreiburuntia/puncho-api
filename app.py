@@ -451,9 +451,10 @@ def end_session():
     
     remove_user_from_bag_map(user_id)
     used_bags.remove(bag_id)
+
+    w_qry = Workout.query.filter(Workout.start_time < datetime.datetime.now()).order_by(Workout.start_time.desc()).first()
     
-    
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+    return workout_schema.jsonify(w_qry)
 
 # ------------------ DOCS ----------------
 
