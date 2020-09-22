@@ -462,7 +462,7 @@ def end_session():
     return workout_schema.jsonify(w_qry)
 
 # ----------- PROIECTOR ---------------
-@app.route('/proiector', methods['GET'])
+@app.route('/proiector', methods=['GET'])
 def proiector():
     obj_list = []
     for i in range(20):
