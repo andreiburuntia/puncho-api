@@ -7,6 +7,7 @@ import os
 import time
 import json
 import datetime
+import random
 
 # Init app
 app = Flask(__name__)
@@ -459,6 +460,19 @@ def end_session():
     w_qry = Workout.query.filter(Workout.start_time < datetime.datetime.now()).order_by(Workout.start_time.desc()).first()
     
     return workout_schema.jsonify(w_qry)
+
+# ----------- PROIECTOR ---------------
+@app.route('/proiector', methods['GET'])
+def proiector():
+    obj_list = []
+    for i in range(20):
+        obj = {}
+        obj['bag_id'] = i + 1
+        obj['score'] = random.randint(1000, 2000)
+        obj['hr'] = random.randint(90, 180)
+        obj['effort'] = random.randint(1,3)
+        obj_list.append(obj)
+    return str(obj_list)
 
 # ------------------ DOCS ----------------
 
