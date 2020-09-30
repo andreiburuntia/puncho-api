@@ -492,7 +492,7 @@ def receptie():
     class_info = 'BOX'
     return render_template('upcoming_info.html',
                            class_info=class_info,
-                           dyn_table=table.__html__(),)
+                           dyn_table=table,)
 
 # ------------------ DOCS ----------------
 
