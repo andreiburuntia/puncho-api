@@ -8,6 +8,7 @@ import time
 import json
 import datetime
 import random
+import platform
 
 # Init app
 app = Flask(__name__)
@@ -473,6 +474,18 @@ def proiector():
         obj['effort'] = random.randint(1,3)
         obj_list.append(obj)
     return str(obj_list)
+
+# ---------- RECEPTIE ---------------
+@app.route('/receptie')
+def receptie():
+    dt = str(datetime.datetime.now())
+    os = platform.system()
+    pyver = sys.version
+    return render_template('status.html',
+                           title='Status',
+                           date=dt,
+                           operating_system=os,
+                           python_version=pyver)
 
 # ------------------ DOCS ----------------
 
