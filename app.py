@@ -436,6 +436,18 @@ def get_bookings_for_user(user_id):
     #print(qry)
     return bookings_schema.jsonify(qry)
 
+# Remove Booking
+@app.route('/booking/remove', methods=['POST'])
+def remove_booking():
+    workout_id = request.json['workout_id']
+    user_id = request.json['user_id']
+
+    Booking.query.filter(Booking.workout_id == workout_id, Booking.user_id == user_id).delete()
+
+    db.session.commit()
+
+    return Response("{'ok':' ok'}", status=200, mimetype='application/json')
+
 # ------------- BAG LINK ---------------
 
 # Link Bag
@@ -482,10 +494,11 @@ def proiector():
     return str(obj_list)
 
 class CustomerTable(Table):
-    entry = Col('#')
+    entry = Col('')
     firstname = Col('First Name')
     lastname = Col('Last Name')
     email = Col('Email')
+    uid = Col('ID')
     dummy = Col('dummy')
 
 class WorkoutTable(Table):
@@ -515,11 +528,12 @@ def upcoming_info():
     cnt = 0
     for i in users:
         cnt += 1
-        item_list.append(dict(entry=str(cnt), firstname=i.firstname, lastname=i.lastname, email=i.email, dummy='replaceMe'))
+        item_list.append(dict(entry='#' + str(cnt), firstname=i.firstname, lastname=i.lastname, email=i.email, uid=i.id, dummy='replaceMe'))
     table = CustomerTable(item_list)
     class_info = w_qry.name + ' - ' + w_qry.w_type + ' - ' + str(w_qry.start_time)
     return render_template('upcoming_info.html',
                            class_info=class_info,
+                           workout_id=w_id,
                            dyn_table=table,)
 
 # ------------------ DOCS ----------------

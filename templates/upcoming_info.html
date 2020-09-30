@@ -19,8 +19,22 @@
           $("table").addClass("table");
 
           findElementByText('replaceMe').html('<button type="button" class="btn btn-danger">Remove</button><button type="button" class="btn btn-success">OK</button>');
+
           $('.btn-success').click(function() {
-            $(this).parent().parent().css('background-color', 'green');
+            $(this).parent().parent().css('background-color', '#90ee90');
+          });
+
+          $('.btn-remove').click(function() {
+            $.post("http://localhost:80/booking/remove",
+            {
+              workout_id: $('#workout_id').text(),
+              user_id: $(this).parent().parent().children().last().prev().text()
+            },
+            function(data,status){
+              alert("Data: " + data + "\nStatus: " + status);
+            });
+            
+            $(this).parent().parent().remove();
           });
           
         });
@@ -29,6 +43,7 @@
   </head>
   <body>
     <h1>Upcoming class: {{class_info}}</h1>
+    <h3 id='workout_id'>{{workout_id}}</h3>
     <br/>
     <br/>
     <br/>
