@@ -425,7 +425,7 @@ def add_booking():
         db.session.commit()
 
         return booking_schema.jsonify(b)
-    else
+    else:
         return Response("{'error':' workout full'}", status=409, mimetype='application/json')
 
 # Get Bookings for User
