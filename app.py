@@ -481,7 +481,7 @@ def receptie():
     dt = str(datetime.datetime.now())
     os = platform.system()
     pyver = sys.version
-    return render_template('status.html',
+    return render_template('receptie.html',
                            title='Status',
                            date=dt,
                            operating_system=os,
