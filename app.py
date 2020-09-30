@@ -477,19 +477,39 @@ def proiector():
         obj_list.append(obj)
     return str(obj_list)
 
-class ItemTable(Table):
+class CustomerTable(Table):
     firstname = Col('First Name')
     lastname = Col('Last Name')
     email = Col('Email')
 
+class WorkoutTable(Table):
+    name = Col('Name')
+    w_type = Col('Type')
+    start_time = Col('Start Time')
+
 # ---------- RECEPTIE ---------------
+@app.route('/workouts')
+def workouts():
+    
+
 @app.route('/upcoming-info')
-def receptie():
+def upcoming_info():
+    w_qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.id.asc()).first()
+    w_id = w_qry.id
+
+    b_qry =  Booking.query.filter(Booking.workout_id==w_id).all()
+
+    user_ids = []
+    for b in b_qry:
+        u_id = b.user_id
+        user = User.query.get(int(user_id))
+        user_ids.append(user)
+
     item_list = []
-    for i in range(20):
-        item_list.append(dict(firstname='firstname'+str(i), lastname='lastname'+str(i), email='email'+str(i)))
-    table = ItemTable(item_list)
-    class_info = 'BOX'
+    for i in user:
+        item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email)))
+    table = CustomerTable(item_list)
+    class_info = w_qry.name + ' - ' + w_qry.w_type + ' - ' + str(w_qry.start_time)
     return render_template('upcoming_info.html',
                            class_info=class_info,
                            dyn_table=table,)
