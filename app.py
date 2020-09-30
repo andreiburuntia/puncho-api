@@ -491,8 +491,8 @@ def receptie():
     table = ItemTable(item_list)
     class_info = 'BOX'
     return render_template('upcoming_info.html',
-                           title=class_info,
-                           date=table.__html__(),)
+                           class_info=class_info,
+                           dyn_table=table.__html__(),)
 
 # ------------------ DOCS ----------------
 
