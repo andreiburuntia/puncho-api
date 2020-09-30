@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory, render_template
+from flask_table import Table, Col
 from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -476,17 +477,22 @@ def proiector():
         obj_list.append(obj)
     return str(obj_list)
 
+class ItemTable(Table):
+    firstname = Col('First Name')
+    lastname = Col('Last Name')
+    email = Col('Email')
+
 # ---------- RECEPTIE ---------------
-@app.route('/receptie')
+@app.route('/upcoming-info')
 def receptie():
-    dt = str(datetime.datetime.now())
-    os = platform.system()
-    pyver = sys.version
-    return render_template('receptie.html',
-                           title='Status',
-                           date=dt,
-                           operating_system=os,
-                           python_version=pyver)
+    item_list = []
+    for i in range(20):
+        item_list.append(dict(firstname='firstname'+str(i), lastname='lastname'+str(i), email='email'+str(i)))
+    table = ItemTable(item_list)
+    class_info = 'BOX'
+    return render_template('upcoming_info.html',
+                           title=class_info,
+                           date=table.__html__(),)
 
 # ------------------ DOCS ----------------
 
