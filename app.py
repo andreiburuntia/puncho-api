@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory, render_template
+from flask import Flask, request, jsonify, send_from_directory, render_template, Response
 from flask_table import Table, Col
 from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
@@ -416,13 +416,17 @@ def add_booking():
     workout_id = request.json['workout_id']
     user_id = request.json['user_id']
 
-    b = Booking(workout_id, user_id)
-    print(workout_id, user_id)
-    print(booking_schema.jsonify(b))
-    db.session.add(b)
-    db.session.commit()
+    bookings = Bookings.query.filter(Booking.workout_id == workout_id).all()
+    if len(bookings) < 21:
+        b = Booking(workout_id, user_id)
+        print(workout_id, user_id)
+        print(booking_schema.jsonify(b))
+        db.session.add(b)
+        db.session.commit()
 
-    return booking_schema.jsonify(b)
+        return booking_schema.jsonify(b)
+    else
+        return Response("{'error':' workout full'}", status=409, mimetype='application/json')
 
 # Get Bookings for User
 @app.route('/booking/<user_id>', methods=['GET'])
