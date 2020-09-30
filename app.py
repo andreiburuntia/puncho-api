@@ -485,6 +485,7 @@ class CustomerTable(Table):
     firstname = Col('First Name')
     lastname = Col('Last Name')
     email = Col('Email')
+    dummy = Col('dummy')
 
 class WorkoutTable(Table):
     name = Col('Name')
@@ -511,7 +512,7 @@ def upcoming_info():
 
     item_list = []
     for i in users:
-        item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email))
+        item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email, dummy=''))
     table = CustomerTable(item_list)
     class_info = w_qry.name + ' - ' + w_qry.w_type + ' - ' + str(w_qry.start_time)
     return render_template('upcoming_info.html',
