@@ -494,7 +494,6 @@ def proiector():
     return str(obj_list)
 
 class CustomerTable(Table):
-    entry = Col('')
     firstname = Col('First Name')
     lastname = Col('Last Name')
     email = Col('Email')
@@ -528,7 +527,7 @@ def upcoming_info():
     cnt = 0
     for i in users:
         cnt += 1
-        item_list.append(dict(entry='#' + str(cnt), firstname=i.firstname, lastname=i.lastname, email=i.email, uid=i.id, dummy='replaceMe'))
+        item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email, uid=i.id, dummy='replaceMe'))
     table = CustomerTable(item_list)
     class_info = w_qry.name + ' - ' + w_qry.w_type + ' - ' + str(w_qry.start_time)
     return render_template('upcoming_info.html',
