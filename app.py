@@ -490,7 +490,7 @@ class WorkoutTable(Table):
 # ---------- RECEPTIE ---------------
 @app.route('/workouts')
 def workouts():
-    
+    return 'a'
 
 @app.route('/upcoming-info')
 def upcoming_info():
