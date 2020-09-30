@@ -8,10 +8,21 @@
       crossorigin="anonymous"></script>
       <script>
 
+        function findElementByText(text) {
+            var jSpot = $("td:contains(" + text + ")")
+                        .filter(function() { return $(this).children().length === 0;})
+
+            return jSpot;
+        }
+
         $(document).ready(function(){
           $("table").addClass("table");
 
-          $('td:contains(replaceMe)').html('<button type="button" class="btn btn-danger">Remove</button><button type="button" class="btn btn-success">OK</button>');
+          findElementByText('replaceMe').html('<button type="button" class="btn btn-danger">Remove</button><button type="button" class="btn btn-success">OK</button>');
+          $('.btn-success').click(function() {
+            $(this).parent().parent().css('background-color', 'green');
+          });
+          
         });
 
       </script>
@@ -19,7 +30,6 @@
   <body>
     <h1>Upcoming class: {{class_info}}</h1>
     <br/>
-    <button type="button" class="btn btn-danger">Danger</button>
     <br/>
     <br/>
     {{dyn_table}}
