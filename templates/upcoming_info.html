@@ -25,14 +25,11 @@
           });
 
           $('.btn-danger').click(function() {
-            $.post("http://localhost:80/booking/remove",
-            {
-              workout_id: $('#workout_id').text(),
-              user_id: $(this).parent().parent().children().last().prev().text()
-            },
-            function(data,status){
-              alert("Data: " + data + "\nStatus: " + status);
-            });
+            $.post('http://localhost:80/booking/remove',   // url
+              { workout_id: $('#workout_id').text(), user_id: $(this).parent().parent().children().last().prev().text() }, // data to be submit
+              function(data, status, jqXHR) {// success callback
+                        alert('status: ' + status + ', data: ' + data);
+                })
             
             $(this).parent().parent().remove();
           });
