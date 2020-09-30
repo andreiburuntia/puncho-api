@@ -417,7 +417,7 @@ def add_booking():
     user_id = request.json['user_id']
 
     bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
-    if len(bookings) < 21:
+    if len(bookings) < 20:
         b = Booking(workout_id, user_id)
         print(workout_id, user_id)
         print(booking_schema.jsonify(b))

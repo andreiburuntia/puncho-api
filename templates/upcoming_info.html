@@ -25,7 +25,7 @@
           });
 
           $('.btn-danger').click(function() {
-            $.post('http://localhost:80/booking/remove',   // url
+            $.post('http://ec2-user@ec2-18-217-1-165.us-east-2.compute.amazonaws.com/booking/remove',   // url
               { workout_id: $('#workout_id').text(), user_id: $(this).parent().parent().children().last().prev().text() }, // data to be submit
               function(data, status, jqXHR) {// success callback
                         alert('status: ' + status + ', data: ' + data);
