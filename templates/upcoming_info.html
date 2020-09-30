@@ -25,21 +25,24 @@
           });
 
           $('.btn-danger').click(function() {
-            var settings = {
-              "url": "http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/booking/remove",
-              "method": "POST",
-              "timeout": 0,
-              "headers": {
-                "Content-Type": "application/json"
-              },
-              "data": JSON.stringify({workout_id: $('#workout_id').text(), user_id: $(this).parent().parent().children().last().prev().text() }),
-            };
+            var result = confirm("Want to delete?");
+            if (result) {
+              var settings = {
+                "url": "http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/booking/remove",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                  "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({workout_id: $('#workout_id').text(), user_id: $(this).parent().parent().children().last().prev().text() }),
+              };
 
-            $.ajax(settings).done(function (response) {
-              console.log(response);
-            });
-            
-            $(this).parent().parent().remove();
+              $.ajax(settings).done(function (response) {
+                console.log(response);
+              });
+              
+              $(this).parent().parent().remove();
+              }            
           });
           
         });
