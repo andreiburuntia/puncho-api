@@ -10,11 +10,9 @@
 
         $(document).ready(function(){
           $("table").addClass("table");
-          
-          $( "tr" ).click(function() {
-            $(this).css('background-color', 'green');
-          });
 
+          console.log($('tr').children());
+          
           $("tr").find('td').last().append('<span class="glyphicon glyphicon-ok"></span>');
           $("tr").find('td').last().append('<span class="glyphicon glyphicon-remove"></span>');
         });
