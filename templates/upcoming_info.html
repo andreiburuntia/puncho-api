@@ -25,11 +25,18 @@
           });
 
           $('.btn-danger').click(function() {
-            $.post('http://ec2-user@ec2-18-217-1-165.us-east-2.compute.amazonaws.com/booking/remove',   // url
-              { workout_id: $('#workout_id').text(), user_id: $(this).parent().parent().children().last().prev().text() }, // data to be submit
-              function(data, status, jqXHR) {// success callback
-                        alert('status: ' + status + ', data: ' + data);
-                })
+            
+
+            $.ajax({
+              url:'http://ec2-user@ec2-18-217-1-165.us-east-2.compute.amazonaws.com/booking/remove',
+              type:"POST",
+              data: {workout_id: $('#workout_id').text(), user_id: $(this).parent().parent().children().last().prev().text() },
+              contentType:"application/json; charset=utf-8",
+              dataType:"json",
+              success: function(data, status, jqXHR) {// success callback
+                    alert('status: ' + status + ', data: ' + data);
+              }
+            });
             
             $(this).parent().parent().remove();
           });
