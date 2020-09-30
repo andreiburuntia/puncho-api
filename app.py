@@ -502,7 +502,7 @@ def upcoming_info():
     users = []
     for b in b_qry:
         u_id = b.user_id
-        user = User.query.get(int(user_id))
+        user = User.query.get(int(u_id))
         users.append(user)
 
     item_list = []
