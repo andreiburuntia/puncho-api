@@ -416,7 +416,7 @@ def add_booking():
     workout_id = request.json['workout_id']
     user_id = request.json['user_id']
 
-    bookings = Bookings.query.filter(Booking.workout_id == workout_id).all()
+    bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
     if len(bookings) < 21:
         b = Booking(workout_id, user_id)
         print(workout_id, user_id)
