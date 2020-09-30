@@ -10,10 +10,19 @@
         $(document).ready(function(){
           $("table").addClass("table");
         });
+
+        $(document).ready(function(){
+          $( "tr" ).click(function() {
+            this.element.css('background-color', 'green');
+          });
+        });
       </script>
   </head>
   <body>
     <h1>Upcoming class: {{class_info}}</h1>
+    <br/>
+    <br/>
+    <br/>
     {{dyn_table}}
   </body>
 </html>
