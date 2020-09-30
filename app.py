@@ -499,14 +499,14 @@ def upcoming_info():
 
     b_qry =  Booking.query.filter(Booking.workout_id==w_id).all()
 
-    user_ids = []
+    users = []
     for b in b_qry:
         u_id = b.user_id
         user = User.query.get(int(user_id))
-        user_ids.append(user)
+        users.append(user)
 
     item_list = []
-    for i in user:
+    for i in users:
         item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email))
     table = CustomerTable(item_list)
     class_info = w_qry.name + ' - ' + w_qry.w_type + ' - ' + str(w_qry.start_time)
