@@ -507,7 +507,7 @@ def upcoming_info():
 
     item_list = []
     for i in user:
-        item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email)))
+        item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email))
     table = CustomerTable(item_list)
     class_info = w_qry.name + ' - ' + w_qry.w_type + ' - ' + str(w_qry.start_time)
     return render_template('upcoming_info.html',
