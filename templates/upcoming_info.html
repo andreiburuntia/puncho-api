@@ -25,7 +25,8 @@
           });
 
           $('.btn-danger').click(function() {
-            
+            data= {workout_id: $('#workout_id').text(), user_id: $(this).parent().parent().children().last().prev().text() };
+            console.log(data);
 
             $.ajax({
               url:'http://ec2-user@ec2-18-217-1-165.us-east-2.compute.amazonaws.com/booking/remove',
