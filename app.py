@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory, render_template, Response
+from flask import Flask, request, jsonify, send_from_directory, render_template, Response, redirect, url_for, session
 from flask_table import Table, Col
 from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +12,9 @@ import random
 import platform
 import sys
 
+from authlib.integrations.flask_client import OAuth
+from auth_decorator import login_required
+
 # Init app
 app = Flask(__name__)
 cors = CORS(app)
@@ -20,6 +23,26 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database-1.cluster-c4rbwipspsxn.us-east-2.rds.amazonaws.com/Test'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
 #    os.path.join(basedir, 'test.db')
+
+app.secret_key = os.getenv("APP_SECRET_KEY")
+app.config['SESSION_COOKIE_NAME'] = 'google-login-session'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
+
+# oAuth Setup
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',  # This is only needed if using openId to fetch user info
+    client_kwargs={'scope': 'openid email profile'},
+)
+
     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -177,6 +200,11 @@ def login():
             return user_schema.jsonify(user)
         else:
             return 'bad credentials', status.HTTP_401_UNAUTHORIZED
+
+@app.route('/user/login/apple', methods=['POST'])
+def apple_login:
+    print(request)
+    return 'ok'
 
 # Get user details
 @app.route('/user/details/<user_id>', methods=['GET'])
