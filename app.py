@@ -202,7 +202,7 @@ def login():
             return 'bad credentials', status.HTTP_401_UNAUTHORIZED
 
 @app.route('/user/login/apple', methods=['POST'])
-def apple_login:
+def apple_login():
     print(request)
     return 'ok'
 
