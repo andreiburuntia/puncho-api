@@ -183,7 +183,7 @@ def login():
 
 # Apple sign in
 
-@app.rout('/user/login/apple-sign-in', methods=['POST'])
+@app.route('/user/login/apple-sign-in', methods=['POST'])
 def apple_sign_in_clinet():
     print(request)
 
