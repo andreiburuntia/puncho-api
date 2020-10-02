@@ -268,10 +268,7 @@ def login():
 
 @app.rout('/user/login/apple-sign-in', methods=['POST'])
 def apple_sign_in_clinet():
-    auth_code = request.json['authorizationCode']
-    print(auth_code)
-
-    response = get_client_secret(auth_code)
+    print(request)
 
     return 'ok'
 
