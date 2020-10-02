@@ -48,12 +48,6 @@ from django.utils import timezone
 from social_core.backends.oauth import BaseOAuth2
 from social_core.utils import handle_http_errors
 
-
-apple_auth_settings = {
-    'AUTH_APPLE_KEY_ID': ''
-    'AUTH_APPLE_TEAN_ID': ''
-}
-
 class AppleOAuth2(BaseOAuth2):
     """apple authentication backend"""
 
