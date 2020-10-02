@@ -185,7 +185,7 @@ def login():
 
 @app.route('/user/login/apple-sign-in', methods=['POST'])
 def apple_sign_in_clinet():
-    print(request)
+    print(request.data)
 
     return 'ok'
 
