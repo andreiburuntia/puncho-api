@@ -83,7 +83,7 @@ class BookingSchema(Schema):
 # Subscription Schema
 class SubscriptionSchema(Schema):
     class Meta:
-        fields('id', 'user_id', 'start_time', 'end_time', 'entries', 'entries_left')
+        fields = ('id', 'user_id', 'start_time', 'end_time', 'entries', 'entries_left')
 
 # Init schema
 user_schema = UserSchema()
