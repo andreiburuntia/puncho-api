@@ -34,6 +34,7 @@ from models.hr import Hr
 from models.weigh_in import Weigh_In
 from models.workout import Workout
 from models.booking import Booking
+from models.subscription import Subscription
 
 db.create_all()
 db.session.commit()
@@ -79,6 +80,11 @@ class BookingSchema(Schema):
     class Meta:
         fields = ('id', 'workout_id', 'user_id')
 
+# Subscription Schema
+class SubscriptionSchema(Schema):
+    class Meta:
+        fields('id', 'user_id', 'start_time', 'end_time', 'entries', 'entries_left')
+
 # Init schema
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
@@ -92,6 +98,8 @@ workout_schema = WorkoutSchema()
 workouts_schema = WorkoutSchema(many=True)
 booking_schema = BookingSchema()
 bookings_schema = BookingSchema(many=True)
+subscription_schema = SubscriptionSchema()
+subscriptions_schema = SubscriptionSchema(many=True)
 
 # BAG - USER ID MAP
 bag_map = {
@@ -495,6 +503,22 @@ def end_session():
     w_qry = Workout.query.filter(Workout.start_time < datetime.datetime.now()).order_by(Workout.start_time.desc()).first()
     
     return workout_schema.jsonify(w_qry)
+
+# ----------- SUBSCRIPTION -----------
+@app.route('/subscription', methods=['POST'])
+def add_subscription():
+    user_id = request.json['user_id']
+    start_time = request.json['start_time']
+    end_time = request.json['end_time']
+    entries = request.json['entries']
+    entries_left = entries
+
+    new_sub = Subscription(user_id, start_time, end_time, entries, entries_left)
+
+    db.session.add(new_sub)
+    db.session.commit()
+
+    return subscription_schema.jsonify(new_sub)
 
 # ----------- PROIECTOR ---------------
 @app.route('/proiector', methods=['GET'])
