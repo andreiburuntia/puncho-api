@@ -1,6 +1,8 @@
 from sqlalchemy import Column, String, Integer, Date, ForeignKey
 from sqlalchemy.orm import relationship
 
+import datetime
+
 from app import db
 
 class Booking(db.Model):
