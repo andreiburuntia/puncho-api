@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory, render_template, Response, redirect, url_for, session
 from flask_table import Table, Col
 from flask_api import status
-from flask_sqlalchemy import SQLAlchemy, Date, cast
+from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 import os
@@ -462,7 +462,7 @@ def get_day_workout(date):
     print(time1)
     time2 = time1 + datetime.timedelta(days=1)
     print(time2)
-    qry = Workout.query.filter(cast(Workout.start_time, Date) == time1).order_by(Workout.start_time.asc()).all()
+    qry = Workout.query.filter(Workout.start_time == datetime.strptime(time1, '%Y-%m-%d')).order_by(Workout.start_time.asc()).all()
     return workouts_schema.jsonify(qry)
 
 # Get Upcoming Workout
