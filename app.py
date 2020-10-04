@@ -452,7 +452,7 @@ def get_wourkouts():
 
 # DONE some day's workouts - ca la upcoming - params: date
 # Get Some Day's Workouts
-@app.route('workout/day/<date>', methods=['GET'])
+@app.route('/workout/day/<date>', methods=['GET'])
 def get_day_workout(date):
     (year, month, day) = date.split('-')
     qry = Workout.query.filter(Workout.start_time.date() == datetime.date(year, month, day)).order_by(Workout.start_time.asc()).all()
