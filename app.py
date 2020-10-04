@@ -221,7 +221,7 @@ def apple_sign_in_clinet():
     alg = r.json()['keys'][0]['alg']
     key = construct((n_decoded, e_decoded))
     keyPub = key.exportKey(format='PEM')
-    decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legendboxing')
+    decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legend.boxing')
 
     uid = obj['user']
     email = obj['email']
