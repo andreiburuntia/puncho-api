@@ -77,7 +77,7 @@ class Weigh_InSchema(Schema):
 # Workout Schema
 class WorkoutSchema(Schema):
     class Meta:
-        fields = ('id', 'name', 'description', 'start_time', 'end_time', 'w_type')
+        fields = ('id', 'name', 'description', 'start_time', 'end_time', 'w_type', 'rounds', 'rest_time', 'trainer')
 
 
 # Booking Schema
