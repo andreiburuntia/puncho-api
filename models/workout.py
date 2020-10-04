@@ -28,4 +28,4 @@ class Workout(db.Model):
         self.w_type = w_type
         self.rounds = rounds
         self.rest_time = rest_time
-        self.trainer = traianer
+        self.trainer = trainer

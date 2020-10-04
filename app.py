@@ -435,8 +435,11 @@ def add_workout():
     start_time = request.json['start_time']
     end_time = request.json['end_time']
     w_type = request.json['w_type']
+    rounds = request.json['rounds']
+    rest_time = request.json['rest_time']
+    trainer = request.json['trainer']
 
-    w = Workout(description, name, start_time, end_time, w_type)
+    w = Workout(description, name, start_time, end_time, w_type, rounds, rest_time, trainer)
 
     db.session.add(w)
     db.session.commit()
