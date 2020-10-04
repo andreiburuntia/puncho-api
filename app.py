@@ -457,7 +457,11 @@ def get_wourkouts():
 # Get Some Day's Workouts
 @app.route('/workout/day/<date>', methods=['GET'])
 def get_day_workout(date):
-    qry = Workout.query.filter(Workout.start_time >= datetime.datetime.strptime(date, '%Y-%m-%d'), Workout.start_time <= datetime.datetime.strptime(date, '%Y-%m-%d') + datetime.timedelta(days=1)).order_by(Workout.start_time.asc()).all()
+    t1 = datetime.datetime.strptime(date, '%Y-%m-%d')
+    print(t1)
+    t2 = datetime.datetime.strptime(date, '%Y-%m-%d') + datetime.timedelta(days=1)
+    print(t2)
+    qry = Workout.query.filter(Workout.start_time >= t1, Workout.start_time <= t2).order_by(Workout.start_time.asc()).all()
     return workouts_schema.jsonify(qry)
 
 # Get Upcoming Workout
