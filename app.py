@@ -462,7 +462,7 @@ def get_day_workout(date):
     print(time1)
     time2 = time1 + datetime.timedelta(days=1)
     print(time2)
-    qry = Workout.query.filter(Workout.start_time == datetime.datetime.strptime(time1, '%Y-%m-%d')).order_by(Workout.start_time.asc()).all()
+    qry = Workout.query.filter(Workout.start_time >= datetime.datetime.strptime(date, '%Y-%m-%d'), Workout.start_time >= datetime.datetime.strptime(date, '%Y-%m-%d') + datetime.timedelta(days=1)).order_by(Workout.start_time.asc()).all()
     return workouts_schema.jsonify(qry)
 
 # Get Upcoming Workout
