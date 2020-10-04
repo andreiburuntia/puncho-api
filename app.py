@@ -251,8 +251,11 @@ def apple_sign_in_clinet():
             break
     if user == {}:
         user = User(firstname, lastname, email, 'apple')
+        db.session.add(user)
+        db.session.commit()
+    else:
     
-    return user_schema.jsonify(user)
+    return user_schema.jsonify(usr), status.HTTP_201_CREATED
 
 marius_jwt = 'eyJraWQiOiJCRkpRUFY2WEdYIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJDUVJRNTVVSzZWIiwiaWF0IjoxNjAxNzI5NTc2LCJleHAiOjE2MTcyODE1NzYsImF1ZCI6Imh0dHBzOi8vYXBwbGVpZC5hcHBsZS5jb20iLCJzdWIiOiJjb20ubGVnZW5kLmJveGluZy5jbGllbnQifQ.GNBAyLgtQ3eO4fJiqjeoIB7iQMlbTzpG1FOdjA5nwTfZJ8NMNlKnjbjVqKKfWrovx4_r6o-h8bTtP2NfPQGYLQ'
 
