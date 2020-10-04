@@ -197,7 +197,7 @@ def login():
 # Apple sign in
 
 @app.route('/user/login/apple-sign-in', methods=['POST'])
-# TODO copy decoder.py
+# DONE copy decoder.py DONE
 def apple_sign_in_clinet():
     obj = request.json
 
@@ -450,7 +450,13 @@ def get_wourkouts():
     #print(qry)
     return workouts_schema.jsonify(qry)
 
-# TODO some day's workouts - ca la upcoming - params: date
+# DONE some day's workouts - ca la upcoming - params: date
+# Get Some Day's Workouts
+@app.route('workout/day/<date>', methods=['GET'])
+def get_day_workout(date):
+    (year, month, day) = date.split('-')
+    qry = Workout.query.filter(Workout.start_time.date() == datetime.date(year, month, day)).order_by(Workout.start_time.asc()).all()
+    return workouts_schema.jsonify(qry)
 
 # Get Upcoming Workout
 @app.route('/workout/upcoming', methods=['GET'])
