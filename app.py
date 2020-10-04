@@ -11,6 +11,11 @@ import datetime
 import random
 import platform
 import sys
+import jwt #pip install PyJWT
+import requests
+import json
+from Crypto.PublicKey.RSA import construct, importKey #pip install pycrypto
+import base64 #pip install pybase64
 
 # Init app
 app = Flask(__name__)
@@ -192,10 +197,61 @@ def login():
 # Apple sign in
 
 @app.route('/user/login/apple-sign-in', methods=['POST'])
+# TODO copy decoder.py
 def apple_sign_in_clinet():
-    print(request.data)
+    obj = request.json
+
+    email = obj['email']
+    authorizationCode = obj['authorizationCode']
+    identityToken= obj['identityToken']
+    firstname = obj['fullName']['givenName']
+    lastname = obj['fullName']['familyName']
+
+    r = requests.get('https://appleid.apple.com/auth/keys')
+
+    n = r.json()['keys'][0]['n'] + '=='
+    n_decoded = base64.urlsafe_b64decode(n)
+    n_decoded = int.from_bytes(n_decoded, 'big')
+    e = r.json()['keys'][0]['e'] + '=='
+    e_decoded = base64.urlsafe_b64decode(e)
+    e_decoded = int.from_bytes(e_decoded, 'big')
+    alg = r.json()['keys'][0]['alg']
+    key = construct((n_decoded, e_decoded))
+    keyPub = key.exportKey(format='PEM')
+    decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legendboxing')
+
+    uid = obj['user']
+    email = obj['email']
+
+    class O:
+        pass
+
+    obj = O()
+    obj.client_id = 'com.legend.boxing' # bun
+    obj.client_secret = marius_jwt # bun
+    obj.code = 'c87ab88a2e2da4e4389694e846efc4fce.0.mrqtt.AD4AdL5aFJK7infuxoMhkg' # nou
+    obj.grant_type = 'authorization_code' # bun
+
+    data = obj.__dict__
+    headers = {'content-type': 'application/x-www-form-urlencoded'}
+
+    r = requests.post('https://appleid.apple.com/auth/token', data, headers)
+    res_obj = r.json()
+
+    user = {}
+    users = User.query.all()
+    for u in users:
+        if u.email == email:
+            user = u
+            break
+    if user == {}:
+        user = User(firstname, lastname, email, 'apple')
+    else:
+        return user_schema.jsonify(user)
 
     return 'ok'
+
+marius_jwt = 'eyJraWQiOiJCRkpRUFY2WEdYIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJDUVJRNTVVSzZWIiwiaWF0IjoxNjAxNzI5NTc2LCJleHAiOjE2MTcyODE1NzYsImF1ZCI6Imh0dHBzOi8vYXBwbGVpZC5hcHBsZS5jb20iLCJzdWIiOiJjb20ubGVnZW5kLmJveGluZy5jbGllbnQifQ.GNBAyLgtQ3eO4fJiqjeoIB7iQMlbTzpG1FOdjA5nwTfZJ8NMNlKnjbjVqKKfWrovx4_r6o-h8bTtP2NfPQGYLQ'
 
 @app.route('/user/login/apple', methods=['POST'])
 def apple_login():
@@ -388,6 +444,8 @@ def get_wourkouts():
     #print(qry)
     return workouts_schema.jsonify(qry)
 
+# TODO some day's workouts - ca la upcoming - params: date
+
 # Get Upcoming Workout
 @app.route('/workout/upcoming', methods=['GET'])
 def get_upcoming_workout():
@@ -546,9 +604,7 @@ class WorkoutTable(Table):
     start_time = Col('Start Time')
 
 # ---------- RECEPTIE ---------------
-@app.route('/workouts')
-def workouts():
-    return 'a'
+#
 
 @app.route('/upcoming-info')
 def upcoming_info():
