@@ -255,7 +255,7 @@ def apple_sign_in_clinet():
         db.session.commit()
         return user_schema.jsonify(user), status.HTTP_201_CREATED
     else:     
-        return user_schema.jsonify(usr)
+        return user_schema.jsonify(user)
 
 marius_jwt = 'eyJraWQiOiJCRkpRUFY2WEdYIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJDUVJRNTVVSzZWIiwiaWF0IjoxNjAxNzI5NTc2LCJleHAiOjE2MTcyODE1NzYsImF1ZCI6Imh0dHBzOi8vYXBwbGVpZC5hcHBsZS5jb20iLCJzdWIiOiJjb20ubGVnZW5kLmJveGluZy5jbGllbnQifQ.GNBAyLgtQ3eO4fJiqjeoIB7iQMlbTzpG1FOdjA5nwTfZJ8NMNlKnjbjVqKKfWrovx4_r6o-h8bTtP2NfPQGYLQ'
 
