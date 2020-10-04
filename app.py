@@ -201,6 +201,9 @@ def login():
 def apple_sign_in_clinet():
     obj = request.json
 
+    marius_jwt = 'eyJraWQiOiJCRkpRUFY2WEdYIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJDUVJRNTVVSzZWIiwiaWF0IjoxNjAxNzM4Njg5LCJleHAiOjE2MTcyOTA2ODksImF1ZCI6Imh0dHBzOi8vYXBwbGVpZC5hcHBsZS5jb20iLCJzdWIiOiJjb20ubGVnZW5kLmJveGluZyJ9.u2Uu_-fHajZetQnkV69b6k6tUiz3-G-iHNlBGZLc_BpsYL0gTe4mnWLO1GDPLNglvTvx6iPbGHdwXwq3yVR5-w'
+
+
     email = obj['email']
     authorizationCode = obj['authorizationCode']
     identityToken= obj['identityToken']
@@ -226,17 +229,19 @@ def apple_sign_in_clinet():
     class O:
         pass
 
-    obj = O()
-    obj.client_id = 'com.legend.boxing' # bun
-    obj.client_secret = marius_jwt # bun
-    obj.code = 'c87ab88a2e2da4e4389694e846efc4fce.0.mrqtt.AD4AdL5aFJK7infuxoMhkg' # nou
-    obj.grant_type = 'authorization_code' # bun
+    o = O()
+    o.client_id = 'com.legend.boxing'
+    o.client_secret = marius_jwt
+    o.code = authorizationCode
+    o.grant_type = 'authorization_code'
 
-    data = obj.__dict__
+    data = o.__dict__
     headers = {'content-type': 'application/x-www-form-urlencoded'}
 
     r = requests.post('https://appleid.apple.com/auth/token', data, headers)
     res_obj = r.json()
+
+    print(res_obj)
 
     user = {}
     users = User.query.all()
