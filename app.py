@@ -638,6 +638,7 @@ def proiector():
         if offset + str(obj['bag_id']) in used_bags:
             #print(obj['bag_id'])
             usr = bag_map[offset + str(obj['bag_id'])]
+            print(usr)
             user_id = usr
             try:
                 p_qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
