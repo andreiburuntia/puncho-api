@@ -552,7 +552,7 @@ def remove_booking():
 
     db.session.commit()
 
-    return Response("{'ok':' ok'}", status=200, mimetype='application/json')
+    return Response("{'ok': 'ok'}", status=200, mimetype='application/json')
 
 # ------------- BAG LINK ---------------
 
@@ -606,12 +606,25 @@ def add_subscription():
 @app.route('/proiector', methods=['GET'])
 def proiector():
     obj_list = []
+
     for i in range(20):
         obj = {}
         obj['bag_id'] = i + 1
-        obj['score'] = random.randint(1000, 2000)
-        obj['hr'] = random.randint(90, 180)
-        obj['effort'] = random.randint(1,3)
+        obj['count'] = 0
+        obj['score'] = 0
+        obj['hr'] = 0
+        obj['effort'] = 1 # 1 to 3
+        offset = '0'
+        if i<10:
+            offset = '00'
+        if offset + str(obj['bag_id']) in used_bags:
+            usr = bag_map[offset + str(obj['bag_id'])]
+            user_id = usr.id
+            hr_qry =  Hr.query.filter(Hr.user_id == user_id).order_by(Hr.id.desc()).first()
+            p_qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
+            obj['count'] = p_qry.count
+            obj['score'] = p_qry.score
+            obj['hr'] = hr_qry.hr
         obj_list.append(obj)
     return str(obj_list)
 
