@@ -211,7 +211,7 @@ def apple_sign_in_clinet():
     lastname = obj['fullName']['familyName']
     email = obj['user']
 
-    print(request.json())
+    print(obj)
 
     print('fetching keys...')
 
