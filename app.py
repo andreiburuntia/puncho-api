@@ -217,6 +217,7 @@ def apple_sign_in_clinet():
     n_decoded = ''
     e_decoded = ''
     alg = ''
+    decoded = ''
 
     for key in r.json()['keys']:
         try:
@@ -227,14 +228,12 @@ def apple_sign_in_clinet():
             e_decoded = base64.urlsafe_b64decode(e)
             e_decoded = int.from_bytes(e_decoded, 'big')
             alg = key['alg']
+            key = construct((n_decoded, e_decoded))
+            keyPub = key.exportKey(format='PEM')
+            decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legend.boxing')
         except:
             pass
     
-    key = construct((n_decoded, e_decoded))
-    keyPub = key.exportKey(format='PEM')
-    decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legend.boxing')
-
-
     class O:
         pass
 
