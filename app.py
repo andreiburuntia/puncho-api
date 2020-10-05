@@ -619,7 +619,7 @@ def proiector():
             offset = '00'
         if offset + str(obj['bag_id']) in used_bags:
             usr = bag_map[offset + str(obj['bag_id'])]
-            user_id = usr.id
+            user_id = usr
             hr_qry =  Hr.query.filter(Hr.user_id == user_id).order_by(Hr.id.desc()).first()
             p_qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
             obj['count'] = p_qry.count
@@ -627,6 +627,9 @@ def proiector():
             obj['hr'] = hr_qry.hr
         obj_list.append(obj)
     return str(obj_list)
+
+
+# ---------- RECEPTIE ---------------
 
 class CustomerTable(Table):
     firstname = Col('First Name')
@@ -639,9 +642,6 @@ class WorkoutTable(Table):
     name = Col('Name')
     w_type = Col('Type')
     start_time = Col('Start Time')
-
-# ---------- RECEPTIE ---------------
-#
 
 @app.route('/upcoming-info')
 def upcoming_info():
