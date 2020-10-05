@@ -517,6 +517,13 @@ def get_workout_summary():
             max = h.hr
     avg = sum/cnt
     
+    if p_qry is not None:
+        p_score = p_qry.score
+        p_count = p_qry.count
+    else:
+        p_score = 0
+        p_count = 0
+
     w_name = w_qry.name
     w_type = w_qry.w_type
     
