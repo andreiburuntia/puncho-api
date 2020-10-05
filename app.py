@@ -632,7 +632,7 @@ def proiector():
         obj['hr'] = 0
         obj['effort'] = 1 # 1 to 3
         offset = '0'
-        if i<10:
+        if i<9:
             offset = '00'
         print(offset + str(obj['bag_id']))
         if offset + str(obj['bag_id']) in used_bags:
