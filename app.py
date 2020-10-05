@@ -638,14 +638,16 @@ def proiector():
             usr = bag_map[offset + str(obj['bag_id'])]
             user_id = usr
             try:
-                hr_qry =  Hr.query.filter(Hr.user_id == user_id).order_by(Hr.id.desc()).first()
                 p_qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
                 obj['count'] = p_qry.count
                 obj['score'] = p_qry.score
-                obj['hr'] = hr_qry.hr
             except:
                 obj['count'] = 0
                 obj['score'] = 0
+            try:
+                hr_qry =  Hr.query.filter(Hr.user_id == user_id).order_by(Hr.id.desc()).first()
+                obj['hr'] = hr_qry.hr
+            except:                
                 obj['hr'] = 0
         obj_list.append(obj)
     return str(obj_list)
