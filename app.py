@@ -209,6 +209,7 @@ def apple_sign_in_clinet():
     identityToken= obj['identityToken']
     firstname = obj['fullName']['givenName']
     lastname = obj['fullName']['familyName']
+    email = obj['user']
 
     print('fetching keys...')
 
@@ -232,7 +233,6 @@ def apple_sign_in_clinet():
     keyPub = key.exportKey(format='PEM')
     decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legend.boxing')
 
-    email = obj['email']
 
     class O:
         pass
