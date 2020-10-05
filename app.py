@@ -210,26 +210,27 @@ def apple_sign_in_clinet():
     firstname = obj['fullName']['givenName']
     lastname = obj['fullName']['familyName']
 
-    print('fetching keys')
+    print('fetching keys...')
 
     r = requests.get('https://appleid.apple.com/auth/keys')
+    n_decoded = ''
+    e_decoded = ''
+    alg = ''
 
-    n = r.json()['keys'][0]['n'] + '=='
-    n_decoded = base64.urlsafe_b64decode(n)
-    n_decoded = int.from_bytes(n_decoded, 'big')
-    e = r.json()['keys'][0]['e'] + '=='
-    e_decoded = base64.urlsafe_b64decode(e)
-    e_decoded = int.from_bytes(e_decoded, 'big')
-    alg = r.json()['keys'][0]['alg']
-    key = construct((n_decoded, e_decoded))
-    keyPub = key.exportKey(format='PEM')
-    print(identityToken)
-    print(keyPub)
+    for key in r.json()['keys']:
+    try:
+        n = key['n'] + '=='
+        n_decoded = base64.urlsafe_b64decode(n)
+        n_decoded = int.from_bytes(n_decoded, 'big')
+        e = key['e'] + '=='
+        e_decoded = base64.urlsafe_b64decode(e)
+        e_decoded = int.from_bytes(e_decoded, 'big')
+        alg = key['alg']
+    except:
+        pass
+
     decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legend.boxing')
 
-    print('decoded')
-
-    uid = obj['user']
     email = obj['email']
 
     class O:
