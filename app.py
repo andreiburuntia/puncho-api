@@ -634,6 +634,7 @@ def proiector():
         offset = '0'
         if i<10:
             offset = '00'
+        print(offset + str(obj['bag_id'])
         if offset + str(obj['bag_id']) in used_bags:
             print(obj['bag_id'])
             usr = bag_map[offset + str(obj['bag_id'])]
