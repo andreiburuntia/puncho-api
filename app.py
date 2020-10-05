@@ -243,6 +243,11 @@ def apple_sign_in_clinet():
 
     print(res_obj)
 
+    res_obj = json.loads(res_obj)
+
+    if 'error' in res_obj:
+        return res_obj['error'], status.HTTP_401_UNAUTHORIZED
+
     user = {}
     users = User.query.all()
     for u in users:
@@ -532,7 +537,7 @@ def add_booking():
 
         return booking_schema.jsonify(b)
     else:
-        return Response("{'error':' workout full'}", status=409, mimetype='application/json')
+        return Response("{'error': 'workout full'}", status=409, mimetype='application/json')
 
 # Get Bookings for User
 @app.route('/booking/<user_id>', methods=['GET'])
