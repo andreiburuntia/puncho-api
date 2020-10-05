@@ -218,16 +218,16 @@ def apple_sign_in_clinet():
     alg = ''
 
     for key in r.json()['keys']:
-    try:
-        n = key['n'] + '=='
-        n_decoded = base64.urlsafe_b64decode(n)
-        n_decoded = int.from_bytes(n_decoded, 'big')
-        e = key['e'] + '=='
-        e_decoded = base64.urlsafe_b64decode(e)
-        e_decoded = int.from_bytes(e_decoded, 'big')
-        alg = key['alg']
-    except:
-        pass
+        try:
+            n = key['n'] + '=='
+            n_decoded = base64.urlsafe_b64decode(n)
+            n_decoded = int.from_bytes(n_decoded, 'big')
+            e = key['e'] + '=='
+            e_decoded = base64.urlsafe_b64decode(e)
+            e_decoded = int.from_bytes(e_decoded, 'big')
+            alg = key['alg']
+        except:
+            pass
 
     decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legend.boxing')
 
