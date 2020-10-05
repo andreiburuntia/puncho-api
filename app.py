@@ -210,6 +210,8 @@ def apple_sign_in_clinet():
     firstname = obj['fullName']['givenName']
     lastname = obj['fullName']['familyName']
 
+    print('fetching keys')
+
     r = requests.get('https://appleid.apple.com/auth/keys')
 
     n = r.json()['keys'][0]['n'] + '=='
@@ -222,6 +224,8 @@ def apple_sign_in_clinet():
     key = construct((n_decoded, e_decoded))
     keyPub = key.exportKey(format='PEM')
     decoded = jwt.decode(identityToken, keyPub, algorithms=alg, audience='com.legend.boxing')
+
+    print('decoded')
 
     uid = obj['user']
     email = obj['email']
