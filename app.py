@@ -251,8 +251,6 @@ def apple_sign_in_clinet():
 
     print(res_obj)
 
-    res_obj = json.loads(res_obj)
-
     if 'error' in res_obj:
         return res_obj['error'], status.HTTP_401_UNAUTHORIZED
 
