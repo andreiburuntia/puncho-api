@@ -541,11 +541,12 @@ def add_booking():
 
     try:
         user_bookings =  Booking.query.filter(Booking.user_id==user_id).all()
+        print(bookings_schema.jsonify(user_bookings))
         for b in user_bookings:
             if b.workout_id == workout_id:
                 return Response("{'error': 'Already registered.'}", status=409, mimetype='application/json')
     except:
-        print('xd')
+        pass
 
     sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
     try:
