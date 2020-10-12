@@ -539,15 +539,20 @@ def add_booking():
     workout_id = request.json['workout_id']
     user_id = request.json['user_id']
 
+    booked = 0
+
     try:
         user_bookings =  Booking.query.filter(Booking.user_id==user_id).all()
         print(bookings_schema.jsonify(user_bookings))
         for b in user_bookings:
             print(b.workout_id)
             if b.workout_id == workout_id:
-                return Response("{'error': 'Already registered.'}", status=409, mimetype='application/json')
+                booked = 1
     except:
         pass
+
+    if booked == 1:
+        return Response("{'error': 'Already registered.'}", status=409, mimetype='application/json')
 
     sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
     try:
@@ -556,8 +561,7 @@ def add_booking():
             bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
             if len(bookings) < 20:
                 b = Booking(workout_id, user_id)
-                print(workout_id, user_id)
-                print(booking_schema.jsonify(b))
+
                 db.session.add(b)
                 db.session.commit()
 
