@@ -546,7 +546,7 @@ def add_booking():
         print(bookings_schema.jsonify(user_bookings))
         for b in user_bookings:
             print(b.workout_id, workout_id)
-            if b.workout_id == workout_id:
+            if int(b.workout_id) == int(workout_id):
                 print('gg')
                 booked = 1
     except:
