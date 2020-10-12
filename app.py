@@ -555,6 +555,8 @@ def add_booking():
             if len(bookings) < 20:
                 b = Booking(workout_id, user_id)
 
+                sub.entries_left -= 1
+
                 db.session.add(b)
                 db.session.commit()
 
