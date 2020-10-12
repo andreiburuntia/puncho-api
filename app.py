@@ -539,17 +539,25 @@ def add_booking():
     workout_id = request.json['workout_id']
     user_id = request.json['user_id']
 
-    bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
-    if len(bookings) < 20:
-        b = Booking(workout_id, user_id)
-        print(workout_id, user_id)
-        print(booking_schema.jsonify(b))
-        db.session.add(b)
-        db.session.commit()
+    sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
+    try:
+        entries_left = sub.entries_left
+        if entries_left > 0:
+            bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
+            if len(bookings) < 20:
+                b = Booking(workout_id, user_id)
+                print(workout_id, user_id)
+                print(booking_schema.jsonify(b))
+                db.session.add(b)
+                db.session.commit()
 
-        return booking_schema.jsonify(b)
-    else:
-        return Response("{'error': 'workout full'}", status=409, mimetype='application/json')
+                return booking_schema.jsonify(b)
+            else:
+                return Response("{'error': 'Workout is full.'}", status=409, mimetype='application/json')
+        else:
+            return Response("{'error': 'Out of entry tokens.'}", status=409, mimetype='application/json')
+    except:
+        return Response("{'error': 'No subscription.'}", status=409, mimetype='application/json')
 
 # Get Bookings for User
 @app.route('/booking/<user_id>', methods=['GET'])
