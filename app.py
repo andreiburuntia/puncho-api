@@ -547,6 +547,7 @@ def add_booking():
         for b in user_bookings:
             print(b.workout_id, workout_id)
             if b.workout_id == workout_id:
+                print('gg')
                 booked = 1
     except:
         pass
