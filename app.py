@@ -619,13 +619,18 @@ def add_subscription():
 
     return subscription_schema.jsonify(new_sub)
 
+@app.route('/subscription/<user_id>', methods=['GET'])
+def get_user_subscriptiono(user_id):
+    sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
+    return subscription_schema.jsonify(sub)
+
 # ----------- PROIECTOR ---------------
 @app.route('/proiector', methods=['GET'])
 def proiector():
     obj_list = []
 
     for i in range(20):
-        obj = {}
+        obj = {}    
         obj['bag_id'] = i + 1
         obj['count'] = 0
         obj['score'] = 0
@@ -638,7 +643,6 @@ def proiector():
         if offset + str(obj['bag_id']) in used_bags:
             #print(obj['bag_id'])
             usr = bag_map[offset + str(obj['bag_id'])]
-            print(usr)
             user_id = usr
             try:
                 p_qry =  Punch.query.filter(Punch.user_id == user_id).order_by(Punch.id.desc()).first()
