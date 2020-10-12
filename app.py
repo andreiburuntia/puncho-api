@@ -543,6 +543,7 @@ def add_booking():
         user_bookings =  Booking.query.filter(Booking.user_id==user_id).all()
         print(bookings_schema.jsonify(user_bookings))
         for b in user_bookings:
+            print(b.workout_id)
             if b.workout_id == workout_id:
                 return Response("{'error': 'Already registered.'}", status=409, mimetype='application/json')
     except:
