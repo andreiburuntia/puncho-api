@@ -760,7 +760,7 @@ def office_sub():
             db.session.add(new_sub)
             db.session.commit()
 
-            return subscription_schema.jsonify(new_sub)
+            #return subscription_schema.jsonify(new_sub)
 
         except:
             print('failed')
