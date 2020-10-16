@@ -730,7 +730,7 @@ def upcoming_info():
 class SubscriptionForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     start_date = DateField('Start Date', format='%m/%d/%Y', validators=[DataRequired()])
-    entries = SelectField('Type', choices = ['1', '8', '12', '999'], validators = [Required()])
+    entries = SelectField('Type', choices = ['1', '8', '12', '999'], validators = [DataRequired()])
     submit = SubmitField('Add Subscription')
 
 @app.route('/office/subscription')
