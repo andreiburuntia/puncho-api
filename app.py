@@ -695,8 +695,12 @@ def proiector():
     # DUMMY DEMO
 
     obj_list = []
-    for i in range(20):
+    for i in range(1, 21):
         obj = {}
+        if i<10:
+            obj['bag_id'] = '00' + str(i)
+        else:
+            obj['bag_id'] = '0' + str(i)
         obj['count'] = random.randint(1, 100)
         obj['score'] = random.randint(200, 2000)
         obj['hr'] = random.randint(88, 162)
