@@ -689,7 +689,20 @@ def proiector():
                 obj['hr'] = hr_qry.hr
             except:                
                 obj['hr'] = 0
+            
         obj_list.append(obj)
+    
+    # DUMMY DEMO
+
+    obj_list = []
+    for i in range(20):
+        obj = {}
+        obj['count'] = random.randint(1, 100)
+        obj['score'] = random.randint(200, 2000)
+        obj['hr'] = random.randint(88, 162)
+        obj_list.append(obj)
+
+
     return str(obj_list)
 
 
