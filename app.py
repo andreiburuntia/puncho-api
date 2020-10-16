@@ -7,6 +7,7 @@ from flask_marshmallow import Marshmallow
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, DateField, SelectField
 from wtforms.validators import DataRequired, Length
+from flask import render_template, flash, redirect
 import os
 import time
 import json
@@ -736,9 +737,12 @@ class SubscriptionForm(FlaskForm):
     entries = SelectField('Type', choices = ['1', '8', '12', '999'], validators = [DataRequired()])
     submit = SubmitField('Add Subscription')
 
-@app.route('/office/subscription')
+@app.route('/office/subscription', methods=['GET', 'POST'])
 def office_sub():
     form = SubscriptionForm()
+    if form.validate_on_submit():
+        flash('Subscription added for user {}'.format(
+            form.email.data))
     return render_template('subscription.html', form=form)
 
 # ------------------ DOCS ----------------
