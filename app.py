@@ -288,7 +288,7 @@ def get_details(user_id):
 
 # Get user details by email
 @app.route('/user/details_by_email/<email>', methods=['GET'])
-def get_details(email):
+def get_details_by_email(email):
     user = User.query.filter(User.email == email).all()
     user.password_hash = 'hidden'
     return users_schema.jsonify(user)
