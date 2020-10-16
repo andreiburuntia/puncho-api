@@ -741,9 +741,10 @@ class SubscriptionForm(FlaskForm):
 def office_sub():
     form = SubscriptionForm()
     if request.method == 'POST':
-        print(request.form.get('email'))
-    if request.method == 'POST' and form.validate_on_submit():
-        print(form.email.data, form.start_date.data, form.entries.data)
+        print(request.form.get('email'))        
+        print(request.form.get('start_date'))        
+        print(request.form.get('entries'))
+        
     return render_template('subscription.html', form=form)
 
 # ------------------ DOCS ----------------
