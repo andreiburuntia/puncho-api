@@ -14,7 +14,14 @@
             </div>
             <div>
                 {{ form.start_date.label }}<br>
-                {{ form.start_date(size=32) }}
+                {{ form.start_date(id_='date', size=32) }}
+                <button class="btn" onclick="
+                    var today = new Date();
+                    var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+                    document.getElementById('date').value = date;
+                ">
+                    TODAY
+                </button>
             </div>
             <div>
                 {{ form.entries.label }}<br>
