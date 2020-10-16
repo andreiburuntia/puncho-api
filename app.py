@@ -659,8 +659,8 @@ def get_user_subscriptiono(user_id):
 
 # DUMMY DEMO
 r = 0
-global dummy_score = [0] * 21
-global dummy_count = [0] * 21
+dummy_score = [0] * 21
+dummy_count = [0] * 21
 
 # DUMMY DEMO END
 
@@ -701,9 +701,9 @@ def proiector():
     
     # DUMMY DEMO
 
-    if dummy_score[1] > 3000:
-        dummy_count = [0] * 21
-        dummy_score = [0] * 21
+    #if dummy_score[1] > 3000:
+    #    dummy_count = [0] * 21
+    #    dummy_score = [0] * 21
 
     obj_list = []
     for i in range(1, 21):
