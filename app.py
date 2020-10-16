@@ -740,7 +740,7 @@ class SubscriptionForm(FlaskForm):
 @app.route('/office/subscription', methods=['GET', 'POST'])
 def office_sub():
     form = SubscriptionForm()
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         print(form.email.data, form.start_date.data, form.entries.data)
     return render_template('subscription.html', form=form)
 
