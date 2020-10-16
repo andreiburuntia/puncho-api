@@ -15,7 +15,7 @@
             <div>
                 {{ form.start_date.label }}<br>
                 {{ form.start_date(size=32) }}
-                <button class="btn" onclick="
+                <button class="btn btn-info" onclick="
                     var today = new Date();
                     var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
                     document.getElementById('start_date').value = date;
