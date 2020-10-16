@@ -4,7 +4,7 @@ from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
-from flask_wtf import FlaskForm,
+from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, DateField, SelectField
 from wtforms.validators import DataRequired, Length
 import os
