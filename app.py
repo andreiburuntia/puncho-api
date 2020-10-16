@@ -8,6 +8,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, DateField, SelectField
 from wtforms.validators import DataRequired, Length
 from flask import render_template, flash, redirect
+from dateutil.relativedelta import relativedelta
 import os
 import time
 import json
@@ -741,12 +742,26 @@ class SubscriptionForm(FlaskForm):
 def office_sub():
     form = SubscriptionForm()
     if request.method == 'POST':
-        print(request.form.get('email'))        
-        print(request.form.get('start_date'))        
-        print(request.form.get('entries'))
-
         try:
-            print(datetime.datetime.strptime(request.form.get('start_date'), '%d/%m/%Y'))
+            start_date = datetime.datetime.strptime(request.form.get('start_date'), '%d/%m/%Y')
+            email = request.form.get('email')
+            entries = request.form.get('entries')
+
+            usr = User.query.filter(User.email == email).order_by(User.id.desc()).first()
+            user_id = usr.id
+
+            entries_left = entries
+
+            end_time = start_date + relativedelta(months=1)
+            start_time = start_date
+
+            new_sub = Subscription(user_id, start_time, end_time, entries, entries_left)
+
+            db.session.add(new_sub)
+            db.session.commit()
+
+            return subscription_schema.jsonify(new_sub)
+
         except:
             print('failed')
         
