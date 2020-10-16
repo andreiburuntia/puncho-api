@@ -289,8 +289,9 @@ def get_details(user_id):
 # Get user details by email
 @app.route('/user/details_by_email/<email>', methods=['GET'])
 def get_details_by_email(email):
-    user = User.query.filter(User.email == email).all()
-    user.password_hash = 'hidden'
+    users = User.query.filter(User.email == email).all()
+    for user in users:
+        user.password_hash = 'hidden'
     return users_schema.jsonify(user)
 
 # Get user count
