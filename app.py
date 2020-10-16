@@ -659,8 +659,8 @@ def get_user_subscriptiono(user_id):
 
 # DUMMY DEMO
 r = 0
-dummy_score = [0] * 21
-dummy_count = [0] * 21
+global dummy_score = [0] * 21
+global dummy_count = [0] * 21
 
 # DUMMY DEMO END
 
