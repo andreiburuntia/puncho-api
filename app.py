@@ -701,6 +701,10 @@ def proiector():
     
     # DUMMY DEMO
 
+    if dummy_score[1] > 3000:
+        dummy_count = [0] * 21
+        dummy_score = [0] * 21
+
     obj_list = []
     for i in range(1, 21):
         obj = {}
