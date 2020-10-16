@@ -733,7 +733,7 @@ def upcoming_info():
 
 class SubscriptionForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
-    start_date = DateField('Start Date', format='%m/%d/%Y', validators=[DataRequired()])
+    start_date = DateField('Start Date (dd/mm/yyyy - e.g. 21/08/2020', format='%d/%m/%Y', validators=[DataRequired()])
     entries = SelectField('Type', choices = ['1', '8', '12', '999'], validators = [DataRequired()])
     submit = SubmitField('Add Subscription')
 
@@ -744,6 +744,11 @@ def office_sub():
         print(request.form.get('email'))        
         print(request.form.get('start_date'))        
         print(request.form.get('entries'))
+
+        try:
+            print(datetime.datetime.strptime(request.form.get('start_date'), '%d/%m/%Y'))
+        except:
+            print('failed')
         
     return render_template('subscription.html', form=form)
 
