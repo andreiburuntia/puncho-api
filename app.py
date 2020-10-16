@@ -741,8 +741,7 @@ class SubscriptionForm(FlaskForm):
 def office_sub():
     form = SubscriptionForm()
     if form.validate_on_submit():
-        flash('Subscription added for user {}'.format(
-            form.email.data))
+        print(form.email.data, form.start_date.data, form.entries.data)
     return render_template('subscription.html', form=form)
 
 # ------------------ DOCS ----------------
