@@ -3,20 +3,25 @@
 {% block content %}
     <h1>Subscription</h1>
     <br/>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}
-        </div>
-        <div>
-            {{ form.start_date.label }}<br>
-            {{ form.start_date(size=32) }}
-        </div>
-        <div>
-            {{ form.entries.label }}<br>
-            {{ form.entries() }}
-        </div>
-        <div>{{ form.submit(class_="btn btn-primary") }}</div>
-    </form>
+
+    <div class='col-4 d-flex justify-content-center'>
+        
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.email.label }}<br>
+                {{ form.email(size=32) }}
+            </div>
+            <div>
+                {{ form.start_date.label }}<br>
+                {{ form.start_date(size=32) }}
+            </div>
+            <div>
+                {{ form.entries.label }}<br>
+                {{ form.entries() }}
+            </div><br>
+            <div>{{ form.submit(class_="btn btn-primary") }}</div>
+        </form>
+    
+    </div>
 {% endblock %}
