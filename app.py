@@ -693,7 +693,7 @@ class WorkoutTable(Table):
     w_type = Col('Type')
     start_time = Col('Start Time')
 
-@app.route('/upcoming-info')
+@app.route('/office/upcoming-info')
 def upcoming_info():
     w_qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.id.asc()).first()
     w_id = w_qry.id
@@ -717,6 +717,11 @@ def upcoming_info():
                            class_info=class_info,
                            workout_id=w_id,
                            dyn_table=table,)
+
+@app.route('/office/subscription')
+def office_sub():
+    choices = ['One Try', 'Rookie (8/m)', 'Beast (12/m)', 'Addict (unlimited)']
+    return render_template('subscription.html', choices=choices)
 
 # ------------------ DOCS ----------------
 

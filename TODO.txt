@@ -1,0 +1,103 @@
+TODO
+
+* bags
+
+    * senzori in tub
+
+    * teste + calibrare
+
+* subscription
+
+    * DONE api 
+
+    * DONE db
+
+    * MARIUS app
+
+* payments ^
+
+* 2 app pe android? MARIUS
+
+* push updates MARIUS
+
+* remote start bag scripts
+
+* video proiector RAMBO
+
+* site
+
+    * DONE calendar
+
+    * DONE email
+
+    * DONE newsletter
+
+    * email fwd ??
+
+* monitorizare pis
+
+* stress testing
+
+* first week free
+
+* GABI
+
+    * grafice, arch
+
+    * ORICE are nevoie ca e baiat bun si te ajuta
+
+* #
+
+    * Canon - alexandra mail, apoi discutie cu mircea --- J <------------------ soto, 99% remote, baieti de baieti, lucrezi la ce vrei, esti in pozitie de putere
+
+    * cloud data warehouse - big data - firebolt.io - GOLANG - CLUJ/remote - Bitica Bianca-Ioana --- J <------------------ daca e full remote si nu trebuie sa mergi in cj des
+
+    * remote GOLANG/GCP - data science - 'almost' fully remote - LDN - Jack Selt --- I <------------------ ban bun, interesant, GOLANG, f bun pt CV
+
+    * cloud c# dev - Bucale - Oana Smeureanu - J <------------------ meh
+
+    * c# .net core dev - ALTEN - Bucale - Laurentiu Placinta-Salaru --- J <------------------ meh
+
+    * c# .net core dev - Consignor - Bucale, Brasov, Oslo - Silvia Pintilie --- I <------------------ meh
+
+    * SENIOR devops engineer - Bucale, LDN - Scott Hastings --- I <------------------ ban bun, relativ interesant, cam meh
+
+    * cloud sw engineer - CrowdStrike - Bucale/remote - Bogdan P. --- I <------------------ interesant, companie relativ mica, poate pun biciu pe tine
+
+    * Devops engineer - Bucale - Hima Treesa George --- J <------------------ relativ interesant, cam meh
+
+    * .net dev - Bucale - Necula Iuliana --- J <------------------ meh
+
+    * .net azure dev - Bucale/LDN - Amar B. --- I <------------------ meh
+
+    * ?? - ALTEN FR - Paris - Matilde MUSCHETTI --- ? <------------------ franta? 
+
+    * FinTech senior sw engineer - FNZ Group - Brno, CZ - Jay Patel <------------------ daca e remote 55 de zile din 60
+
+    * OpSwat <------------------ mai ai nervi?
+
+    * CrossOver <------------------ ban f bun, cel mai remote remote, multa munca de plantatie
+
+    * cacatu ala in norvegia la sat unde e ban turbo da e noapte 6 luni pe an si intri in depresie daca nu vor remote
+
+    * devops engineer - ING - Bucale/remote/Asterdam --- I <------------------ probabil ban blana, probabil remote, poate trebuie sa mergi in Amsterdam relativ des
+
+* SCOALA
+
+    * alege optional
+
+    * mailuri profi
+
+    * jalobeanu carte pana duminica
+
+* mancare
+
+* tigari
+
+* anamneza
+
+* receptie
+
+* date in app - adresa etc
+
+* contracte receptie
