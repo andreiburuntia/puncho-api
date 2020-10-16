@@ -4,6 +4,9 @@ from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
+from flask_wtf import FlaskForm,
+from wtforms import StringField, TextField, SubmitField, DateField, SelectField
+from wtforms.validators import DataRequired, Length
 import os
 import time
 import json
@@ -724,10 +727,16 @@ def upcoming_info():
                            workout_id=w_id,
                            dyn_table=table,)
 
+class SubscriptionForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    start_date = DateField('Start Date', format='%m/%d/%Y', validators=[DataRequired()])
+    entries = SelectField('Type', choices = ['1', '8', '12', '999'], validators = [Required()])
+    submit = SubmitField('Add Subscription')
+
 @app.route('/office/subscription')
 def office_sub():
-    choices = ['One Try', 'Rookie (8/m)', 'Beast (12/m)', 'Addict (unlimited)']
-    return render_template('subscription.html', choices=choices)
+    form = SubscriptionForm()
+    return render_template('subscription.html', form=form)
 
 # ------------------ DOCS ----------------
 
