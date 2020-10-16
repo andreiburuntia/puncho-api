@@ -657,6 +657,13 @@ def get_user_subscriptiono(user_id):
     sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
     return subscription_schema.jsonify(sub)
 
+# DUMMY DEMO
+r = 0
+dummy_score = [0] * 21
+dummy_count = [0] * 21
+
+# DUMMY DEMO END
+
 # ----------- PROIECTOR ---------------
 @app.route('/proiector', methods=['GET'])
 def proiector():
@@ -697,12 +704,19 @@ def proiector():
     obj_list = []
     for i in range(1, 21):
         obj = {}
+
         obj['bag_id'] = i
-        obj['count'] = random.randint(1, 100)
-        obj['score'] = random.randint(200, 2000)
-        obj['hr'] = random.randint(88, 162)
+
+        dummy_score[i] += random.randint(7, 13)
+        obj['score'] = dummy_score[i]
+
+        dummy_count[i] += random.randint(1, 3)
+        obj['count'] = dummy_count[i]
+
+        obj['hr'] = random.randint(120, 135)
         obj_list.append(obj)
 
+    # DUMMY DEMO END
 
     return str(obj_list)
 
