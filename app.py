@@ -541,8 +541,8 @@ def get_workout_summary():
     w_name = w_qry.name
     w_type = w_qry.w_type
        
-    return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
-    #return '{"name": "workout x", "start_time": "2019/8/8/14:00", "end_time": "2019/8/8/15:00", "type": "muscle", "avg_hr": "101", "max_hr": "149", "kcals": "774", "punch_score": "99912", "punch_count": "1281"}'
+    #return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
+    return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': 'BOX', "avg_hr": 134, 'max_hr': 167, 'kcals': 741, 'punch_score': 1974, 'punch_count': 364})
 
 
 # ---------- BOOKINGS ------------
