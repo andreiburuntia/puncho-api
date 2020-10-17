@@ -712,6 +712,9 @@ def proiector():
         obj['bag_id'] = i
 
         dummy_score[i] += random.randint(7, 13)
+        if dummy_score[i] > 5000:
+            dummy_score = [0] * 21
+            dummy_count = [0] * 21
         obj['score'] = dummy_score[i]
 
         dummy_count[i] += random.randint(1, 5)/5
