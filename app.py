@@ -275,7 +275,7 @@ def apple_sign_in_clinet():
             user = u
             break
     if user == {}:
-        user = User(firstname, lastname, email, 'apple')
+        user = User(firstname, lastname, email, '', '', '', 'apple')
         db.session.add(user)
         db.session.commit()
         return user_schema.jsonify(user), status.HTTP_201_CREATED
@@ -311,6 +311,30 @@ def get_user_count():
     user_count = len(users)
     print(user_count)
     return str(user_count)
+
+# Update user
+@app.route('/user/update', methods=['POST'])
+def update_user_details():
+    user_id = request.json['user_id']
+    #firstname = request.json['firstname']
+    #lastname = request.json['lastname']
+    #email = request.json['email']
+    birth_date = request.json['birth_date']
+    address = request.json['address']
+    gender = request.json['gender']
+    
+    user = User.query.get(int(user_id))
+    #user.firstname = firstname
+    #user.lastname = lastname
+    #user.email = email
+    user.birth_date = birth_date
+    user.address = address
+    user.gender = gender
+
+    db.session.commit()
+
+    return user_schema.jsonify(user)
+
 
 # ------------ PUNCH ----------------------
 
