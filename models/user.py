@@ -24,3 +24,9 @@ class User(db.Model):
         self.address = address
         self.gender = gender
         self.password_hash = password_hash
+
+    def __init__(self, firstname, lastname, email, password_hash):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+        self.password_hash = password_hash
