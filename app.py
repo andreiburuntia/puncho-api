@@ -315,7 +315,7 @@ def get_user_count():
 # Update user
 @app.route('/user/update', methods=['POST'])
 def update_user_details():
-    user_id = request.json['user_id']
+    user_id = request.json['id']
     #firstname = request.json['firstname']
     #lastname = request.json['lastname']
     #email = request.json['email']
