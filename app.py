@@ -63,7 +63,7 @@ class Schema(ma.Schema):
 # User Schema
 class UserSchema(Schema):
     class Meta:
-        fields = ('id', 'firstname', 'lastname', 'email', 'birth_date', 'address', 'gender')
+        fields = ('id', 'firstname', 'lastname', 'email')
 
 # Punch Schema
 class PunchSchema(Schema):
