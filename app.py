@@ -157,9 +157,12 @@ def add_user():
     firstname = request.json['firstname']
     lastname = request.json['lastname']
     email = request.json['email']
+    birth_date = request.json['birth_date']
+    address = request.json['address']
+    gender = request.json['gender']
     password_hash = request.json['password_hash']
 
-    usr = User(firstname, lastname, email, password_hash)
+    usr = User(firstname, lastname, email, birth_date, address, gender, password_hash)
 
     found = False
     users = User.query.all()
