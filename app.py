@@ -735,20 +735,20 @@ def proiector():
     #    dummy_count = [0] * 21
     #    dummy_score = [0] * 21
 
-    obj_list = []
-    for i in range(1, 21):
-        obj = {}
-
-        obj['bag_id'] = i
-
-        dummy_score[i] += random.randint(7, 13)
-        obj['score'] = dummy_score[i]
-
-        dummy_count[i] += random.randint(1, 5)/5
-        obj['count'] = int(dummy_count[i])
-
-        obj['hr'] = random.randint(120, 135)
-        obj_list.append(obj)
+    #obj_list = []
+    #for i in range(1, 21):
+    #    obj = {}
+    #
+    #    obj['bag_id'] = i
+    #
+    #    dummy_score[i] += random.randint(7, 13)
+    #    obj['score'] = dummy_score[i]
+    #
+    #    dummy_count[i] += random.randint(1, 5)/5
+    #    obj['count'] = int(dummy_count[i])
+    #
+    #    obj['hr'] = random.randint(120, 135)
+    #    obj_list.append(obj)
 
     # DUMMY DEMO END
 
