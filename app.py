@@ -339,7 +339,9 @@ def update_user_details():
 @app.route('/user/stats/<user_id>', methods=['GET'])
 def user_stats(user_id):
     user = User.query.get(int(user_id))
-    return "{ 'score' : 578, 'punches' : { 'total' : 1763, 'perSecond': 6.3 }, 'force' : { 'perPunch': 11.3 }, 'rank': 20, 'workouts': 52, 'classes' : 33, 'calories': 3471, 'trained' : { 'hours' : 12, 'minutes': 45 } }", status.HTTP_200_OK
+    obj = json.loads("{ 'score' : 578, 'punches' : { 'total' : 1763, 'perSecond': 6.3 }, 'force' : { 'perPunch': 11.3 }, 'rank': 20, 'workouts': 52, 'classes' : 33, 'calories': 3471, 'trained' : { 'hours' : 12, 'minutes': 45 } }")
+
+    return json.dumps(obj), status.HTTP_200_OK
 
 
 # ------------ PUNCH ----------------------
