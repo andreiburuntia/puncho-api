@@ -1,0 +1,20 @@
+1   raspbian vechi, accel sus
+2   raspbian vechi, accel sus - update scripts
+3   
+4   accel jos nu merge
+5   TUB
+6   TUB, 
+7   TUB, NU merge accel
+8   TUB, merge accel - parca putin glitchy
+v9   TUB, merge accel
+10  ?
+11  ?
+v12  TUB, merge accel
+v13  TUB, merge accel
+14  TUB, cablul trebe schimbat ca ai pus scurt
+v15  TUB, merge accel
+16  TUB, merge accel
+v17  TUB, merge accel, calibrat
+18  l-a dus ivo la reparat
+19  TUB, merge accel, calibrat
+20  TUB, merge accel, calibrat
