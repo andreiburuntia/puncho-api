@@ -890,7 +890,7 @@ def pay():
             intent = stripe.PaymentIntent.confirm(data['payment_intent_id'])
     except stripe.error.CardError as e:
     # Display error on client
-    return json.dumps({'error': e.user_message}), 200
+        return json.dumps({'error': e.user_message}), 200
 
     return generate_response(intent)
 
@@ -900,17 +900,17 @@ def generate_response(intent):
     # appears as 'requires_source_action'.
     if intent.status == 'requires_action' and intent.next_action.type == 'use_stripe_sdk':
     # Tell the client to handle the action
-    return json.dumps({
-        'requires_action': True,
-        'payment_intent_client_secret': intent.client_secret,
-    }), 200
+        return json.dumps({
+            'requires_action': True,
+            'payment_intent_client_secret': intent.client_secret,
+        }), 200
     elif intent.status == 'succeeded':
-    # The payment didn’t need any additional actions and completed!
-    # Handle post-payment fulfillment
-    return json.dumps({'success': True}), 200
+        # The payment didn’t need any additional actions and completed!
+        # Handle post-payment fulfillment
+        return json.dumps({'success': True}), 200
     else:
-    # Invalid status
-    return json.dumps({'error': 'Invalid PaymentIntent status'}), 500
+        # Invalid status
+        return json.dumps({'error': 'Invalid PaymentIntent status'}), 500
 
 # ------------------ DOCS ----------------
 
