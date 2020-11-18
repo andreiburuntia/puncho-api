@@ -66,7 +66,7 @@ class Schema(ma.Schema):
 # User Schema
 class UserSchema(Schema):
     class Meta:
-        fields = ('id', 'firstname', 'lastname', 'email', 'birth_date', 'address', 'gender')
+        fields = ('id', 'firstname', 'lastname', 'email', 'birth_date', 'address', 'gender', 'nickname')
 
 # Punch Schema
 class PunchSchema(Schema):
@@ -163,9 +163,10 @@ def add_user():
     birth_date = request.json['birth_date']
     address = request.json['address']
     gender = request.json['gender']
+    nickname = request.json['nickname']
     password_hash = request.json['password_hash']
 
-    usr = User(firstname, lastname, email, birth_date, address, gender, password_hash)
+    usr = User(firstname, lastname, email, birth_date, address, gender, nickname, password_hash)
 
     found = False
     users = User.query.all()
@@ -271,6 +272,10 @@ def apple_sign_in_clinet():
     if 'error' in res_obj:
         return res_obj['error'], status.HTTP_401_UNAUTHORIZED
 
+    # DEBUG - remove this
+    print(email)
+
+
     user = {}
     users = User.query.all()
     for u in users:
@@ -325,6 +330,7 @@ def update_user_details():
     birth_date = request.json['birth_date']
     address = request.json['address']
     gender = request.json['gender']
+    nickname = request.json['nickname']
     
     user = User.query.get(int(user_id))
     #user.firstname = firstname
@@ -333,6 +339,7 @@ def update_user_details():
     user.birth_date = birth_date
     user.address = address
     user.gender = gender
+    user.nickname = nickname
 
     db.session.commit()
 

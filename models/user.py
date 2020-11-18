@@ -13,14 +13,16 @@ class User(db.Model):
     birth_date = Column(String(30))
     address = Column(String(30))    
     gender = Column(String(30))
+    nickname = Column(String(30))
     password_hash = Column(String(128))
     punches = relationship("Punch")
     
-    def __init__(self, firstname, lastname, email, birth_date, address, gender, password_hash):
+    def __init__(self, firstname, lastname, email, birth_date, address, gender, nickname, password_hash):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.birth_date = birth_date
         self.address = address
         self.gender = gender
+        self.nickname = nickname
         self.password_hash = password_hash
