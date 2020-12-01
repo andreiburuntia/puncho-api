@@ -56,8 +56,8 @@ db.create_all()
 db.session.commit()
 
 stripe_keys = {
-  'secret_key': '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',
-  'publishable_key': 'pk_live_51HYErVLvvkhUISt4raKM3DN0JvpI6au5jEfr3lk1kAw8BXyEru9upMyVmJSYSqcf8NcF8xrggJ61LvXv1NOFXC9P007KnDc0bE'
+  'secret_key': 'sk_test_51HYErVLvvkhUISt4TYOB2XO9dtI7ocsGYfUC3ZqtX7AtCOv2ufgB3jP5HSwrIzrUyEJeN7UghxNz5pJgoDKOmTbv002rcrojTz',
+  'publishable_key': 'pk_test_51HYErVLvvkhUISt4KWv6hvYpIDz7KjHiN17Obqx7jtPDxsH9ZJXBITGDAL0uaDtW9ZXmW1diDYvQ4iJvhOxhhl0q00Jl0Vxb2f'
 }
 
 stripe.api_key = stripe_keys['secret_key']
