@@ -163,11 +163,13 @@ used_bags = []
 def charge():
     # Amount in cents
     amount = 500
-
+    print('0')
     customer = stripe.Customer.create(
         email='customer@example.com',
         source=request.form['stripeToken']
     )
+
+    print('1')
 
     charge = stripe.Charge.create(
         customer=customer.id,
