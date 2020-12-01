@@ -159,6 +159,10 @@ used_bags = []
 
 # ----------- STRIPE ----------
 
+@app.route('/stripe')
+def index():
+    return render_template('stripe.html', key=stripe_keys['publishable_key'])
+
 @app.route('/charge', methods=['POST'])
 def charge():
     # Amount in cents
