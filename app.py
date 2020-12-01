@@ -55,7 +55,12 @@ from models.subscription import Subscription
 db.create_all()
 db.session.commit()
 
-# APPLE SIGN IN STUFF
+stripe_keys = {
+  'secret_key': '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',
+  'publishable_key': 'pk_live_51HYErVLvvkhUISt4raKM3DN0JvpI6au5jEfr3lk1kAw8BXyEru9upMyVmJSYSqcf8NcF8xrggJ61LvXv1NOFXC9P007KnDc0bE'
+}
+
+stripe.api_key = stripe_keys['secret_key']
 
 
 # Base Schema
@@ -151,6 +156,27 @@ def remove_user_from_bag_map(user_id):
             bag_map[key] = ""
             
 used_bags = []
+
+# ----------- STRIPE ----------
+
+@app.route('/charge', methods=['POST'])
+def charge():
+    # Amount in cents
+    amount = 500
+
+    customer = stripe.Customer.create(
+        email='customer@example.com',
+        source=request.form['stripeToken']
+    )
+
+    charge = stripe.Charge.create(
+        customer=customer.id,
+        amount=amount,
+        currency='usd',
+        description='Flask Charge'
+    )
+
+    return 'ok', status.HTTP_200_OK
 
 # ------------ USER ----------------------
 
