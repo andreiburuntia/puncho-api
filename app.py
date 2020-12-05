@@ -914,7 +914,7 @@ def pay():
         description=data.description,
         metadata={'integration_check': 'accept_a_payment'},
         confirmation_method='manual',
-        payment_method=
+        #payment_method=
     )
 
     try:
