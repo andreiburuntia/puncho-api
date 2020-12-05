@@ -23,6 +23,8 @@ from Crypto.PublicKey.RSA import construct, importKey #pip install pycrypto
 import base64 #pip install pybase64
 import stripe
 
+import mobilpay
+
 stripe.api_key = 'sk_test_51HYErVLvvkhUISt4TYOB2XO9dtI7ocsGYfUC3ZqtX7AtCOv2ufgB3jP5HSwrIzrUyEJeN7UghxNz5pJgoDKOmTbv002rcrojTz'
 
 # Init app
@@ -905,7 +907,15 @@ def office_sub():
 @app.route('/pay', methods=['POST'])
 def pay():
     data = request.get_json()
-    intent = None
+    intent = stripe.PaymentIntent.create(
+        amount=data.price,
+        currency='ron',
+        # Verify your integration in this guide by including this parameter
+        description=data.description,
+        metadata={'integration_check': 'accept_a_payment'},
+        confirmation_method='manual',
+        payment_method=
+    )
 
     try:
         if 'payment_method_id' in data:
