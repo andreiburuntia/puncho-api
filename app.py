@@ -921,8 +921,7 @@ def demo():
         env_data = result["data"]
 
         """daca env_key si env_data exista, se incepe decriptarea"""
-        if env_key is not None and len(env_key) > 0 and
-            env_data is not None and len(env_data) > 0:
+        if env_key is not None and len(env_key) > 0 and env_data is not None and len(env_data) > 0:
             try:
                 """env_key si data trebuie parsate pentru ca vin din url, se face cu function unquote din urllib
                 in cazul in care decriptarea nu este reusita, raspunsul v-a contine o eroare si mesajul acesteia
