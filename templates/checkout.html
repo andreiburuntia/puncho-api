@@ -30,9 +30,11 @@
         method: "POST",
       })
         .then(function (response) {
+            console.log('1');
           return response.json();
         })
         .then(function (session) {
+            console.log('2');
           return stripe.redirectToCheckout({ sessionId: session.id });
         })
         .then(function (result) {
