@@ -186,7 +186,8 @@ def create_checkout_session():
 YOUR_DOMAIN = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/checkout'
 @app.route('/create-session', methods=['POST'])
 def create_checkout_session_2():
-    print(request.json)
+    price = request.json['price']
+    name = request.json['name']
     try:
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -194,9 +195,9 @@ def create_checkout_session_2():
                 {
                     'price_data': {
                         'currency': 'usd',
-                        'unit_amount': 999,
+                        'unit_amount': price,
                         'product_data': {
-                            'name': 'Stubborn Attachments',
+                            'name': name,
                             'images': ['https://i.imgur.com/EHyR2nP.png'],
                         },
                     },
