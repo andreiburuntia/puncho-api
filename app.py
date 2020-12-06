@@ -185,7 +185,7 @@ def create_checkout_session():
 
 YOUR_DOMAIN = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/checkout'
 @app.route('/create-session', methods=['POST'])
-def create_checkout_session_2():
+def create_checkout_session():
     try:
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -193,7 +193,7 @@ def create_checkout_session_2():
                 {
                     'price_data': {
                         'currency': 'usd',
-                        'unit_amount': 2000,
+                        'unit_amount': 999,
                         'product_data': {
                             'name': 'Stubborn Attachments',
                             'images': ['https://i.imgur.com/EHyR2nP.png'],
@@ -203,8 +203,8 @@ def create_checkout_session_2():
                 },
             ],
             mode='payment',
-            success_url=YOUR_DOMAIN + '?success=true',
-            cancel_url=YOUR_DOMAIN + '?canceled=true',
+            success_url=YOUR_DOMAIN + '/success.html',
+            cancel_url=YOUR_DOMAIN + '/cancel.html',
         )
         return jsonify({'id': checkout_session.id})
     except Exception as e:
@@ -212,7 +212,7 @@ def create_checkout_session_2():
 
 @app.route('/checkout', methods=['POST', 'GET'])
 def checkout_method():
-    print(request)
+    return render_template('checkout.html')
 
 @app.route('/stripe')
 def index():
