@@ -183,7 +183,7 @@ def create_checkout_session():
 
   return jsonify(id=session.id)
 
-YOUR_DOMAIN = 'ec2-18-217-1-165.us-east-2.compute.amazonaws.com/checkout'
+YOUR_DOMAIN = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/checkout'
 @app.route('/create-session', methods=['POST'])
 def create_checkout_session_2():
     try:
