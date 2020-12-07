@@ -251,6 +251,7 @@ def checkout_method():
 @app.route('/checkout/stripe_success', methods=['POST', 'GET'])
 def stripe_success():
     print(request.args)
+    return 'ok'
 
 @app.route('/stripe')
 def index():
