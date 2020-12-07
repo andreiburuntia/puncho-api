@@ -192,10 +192,10 @@ sub_types = {
 }
 
 sub_img = {
-    '1': 'https://i.imgur.com/8KFGjIT',
-    '8': 'https://i.imgur.com/6px4KLT',
-    '12': 'https://i.imgur.com/b4xnCma',
-    '999': 'https://i.imgur.com/4QUpSCM'
+    '1': 'https://i.imgur.com/8KFGjIT.png',
+    '8': 'https://i.imgur.com/6px4KLT.png',
+    '12': 'https://i.imgur.com/b4xnCma.png',
+    '999': 'https://i.imgur.com/4QUpSCM.png'
 }
 
 sub_names = {
@@ -248,7 +248,7 @@ def checkout_method():
     print(sub_type)
     return render_template('checkout.html', sub_type=sub_type, user_id=usr_id)
 
-@app.route('/stripe_success', methods=['POST', 'GET'])
+@app.route('/checkout/stripe_success', methods=['POST', 'GET'])
 def stripe_success():
     print(request.args)
 
