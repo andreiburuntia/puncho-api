@@ -224,6 +224,7 @@ def create_checkout_session_2():
 @app.route('/checkout', methods=['POST', 'GET'])
 def checkout_method():
     sub_type = request.args.get('sub_type')
+    print(sub_type)
     return render_template('checkout.html', sub_type=sub_type)
 
 @app.route('/stripe')
