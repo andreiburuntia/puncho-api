@@ -183,18 +183,27 @@ def create_checkout_session():
 
   return jsonify(id=session.id)
 
+# SUBS
+sub_types = {
+    '1': '70',
+    '8': '240',
+    '12': '300',
+    '999': '500'
+}
+
 YOUR_DOMAIN = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/checkout'
 @app.route('/create-session', methods=['POST'])
 def create_checkout_session_2():
-    price = request.json['price']
-    name = request.json['name']
+    sub_type = request.json['sub_type']
+    price = int(sub_types[sub_type])*10
+    print(price)
     try:
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[
                 {
                     'price_data': {
-                        'currency': 'usd',
+                        'currency': 'ron',
                         'unit_amount': price,
                         'product_data': {
                             'name': name,
@@ -214,7 +223,8 @@ def create_checkout_session_2():
 
 @app.route('/checkout', methods=['POST', 'GET'])
 def checkout_method():
-    return render_template('checkout.html')
+    sub_type = request.args.get('sub_type')
+    return render_template('checkout.html', sub_type=sub_type)
 
 @app.route('/stripe')
 def index():
