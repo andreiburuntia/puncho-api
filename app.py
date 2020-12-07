@@ -206,7 +206,7 @@ def create_checkout_session_2():
                         'currency': 'ron',
                         'unit_amount': price,
                         'product_data': {
-                            'name': name,
+                            'name': 'xd',
                             'images': ['https://i.imgur.com/EHyR2nP.png'],
                         },
                     },
