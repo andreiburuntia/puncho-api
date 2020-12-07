@@ -195,7 +195,7 @@ YOUR_DOMAIN = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/checkout'
 @app.route('/create-session', methods=['POST'])
 def create_checkout_session_2():
     sub_type = request.json['sub_type']
-    price = int(sub_types[sub_type])*10
+    price = int(sub_types[sub_type])*100
     print(price)
     try:
         checkout_session = stripe.checkout.Session.create(
