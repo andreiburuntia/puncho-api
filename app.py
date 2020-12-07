@@ -191,12 +191,32 @@ sub_types = {
     '999': '500'
 }
 
+sub_img = {
+    '1': 'https://i.imgur.com/8KFGjIT',
+    '8': 'https://i.imgur.com/6px4KLT',
+    '12': 'https://i.imgur.com/b4xnCma',
+    '999': 'https://i.imgur.com/4QUpSCM'
+}
+
+sub_names = {
+    '1': 'Abonament ONE TRY',
+    '8': 'Abonament ROOKIE',
+    '12': 'Abonament BEAST',
+    '999': 'Abonament ADDICT'
+}
+
 YOUR_DOMAIN = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/checkout'
 @app.route('/create-session', methods=['POST'])
 def create_checkout_session_2():
     sub_type = request.json['sub_type']
+    user_id = request.json['user_id']
     price = int(sub_types[sub_type])*100
+    name = sub_names[sub_type]
+    img = sub_img[sub_type]
+    imgs = []
+    imgs.append(img)
     print(price)
+    print(user_id)
     try:
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -206,16 +226,16 @@ def create_checkout_session_2():
                         'currency': 'ron',
                         'unit_amount': price,
                         'product_data': {
-                            'name': 'xd',
-                            'images': ['https://i.imgur.com/EHyR2nP.png'],
+                            'name': name,
+                            'images': imgs,
                         },
                     },
                     'quantity': 1,
                 },
             ],
             mode='payment',
-            success_url=YOUR_DOMAIN + '/success.html',
-            cancel_url=YOUR_DOMAIN + '/cancel.html',
+            success_url=YOUR_DOMAIN + '/stripe_success?sub_type=' + sub_type + '&user_id=' + user_id,
+            cancel_url=YOUR_DOMAIN + '/stripe_cancel',
         )
         return jsonify({'id': checkout_session.id})
     except Exception as e:
@@ -224,8 +244,13 @@ def create_checkout_session_2():
 @app.route('/checkout', methods=['POST', 'GET'])
 def checkout_method():
     sub_type = request.args.get('sub_type')
+    usr_id = request.args.get('user_id')
     print(sub_type)
-    return render_template('checkout.html', sub_type=sub_type)
+    return render_template('checkout.html', sub_type=sub_type, user_id=usr_id)
+
+@app.route('/stripe_success', methods=['POST', 'GET'])
+def stripe_success():
+    print(request.args)
 
 @app.route('/stripe')
 def index():

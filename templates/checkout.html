@@ -20,6 +20,7 @@
       </div>
       <button id="checkout-button">Checkout</button>
       <span id='sub_type'>{{ sub_type }}</span>
+      <span id='user_id'>{{ user_id }}</span>
     </section>
   </body>
   <script type="text/javascript">
@@ -38,7 +39,7 @@
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify({'sub_type': document.getElementById('sub_type').innerHTML}) // body data type must match "Content-Type" header
+        body: JSON.stringify({'sub_type': document.getElementById('sub_type').innerHTML, 'user_id': document.getElementById('user_id').innerHTML}) // body data type must match "Content-Type" header
       })
         .then(function (response) {
           return response.json();
