@@ -58,9 +58,14 @@ from models.subscription import Subscription
 db.create_all()
 db.session.commit()
 
+#stripe_keys = {
+#  'secret_key': 'sk_test_51HYErVLvvkhUISt4TYOB2XO9dtI7ocsGYfUC3ZqtX7AtCOv2ufgB3jP5HSwrIzrUyEJeN7UghxNz5pJgoDKOmTbv002rcrojTz',
+#  'publishable_key': 'pk_test_51HYErVLvvkhUISt4KWv6hvYpIDz7KjHiN17Obqx7jtPDxsH9ZJXBITGDAL0uaDtW9ZXmW1diDYvQ4iJvhOxhhl0q00Jl0Vxb2f'
+#}
+
 stripe_keys = {
-  'secret_key': 'sk_test_51HYErVLvvkhUISt4TYOB2XO9dtI7ocsGYfUC3ZqtX7AtCOv2ufgB3jP5HSwrIzrUyEJeN7UghxNz5pJgoDKOmTbv002rcrojTz',
-  'publishable_key': 'pk_test_51HYErVLvvkhUISt4KWv6hvYpIDz7KjHiN17Obqx7jtPDxsH9ZJXBITGDAL0uaDtW9ZXmW1diDYvQ4iJvhOxhhl0q00Jl0Vxb2f'
+    'secret_key': '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',
+    'publishable_key': 'pk_live_51HYErVLvvkhUISt4raKM3DN0JvpI6au5jEfr3lk1kAw8BXyEru9upMyVmJSYSqcf8NcF8xrggJ61LvXv1NOFXC9P007KnDc0bE'
 }
 
 stripe.api_key = stripe_keys['secret_key']
@@ -185,6 +190,7 @@ def create_checkout_session():
 
 # SUBS
 sub_types = {
+    '0': '1'
     '1': '70',
     '8': '240',
     '12': '300',
@@ -192,6 +198,7 @@ sub_types = {
 }
 
 sub_img = {
+    '0': 'https://i.imgur.com/8KFGjIT.png',
     '1': 'https://i.imgur.com/8KFGjIT.png',
     '8': 'https://i.imgur.com/6px4KLT.png',
     '12': 'https://i.imgur.com/b4xnCma.png',
@@ -199,6 +206,7 @@ sub_img = {
 }
 
 sub_names = {
+    '0': 'Abonament TEST',
     '1': 'Abonament ONE TRY',
     '8': 'Abonament ROOKIE',
     '12': 'Abonament BEAST',
