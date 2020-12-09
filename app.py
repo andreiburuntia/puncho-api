@@ -26,7 +26,6 @@ import stripe
 #import mobilpay
 from mobilpay.request import Request
 
-stripe.api_key = 'sk_test_51HYErVLvvkhUISt4TYOB2XO9dtI7ocsGYfUC3ZqtX7AtCOv2ufgB3jP5HSwrIzrUyEJeN7UghxNz5pJgoDKOmTbv002rcrojTz'
 
 # Init app
 app = Flask(__name__)
