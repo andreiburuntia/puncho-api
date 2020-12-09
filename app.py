@@ -190,7 +190,7 @@ def create_checkout_session():
 
 # SUBS
 sub_types = {
-    '0': '1',
+    '0': '2',
     '1': '70',
     '8': '240',
     '12': '300',
