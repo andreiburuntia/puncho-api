@@ -430,6 +430,7 @@ def apple_login():
     print(request)
     return 'ok'
 
+# TODO ADD TOKENS HERE
 # Get user details
 @app.route('/user/details/<user_id>', methods=['GET'])
 def get_details(user_id):
@@ -438,6 +439,7 @@ def get_details(user_id):
     user.password_hash = 'hidden'
     return user_schema.jsonify(user)
 
+# TODO REMOVE - OBSOLETE
 # Get user details by email
 @app.route('/user/details_by_email/<email>', methods=['GET'])
 def get_details_by_email(email):
@@ -482,7 +484,7 @@ def update_user_details():
 @app.route('/user/stats/<user_id>', methods=['GET'])
 def user_stats(user_id):
     user = User.query.get(int(user_id))
-    obj = json.loads('{ "score" : 578, "punches" : { "total" : 1763, "perSecond": 6.3 }, "force" : { "perPunch": 11.3 }, "rank": 20, "workouts": 52, "classes" : 33, "calories": 3471, "trained" : { "hours" : 12, "minutes": 45 } }')
+    obj = json.loads('{ "score" : "-", "punches" : { "total" : "-", "perSecond": "-" }, "force" : { "perPunch": "-" }, "rank": "-", "workouts": "-", "classes" : "-", "calories": "-", "trained" : { "hours" : "-", "minutes": "-" } }')
 
     return json.dumps(obj), status.HTTP_200_OK
 
@@ -1058,5 +1060,7 @@ def get_web():
 # Run Server
 if __name__ == '__main__':
     import logging
-    logging.basicConfig(filename='error.log',level=logging.DEBUG)
+    logging.basicConfig(filename='error.log', level=logging.DEBUG)
     app.run(debug=True, ssl_context='adhoc')
+
+# TODO REMOVE ALL USERS FROM BAGS EVERY TWO HOURS
