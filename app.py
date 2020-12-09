@@ -659,6 +659,11 @@ def get_wourkouts():
     #print(qry)
     return workouts_schema.jsonify(qry)
 
+# TODO GET WORKOUTS OF USER
+@app.route('/workout/<user_id>', methods=['GET'])
+    qry = Workout.query.filter(Workout.user_id == user_id).all()
+    return workouts_schema.jsonify(qry)
+
 # DONE some day's workouts - ca la upcoming - params: date
 # Get Some Day's Workouts
 @app.route('/workout/day/<date>', methods=['GET'])
