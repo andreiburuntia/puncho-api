@@ -661,6 +661,7 @@ def get_wourkouts():
 
 # TODO GET WORKOUTS OF USER
 @app.route('/workout/<user_id>', methods=['GET'])
+def get_user_workouts(user_id):
     qry = Workout.query.filter(Workout.user_id == user_id).all()
     return workouts_schema.jsonify(qry)
 
