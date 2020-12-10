@@ -804,7 +804,7 @@ def remove_booking():
     sub.entries_left += 1 
     db.session.commit()
 
-    return Response("{'ok': 'ok'}", status=200, mimetype='application/json')
+    return Response('{"ok": "ok"}', status=200, mimetype='application/json')
 
 # ------------- BAG LINK ---------------
 
