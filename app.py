@@ -57,15 +57,15 @@ from models.subscription import Subscription
 db.create_all()
 db.session.commit()
 
-#stripe_keys = {
-#  'secret_key': 'sk_test_51HYErVLvvkhUISt4TYOB2XO9dtI7ocsGYfUC3ZqtX7AtCOv2ufgB3jP5HSwrIzrUyEJeN7UghxNz5pJgoDKOmTbv002rcrojTz',
-#  'publishable_key': 'pk_test_51HYErVLvvkhUISt4KWv6hvYpIDz7KjHiN17Obqx7jtPDxsH9ZJXBITGDAL0uaDtW9ZXmW1diDYvQ4iJvhOxhhl0q00Jl0Vxb2f'
-#}
-
 stripe_keys = {
-    'secret_key': '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',
-    'publishable_key': 'pk_live_51HYErVLvvkhUISt4raKM3DN0JvpI6au5jEfr3lk1kAw8BXyEru9upMyVmJSYSqcf8NcF8xrggJ61LvXv1NOFXC9P007KnDc0bE'
+  'secret_key': 'sk_test_51HYErVLvvkhUISt4TYOB2XO9dtI7ocsGYfUC3ZqtX7AtCOv2ufgB3jP5HSwrIzrUyEJeN7UghxNz5pJgoDKOmTbv002rcrojTz',
+  'publishable_key': 'pk_test_51HYErVLvvkhUISt4KWv6hvYpIDz7KjHiN17Obqx7jtPDxsH9ZJXBITGDAL0uaDtW9ZXmW1diDYvQ4iJvhOxhhl0q00Jl0Vxb2f'
 }
+
+#stripe_keys = {
+#    'secret_key': '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',
+#    'publishable_key': 'pk_live_51HYErVLvvkhUISt4raKM3DN0JvpI6au5jEfr3lk1kAw8BXyEru9upMyVmJSYSqcf8NcF8xrggJ61LvXv1NOFXC9P007KnDc0bE'
+#}
 
 stripe.api_key = stripe_keys['secret_key']
 
@@ -258,7 +258,22 @@ def checkout_method():
 @app.route('/checkout/stripe_success', methods=['POST', 'GET'])
 def stripe_success():
     print(request.args)
-    return 'ok'
+    sub_type = request.args.get('sub_type')
+    user_id = reuqest.args.get('user_id')
+    #user = User.query.get(int(user_id))
+    
+    user_id = user_id
+    start_time = datetime.datetime.now()
+    end_time = datetime.datetime.now() + datetime.timedelta(months=+1)
+    entries = sub_types[sub_type]
+    entries_left = entries
+
+    new_sub = Subscription(user_id, start_time, end_time, entries, entries_left)
+
+    db.session.add(new_sub)
+    db.session.commit()
+
+    return subscription_schema.jsonify(new_sub)
 
 @app.route('/stripe')
 def index():
@@ -455,6 +470,7 @@ def get_user_count():
     print(user_count)
     return str(user_count)
 
+#TODO FIX THIS!? da 500 si comenteaza de birth_date
 # Update user
 @app.route('/user/update', methods=['POST'])
 def update_user_details():
@@ -661,7 +677,7 @@ def get_wourkouts():
     #print(qry)
     return workouts_schema.jsonify(qry)
 
-# TODO GET WORKOUTS OF USER
+# TODO GET WORKOUTS OF USER - tre sa faci prin booking
 @app.route('/workout/<user_id>', methods=['GET'])
 def get_user_workouts(user_id):
     qry = Workout.query.filter(Workout.user_id == user_id).all()

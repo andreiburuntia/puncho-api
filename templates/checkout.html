@@ -25,8 +25,8 @@
   </body>
   <script type="text/javascript">
     // Create an instance of the Stripe object with your publishable API key
-    //var stripe = Stripe("pk_test_51HYErVLvvkhUISt4KWv6hvYpIDz7KjHiN17Obqx7jtPDxsH9ZJXBITGDAL0uaDtW9ZXmW1diDYvQ4iJvhOxhhl0q00Jl0Vxb2f");
-    var stripe = Stripe("pk_live_51HYErVLvvkhUISt4raKM3DN0JvpI6au5jEfr3lk1kAw8BXyEru9upMyVmJSYSqcf8NcF8xrggJ61LvXv1NOFXC9P007KnDc0bE");
+    var stripe = Stripe("pk_test_51HYErVLvvkhUISt4KWv6hvYpIDz7KjHiN17Obqx7jtPDxsH9ZJXBITGDAL0uaDtW9ZXmW1diDYvQ4iJvhOxhhl0q00Jl0Vxb2f");
+    //var stripe = Stripe("pk_live_51HYErVLvvkhUISt4raKM3DN0JvpI6au5jEfr3lk1kAw8BXyEru9upMyVmJSYSqcf8NcF8xrggJ61LvXv1NOFXC9P007KnDc0bE");
     var checkoutButton = document.getElementById("checkout-button");
     checkoutButton.addEventListener("click", function () {
       fetch("/create-session", {
