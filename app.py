@@ -264,7 +264,7 @@ def stripe_success():
     
     user_id = user_id
     start_time = datetime.datetime.now()
-    end_time = datetime.datetime.now() + datetime.timedelta(months=+1)
+    end_time = datetime.datetime.now() + relativedelta(months=+1)
     entries = sub_types[sub_type]
     entries_left = entries
 
