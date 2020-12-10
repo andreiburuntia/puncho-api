@@ -259,7 +259,7 @@ def checkout_method():
 def stripe_success():
     print(request.args)
     sub_type = request.args.get('sub_type')
-    user_id = reuqest.args.get('user_id')
+    user_id = request.args.get('user_id')
     #user = User.query.get(int(user_id))
     
     user_id = user_id
