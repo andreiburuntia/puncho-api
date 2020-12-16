@@ -445,7 +445,7 @@ def apple_login():
     print(request)
     return 'ok'
 
-# TODO ADD TOKENS HERE
+# DONE ADD TOKENS HERE - done? le ia pe /subscription/uid
 # Get user details
 @app.route('/user/details/<user_id>', methods=['GET'])
 def get_details(user_id):
@@ -453,12 +453,6 @@ def get_details(user_id):
     user = User.query.get(int(user_id))
     user.password_hash = 'hidden'
     return user_schema.jsonify(user)
-
-# TODO REMOVE - OBSOLETE
-# Get user details by email
-@app.route('/user/details_by_email/<email>', methods=['GET'])
-def get_details_by_email(email):
-    user = User.query.filter(User.email == email).order_by(User.id.desc()).first()
     return user_schema.jsonify(user)
 
 # Get user count
@@ -470,7 +464,7 @@ def get_user_count():
     print(user_count)
     return str(user_count)
 
-#TODO FIX THIS!? da 500 si comenteaza de birth_date
+# DONE FIX THIS!? da 500 si comenteaza de birth_date - FIXED nu erau userii in db
 # Update user
 @app.route('/user/update', methods=['POST'])
 def update_user_details():
@@ -680,8 +674,57 @@ def get_wourkouts():
 # TODO GET WORKOUTS OF USER - tre sa faci prin booking
 @app.route('/workout/<user_id>', methods=['GET'])
 def get_user_workouts(user_id):
-    qry = Workout.query.filter(Workout.user_id == user_id).all()
-    return workouts_schema.jsonify(qry)
+    #qry = Workout.query.filter(Workout.user_id == user_id).all()
+    #return workouts_schema.jsonify(qry)
+
+    user_id = request.args.get('user_id')
+    
+    user_bookings = Booking.query.filter(Booking.user_id == user_id).all()
+
+    user_workouts = []
+
+    for b in user_bookings:
+        workout_id = b.workout_id
+        workout_q = Workout.query.get(int(workout_id))
+        user_workouts.append(workout_q)
+
+    pretty_workout_list = []
+    
+    for w_qry in user_workouts:
+        w_start_time = w_qry.start_time
+        print(w_start_time)
+        w_end_time = w_qry.end_time
+        print(w_end_time)
+        
+        p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
+        #print(punch_schema.jsonify(p_qry))
+        hr_qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp > w_start_time, Hr.timestamp < w_end_time).order_by(Hr.id.desc())
+        #print(hr_schema.jsonify(hr_qry))
+        sum = 0
+        cnt = 1
+        max = 0
+        for h in hr_qry:
+            sum = sum + h.hr
+            cnt = cnt + 1
+            if max < h.hr:
+                max = h.hr
+        avg = sum/cnt
+        
+        if p_qry is not None:
+            p_score = p_qry.score
+            p_count = p_qry.count
+        else:
+            p_score = 0
+            p_count = 0
+
+        w_name = w_qry.name
+        w_type = w_qry.w_type
+
+        pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
+        
+    #return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
+    return jsonify(pretty_workout_list)
+
 
 # DONE some day's workouts - ca la upcoming - params: date
 # Get Some Day's Workouts
