@@ -815,10 +815,12 @@ def add_booking():
         #entries_left = sub.entries_left
         if entries_left > 0:
             bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
+            print(len(bookings))
             if len(bookings) < 20:
                 b = Booking(workout_id, user_id)
 
-                sub.entries_left -= 1
+                #TODO UNCOMMENT THIS WHEN SUB IS AVAILABLE
+                #sub.entries_left -= 1
 
                 db.session.add(b)
                 db.session.commit()
