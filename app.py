@@ -373,6 +373,7 @@ def apple_sign_in_clinet():
     firstname = obj['fullName']['givenName']
     lastname = obj['fullName']['familyName']
     email = obj['user']
+    password_hash = 'apples'
 
     print(obj)
 
@@ -431,7 +432,7 @@ def apple_sign_in_clinet():
             user = u
             break
     if user == {}:
-        user = User(firstname, lastname, email, '', '', '', 'apple')
+        user = User(firstname, lastname, email, '', '', '', 'apple', password_hash)
         db.session.add(user)
         db.session.commit()
         return user_schema.jsonify(user), status.HTTP_201_CREATED
