@@ -469,18 +469,18 @@ def get_user_count():
 @app.route('/user/update', methods=['POST'])
 def update_user_details():
     user_id = request.json['id']
-    #firstname = request.json['firstname']
-    #lastname = request.json['lastname']
-    #email = request.json['email']
+    firstname = request.json['firstname']
+    lastname = request.json['lastname']
+    email = request.json['email']
     birth_date = request.json['birth_date']
     address = request.json['address']
     gender = request.json['gender']
     nickname = request.json['nickname']
     
     user = User.query.get(int(user_id))
-    #user.firstname = firstname
-    #user.lastname = lastname
-    #user.email = email
+    user.firstname = firstname
+    user.lastname = lastname
+    user.email = email
     user.birth_date = birth_date
     user.address = address
     user.gender = gender
