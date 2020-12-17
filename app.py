@@ -686,11 +686,7 @@ def get_user_workouts(user_id):
         user_workouts.append(workout_q)
 
     pretty_workout_list = []
-
-    for w in user_workouts:
-        pretty_workout_list.append(w.id)
-
-    """
+    
     print(user_workouts)
     for w_qry in user_workouts:
         try:
@@ -723,11 +719,11 @@ def get_user_workouts(user_id):
             w_name = w_qry.name
             w_type = w_qry.w_type
 
-            pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
+            pretty_workout_list.append({'workout_id': w_qry.id, 'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
         except:
             #TODO REMOVE THIS HARD CODED SHIT
-            pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": 141, 'max_hr': 161, 'kcals': 741, 'punch_score': 2111, 'punch_count': 531})
-    """
+            pretty_workout_list.append({'workout_id': w_qry.id, 'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": 141, 'max_hr': 161, 'kcals': 741, 'punch_score': 2111, 'punch_count': 531})
+    
     return jsonify(pretty_workout_list)
 
 
@@ -790,9 +786,10 @@ def get_workout_summary():
 
     w_name = w_qry.name
     w_type = w_qry.w_type
-       
+
+    #TODO REMOVE HARDCODED SHIT   
     #return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
-    return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': 'BOX', "avg_hr": 134, 'max_hr': 167, 'kcals': 741, 'punch_score': 1974, 'punch_count': 364})
+    return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": 134, 'max_hr': 167, 'kcals': 741, 'punch_score': 1974, 'punch_count': 364})
 
 
 # ---------- BOOKINGS ------------
