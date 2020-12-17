@@ -849,8 +849,8 @@ def remove_booking():
 
     Booking.query.filter(Booking.workout_id == workout_id, Booking.user_id == user_id).delete()
     sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
-    
-    sub.entries_left += 1 
+    #TODO UNCOMMENT
+    #sub.entries_left += 1 
     db.session.commit()
 
     return Response('{"ok": "ok"}', status=200, mimetype='application/json')
