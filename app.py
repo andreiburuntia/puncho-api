@@ -723,6 +723,7 @@ def get_user_workouts(user_id):
 
             pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
         except:
+            #TODO REMOVE THIS HARD CODED SHIT
             pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": 141, 'max_hr': 161, 'kcals': 741, 'punch_score': 2111, 'punch_count': 531})
     return jsonify(pretty_workout_list)
 
@@ -809,7 +810,9 @@ def add_booking():
 
     sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
     try:
-        entries_left = sub.entries_left
+        entries_left = 1
+        #TODO UNCOMMENT THIS WHEN SUB IS AVAILABLE
+        #entries_left = sub.entries_left
         if entries_left > 0:
             bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
             if len(bookings) < 20:
