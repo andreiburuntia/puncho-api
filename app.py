@@ -691,38 +691,39 @@ def get_user_workouts(user_id):
     pretty_workout_list = []
     
     for w_qry in user_workouts:
-        w_start_time = w_qry.start_time
-        print(w_start_time)
-        w_end_time = w_qry.end_time
-        print(w_end_time)
-        
-        p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
-        #print(punch_schema.jsonify(p_qry))
-        hr_qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp > w_start_time, Hr.timestamp < w_end_time).order_by(Hr.id.desc())
-        #print(hr_schema.jsonify(hr_qry))
-        sum = 0
-        cnt = 1
-        max = 0
-        for h in hr_qry:
-            sum = sum + h.hr
-            cnt = cnt + 1
-            if max < h.hr:
-                max = h.hr
-        avg = sum/cnt
-        
-        if p_qry is not None:
-            p_score = p_qry.score
-            p_count = p_qry.count
-        else:
-            p_score = 0
-            p_count = 0
+        try:
+            w_start_time = w_qry.start_time
+            print(w_start_time)
+            w_end_time = w_qry.end_time
+            print(w_end_time)
+            
+            p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
+            #print(punch_schema.jsonify(p_qry))
+            hr_qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp > w_start_time, Hr.timestamp < w_end_time).order_by(Hr.id.desc())
+            #print(hr_schema.jsonify(hr_qry))
+            sum = 0
+            cnt = 1
+            max = 0
+            for h in hr_qry:
+                sum = sum + h.hr
+                cnt = cnt + 1
+                if max < h.hr:
+                    max = h.hr
+            avg = sum/cnt
+            
+            if p_qry is not None:
+                p_score = p_qry.score
+                p_count = p_qry.count
+            else:
+                p_score = 0
+                p_count = 0
 
-        w_name = w_qry.name
-        w_type = w_qry.w_type
+            w_name = w_qry.name
+            w_type = w_qry.w_type
 
-        pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
-        
-    #return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
+            pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
+        except:
+            pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
     return jsonify(pretty_workout_list)
 
 
