@@ -747,7 +747,7 @@ def get_workout_details(workout_id):
 # Get Upcoming Workout
 @app.route('/workout/upcoming', methods=['GET'])
 def get_upcoming_workout():
-    qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.id.asc()).first()
+    qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.start_time.asc()).first()
     return workout_schema.jsonify(qry)
 
 # Get Workout Summary
