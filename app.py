@@ -682,14 +682,14 @@ def get_user_workouts(user_id):
     user_bookings = Booking.query.filter(Booking.user_id == user_id).all()
 
     user_workouts = []
-
+    print(user_bookings)
     for b in user_bookings:
         workout_id = b.workout_id
         workout_q = Workout.query.get(int(workout_id))
         user_workouts.append(workout_q)
 
     pretty_workout_list = []
-    
+    print(user_workouts)
     for w_qry in user_workouts:
         try:
             w_start_time = w_qry.start_time
