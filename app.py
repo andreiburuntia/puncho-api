@@ -453,7 +453,6 @@ def get_details(user_id):
     user = User.query.get(int(user_id))
     user.password_hash = 'hidden'
     return user_schema.jsonify(user)
-    return user_schema.jsonify(user)
 
 # Get user count
 @app.route('/user/count', methods=['GET'])
@@ -687,6 +686,11 @@ def get_user_workouts(user_id):
         user_workouts.append(workout_q)
 
     pretty_workout_list = []
+
+    for w in user_workouts:
+        pretty_workout_list.append(w.id)
+
+    """
     print(user_workouts)
     for w_qry in user_workouts:
         try:
@@ -723,6 +727,7 @@ def get_user_workouts(user_id):
         except:
             #TODO REMOVE THIS HARD CODED SHIT
             pretty_workout_list.append({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": 141, 'max_hr': 161, 'kcals': 741, 'punch_score': 2111, 'punch_count': 531})
+    """
     return jsonify(pretty_workout_list)
 
 
