@@ -676,8 +676,6 @@ def get_wourkouts():
 def get_user_workouts(user_id):
     #qry = Workout.query.filter(Workout.user_id == user_id).all()
     #return workouts_schema.jsonify(qry)
-
-    user_id = request.args.get('user_id')
     
     user_bookings = Booking.query.filter(Booking.user_id == user_id).all()
 
