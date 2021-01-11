@@ -1000,6 +1000,28 @@ class WorkoutTable(Table):
     w_type = Col('Type')
     start_time = Col('Start Time')
 
+@app.route('/office/workout/<wid>')
+def workout_joined(wid):
+    w_qry = Workout.query.get(int(wid))
+    w_id = w_qry.id
+
+    b_qry =  Booking.query.filter(Booking.workout_id==w_id).all()
+
+    users = []
+    for b in b_qry:
+        u_id = b.user_id
+        user = User.query.get(int(u_id))
+        users.append(user)
+
+    item_list = []
+    cnt = 0
+    for i in users:
+        cnt += 1
+        item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email, uid=i.id, dummy='replaceMe'))
+    table = CustomerTable(item_list)
+    class_info = w_qry.name + ' - ' + w_qry.w_type + ' - ' + str(w_qry.start_time)
+    return json.dumps(users)
+
 @app.route('/office/upcoming-info')
 def upcoming_info():
     w_qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.start_time.asc()).first()
