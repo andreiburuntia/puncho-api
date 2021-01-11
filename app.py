@@ -1002,7 +1002,7 @@ class WorkoutTable(Table):
 
 @app.route('/office/upcoming-info')
 def upcoming_info():
-    w_qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.id.asc()).first()
+    w_qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.start_time.asc()).first()
     w_id = w_qry.id
 
     b_qry =  Booking.query.filter(Booking.workout_id==w_id).all()
