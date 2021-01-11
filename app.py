@@ -330,7 +330,7 @@ def add_user():
     db.session.commit()
 
     
-    new_sub = Subscription(usr.id, datetime.datetime.now(), datetime.datetime.now() + datetime.timedelta(months=1), 1, 1)
+    new_sub = Subscription(usr.id, datetime.datetime.now(), datetime.datetime.now() + datetime.timedelta(days=30), 1, 1)
 
     db.session.add(new_sub)
     db.session.commit()
