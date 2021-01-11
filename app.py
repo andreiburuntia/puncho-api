@@ -328,6 +328,12 @@ def add_user():
     
     db.session.add(usr)
     db.session.commit()
+
+    
+    new_sub = Subscription(usr.id, datetime.datetime.now(), datetime.datetime.now() + datetime.timedelta(months=1), 1, 1)
+
+    db.session.add(new_sub)
+    db.session.commit()
     
     return user_schema.jsonify(usr), status.HTTP_201_CREATED
 
@@ -813,7 +819,7 @@ def add_booking():
     try:
         entries_left = 1
         #TODO UNCOMMENT THIS WHEN SUB IS AVAILABLE
-        #entries_left = sub.entries_left
+        entries_left = sub.entries_left
         if entries_left > 0:
             bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
             print(len(bookings))
