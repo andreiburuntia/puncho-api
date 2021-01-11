@@ -817,7 +817,7 @@ def add_booking():
         if entries_left > 0:
             bookings = Booking.query.filter(Booking.workout_id == workout_id).all()
             print(len(bookings))
-            if len(bookings) < 20:
+            if len(bookings) < 15:
                 b = Booking(workout_id, user_id)
 
                 #TODO UNCOMMENT THIS WHEN SUB IS AVAILABLE
