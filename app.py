@@ -1018,7 +1018,7 @@ def workout_joined(wid):
     for i in users:
         cnt += 1
         item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email, uid=i.id, dummy='replaceMe'))
-    return json.dumps(item_list)
+    return users_schema.jsonify(users)
 
 @app.route('/office/upcoming-info')
 def upcoming_info():
