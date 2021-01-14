@@ -827,7 +827,7 @@ def add_booking():
                 b = Booking(workout_id, user_id)
 
                 #TODO UNCOMMENT THIS WHEN SUB IS AVAILABLE
-                #sub.entries_left -= 1
+                sub.entries_left -= 1
 
                 db.session.add(b)
                 db.session.commit()
