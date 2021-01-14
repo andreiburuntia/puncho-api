@@ -857,7 +857,7 @@ def remove_booking():
     Booking.query.filter(Booking.workout_id == workout_id, Booking.user_id == user_id).delete()
     sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
     #TODO UNCOMMENT
-    #sub.entries_left += 1 
+    sub.entries_left += 1 
     db.session.commit()
 
     return Response('{"ok": "ok"}', status=200, mimetype='application/json')
@@ -1013,11 +1013,6 @@ def workout_joined(wid):
         user = User.query.get(int(u_id))
         users.append(user)
 
-    item_list = []
-    cnt = 0
-    for i in users:
-        cnt += 1
-        item_list.append(dict(firstname=i.firstname, lastname=i.lastname, email=i.email, uid=i.id, dummy='replaceMe'))
     return users_schema.jsonify(users)
 
 @app.route('/office/upcoming-info')
