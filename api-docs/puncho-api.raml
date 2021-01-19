@@ -23,6 +23,10 @@ documentation:
                     "firstname": "user1",
                     "lastname": "user1",
                     "email": "a@b.c",
+                    "birth_date": "1995/08/19",
+                    "address": "xyz",
+                    "gender": "wizard",
+                    "nickname": "xyz",
                     "password_hash": "hashxyz"
                 }
       responses:
@@ -37,7 +41,11 @@ documentation:
                     {
                         "firstname": "user1",
                         "lastname": "user1",
-                        "email": "a@b.c"
+                        "email": "a@b.c",
+                        "birth_date": "1995/08/19",
+                        "address": "xyz",
+                        "gender": "wizard",
+                        "nickname": "xyz"
                     }
         409: #EMAIL EXISTS
           body:
@@ -69,7 +77,11 @@ documentation:
                     {
                         "firstname": "user1",
                         "lastname": "user1",
-                        "email": "a@b.c"
+                        "email": "a@b.c",
+                        "birth_date": "1995/08/19",
+                        "address": "xyz",
+                        "gender": "wizard",
+                        "nickname": "xyz"
                     }
         401:
           body:
@@ -95,9 +107,80 @@ documentation:
                         {
                             "firstname": "user1",
                             "lastname": "user1",
-                            "email": "a@b.c"
+                            "email": "a@b.c",
+                            "birth_date": "1995/08/19",
+                            "address": "xyz",
+                            "gender": "wizard",
+                            "nickname": "xyz"
                         }
 
+    /update:
+      post:
+        description: update user
+        body:
+          application/json:
+            properties:
+              name:
+                description: user object
+                type: object
+                example:
+                  {
+                      "firstname": "user1",
+                      "lastname": "user1",
+                      "email": "a@b.c",
+                      "birth_date": "1995/08/19",
+                      "address": "xyz",
+                      "gender": "wizard",
+                      "nickname": "xyz"
+                  }
+        responses:
+          201: #USER UPDATED
+            body:
+              application/json:
+                properties:
+                  name:
+                    description: user object
+                    type: object
+                    example:
+                      {
+                          "firstname": "user1",
+                          "lastname": "user1",
+                          "email": "a@b.c",
+                          "birth_date": "1995/08/19",
+                          "address": "xyz",
+                          "gender": "wizard",
+                          "nickname": "xyz"
+                      }
+
+  /stats:
+    /{user_id}:
+      get:
+        responses:
+            200:
+              body:
+                application/json:
+                  properties:
+                    name:
+                      description: user object
+                      type: object
+                      example:
+                        {
+                            "score": 132,
+                            "punches": {
+                              "total": 100,
+                              "perSecond": 2.1
+                            }
+                            "force": {
+                              "perPunch": 6.8
+                            }
+                            "rank": 12,
+                            "workouts": 10,
+                            "calories": 12131,
+                            "trained": {
+                              "hours": 30,
+                              "minutes": 12
+                            }
+                        }
 
 /workout:
   description: This is the top level description for /workouts.
@@ -184,6 +267,48 @@ documentation:
                           "punch_score": "12341",
                           "punch_count": "1291"
                       }
+
+  /{user_id}:
+    get:
+      description: get all workouts for some user
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                description: list of summariezed workouts
+                type: object
+
+  /day/{date}:
+    get:
+      description: get all workouts for some day
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                description: list of workouts
+                type: object
+
+  /details/{workout_id}:
+    get:
+      description: get full workout object by id
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                description: workout object
+                type: object
+              example:
+                {
+                  "description": "workout x",
+                  "end_time": "2020-09-02T11:31:26+00:00",
+                  "id": 9,
+                  "name": "asdasd",
+                  "start_time": "2020-09-02T10:31:26+00:00",
+                  "w_type": "asdasdasd"
+                }
 /booking:
   /{user_id}:
     get:
@@ -235,6 +360,34 @@ documentation:
         body:
           text/plain:
             example: "workout full"
+
+  /remove:
+    post:
+      description: delete a booking
+      body:
+        application/json:
+          properties:
+            name:
+              description: booking object
+              type: object
+              example:
+                {
+                    "user_id": "1",
+                    "workout_id": "1"
+                }
+      responses:
+        201: #BOOKING DELETED
+          body:
+            application/json:
+              properties:
+                name:
+                  description: booking object
+                  type: object
+                  example:
+                    {
+                      "ok":"ok"
+                    }
+
 
 /punch:
   /{user_id}:
@@ -341,30 +494,124 @@ documentation:
                             ]
 
 /link_bag:
-  uriParameters:
-        user_id:
-          type: string
-          description: user id
-          minLength: 1
-          maxLength: 10
-        bag_id:
-          type: string
-          description: workout id
-          minLength: 1
-          maxLength: 10
-  get:
-    description: link specific user to specific bag
-    responses:
-      200:
-        body:
-          string:
-            example: "OK"
+  post:
+      description: link user to bag
+      body:
+        application/json:
+          properties:
+            name:
+              description: object - uid + bagid
+              type: object
+              example:
+                {
+                    "user_id": "1",
+                    "bag_id": "001"
+                }
+      responses:
+        200: #linked
+          body:
+            application/json:
+              properties:
+                name:
+                  description: object
+                  type: object
+                  example:
+                    {
+                      "success":"True"
+                    }
+        409: #failed
+          body:
+            application/json:
+              properties:
+                name:
+                  description: object
+                  type: object
+                  example:
+                    {
+                      "success":"false"
+                    }
 
 /end_session:
-  /{user_id}:
-    post:
+  post:
+      description: reverse of link_bag
+      body:
+        application/json:
+          properties:
+            name:
+              description: object - uid + bagid
+              type: object
+              example:
+                {
+                    "user_id": "1",
+                    "bag_id": "001"
+                }
       responses:
-        200:
+        200: #linked
           body:
-            string:
-              example: "OK"
+            application/json:
+              properties:
+                name:
+                  description: workout object
+                  type: object
+                  example:
+                    {
+                      "description": "workout x",
+                      "end_time": "2020-09-02T11:31:26+00:00",
+                      "id": 9,
+                      "name": "asdasd",
+                      "start_time": "2020-09-02T10:31:26+00:00",
+                      "w_type": "asdasdasd"
+                    }
+
+/subscription:
+  post:
+      description: add new subscription/tokens
+      body:
+        application/json:
+          properties:
+            name:
+              description: object - uid + start_time + end_time + entries
+              type: object
+              example:
+                {
+                    "user_id": "1",
+                    "start_time": "SOME PYTHON COMPLIANT DATETIME",
+                    "end_time": "SOME PYTHON COMPLIANT DATETIME",
+                    "entries": 12
+                }
+      responses:
+        200: #added
+          body:
+            application/json:
+                properties:
+                  name:
+                    description: subscription object
+                    type: object
+                    example:
+                      {
+                        "user_id": "1",
+                        "start_time": "SOME PYTHON COMPLIANT DATETIME",
+                        "end_time": "SOME PYTHON COMPLIANT DATETIME",
+                        "entries": 12,
+                        "entries_left": 12
+                      }
+
+  /{user_id}:
+    get:
+      description: get current subscription by user id
+      responses:
+          200:
+              body:
+                  application/json:
+                      properties:
+                        name:
+                          description: subscription object
+                          type: object
+                          example:
+                            {
+                              "user_id": "1",
+                              "start_time": "SOME PYTHON COMPLIANT DATETIME",
+                              "end_time": "SOME PYTHON COMPLIANT DATETIME",
+                              "entries": 12,
+                              "entries_left": 12
+                            }
