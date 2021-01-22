@@ -931,8 +931,8 @@ dummy_count = [0] * 21
 def restart_proiector():
     global dummy_count
     global dummy_score
-    dummy_score = 0
-    dummy_score = 0
+    dummy_score = [0] * 21
+    dummy_count = [0] * 21
 
 @app.route('/proiector', methods=['GET'])
 def proiector():
