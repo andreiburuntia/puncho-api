@@ -965,9 +965,9 @@ def proiector():
     #if dummy_score[1] > 3000:
     #    dummy_count = [0] * 21
     #    dummy_score = [0] * 21
-
+    print(dummy_score)
     obj_list = []
-    for i in range(1, 21):
+    for i in range(6, 21):
         obj = {}
     
         obj['bag_id'] = i
