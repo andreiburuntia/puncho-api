@@ -975,10 +975,10 @@ def proiector():
     
         obj['bag_id'] = i
     
-        dummy_score[i] += random.randint(7, 13)
+        dummy_score[i] += random.randint(1, 3)
         obj['score'] = dummy_score[i]
     
-        dummy_count[i] += random.randint(1, 5)/5
+        dummy_count[i] += random.randint(1, 5)/10
         obj['count'] = int(dummy_count[i])
     
         obj['hr'] = random.randint(160, 175)
