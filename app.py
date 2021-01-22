@@ -925,7 +925,15 @@ dummy_count = [0] * 21
 
 # DUMMY DEMO END
 
+
 # ----------- PROIECTOR ---------------
+@app.route('/restart', methods=['GET'])
+def restart_proiector():
+    global dummy_count
+    global dummy_score
+    dummy_score = 0
+    dummy_score = 0
+
 @app.route('/proiector', methods=['GET'])
 def proiector():
     obj_list = []
