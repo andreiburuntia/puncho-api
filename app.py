@@ -978,7 +978,7 @@ def proiector():
         dummy_count[i] += random.randint(1, 5)/5
         obj['count'] = int(dummy_count[i])
     
-        obj['hr'] = random.randint(140, 155)
+        obj['hr'] = random.randint(160, 175)
         obj_list.append(obj)
 
     # DUMMY DEMO END
