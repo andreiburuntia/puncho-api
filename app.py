@@ -441,6 +441,11 @@ def apple_sign_in_clinet():
         user = User(firstname, lastname, email, '', '', '', 'apple', password_hash)
         db.session.add(user)
         db.session.commit()
+
+        new_sub = Subscription(user.id, datetime.datetime.now(), datetime.datetime.now() + datetime.timedelta(days=30), 1, 1)
+        db.session.add(new_sub)
+        db.session.commit()
+
         return user_schema.jsonify(user), status.HTTP_201_CREATED
     else:     
         return user_schema.jsonify(user)
@@ -934,7 +939,7 @@ def restart_proiector():
     dummy_score = [0] * 21
     dummy_count = [0] * 21
     return 'ok'
-    
+
 @app.route('/proiector', methods=['GET'])
 def proiector():
     obj_list = []
