@@ -759,7 +759,7 @@ def get_workout_details(workout_id):
 # Get Upcoming Workout
 @app.route('/workout/upcoming', methods=['GET'])
 def get_upcoming_workout():
-    qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.start_time.asc()).first()
+    qry = Workout.query.filter(Workout.end_time - datetime.timedelta(hours=2) > datetime.datetime.now()).order_by(Workout.start_time.asc()).first()
     return workout_schema.jsonify(qry)
 
 # Get Workout Summary
@@ -1034,7 +1034,7 @@ def workout_joined(wid):
 
 @app.route('/office/upcoming-info')
 def upcoming_info():
-    w_qry = Workout.query.filter(Workout.start_time > datetime.datetime.now()).order_by(Workout.start_time.asc()).first()
+    w_qry = Workout.query.filter(Workout.end_time - datetime.timedelta(hours=2) > datetime.datetime.now()).order_by(Workout.start_time.asc()).first()
     w_id = w_qry.id
 
     b_qry =  Booking.query.filter(Booking.workout_id==w_id).all()
