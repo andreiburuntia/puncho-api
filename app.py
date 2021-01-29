@@ -770,9 +770,9 @@ def get_workout_summary():
     
     w_qry= Workout.query.filter(Workout.id == workout_id).first()
     
-    w_start_time = w_qry.start_time
+    w_start_time = w_qry.start_time + datetime.timedelta(hours=2)
     print(w_start_time)
-    w_end_time = w_qry.end_time
+    w_end_time = w_qry.end_time + datetime.timedelta(hours=2)
     print(w_end_time)
     
     p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
@@ -790,7 +790,7 @@ def get_workout_summary():
     avg = sum/cnt
     
     if p_qry is not None:
-        p_score = p_qry.score
+        p_score = p_qry.scores
         p_count = p_qry.count
     else:
         p_score = 0
@@ -801,7 +801,7 @@ def get_workout_summary():
 
     #TODO REMOVE HARDCODED SHIT   
     #return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
-    return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": 134, 'max_hr': 167, 'kcals': 741, 'punch_score': 1974, 'punch_count': 364})
+    return jsonify({'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 0, 'punch_score': p_score, 'punch_count': p_count})
 
 
 # ---------- BOOKINGS ------------
@@ -902,6 +902,11 @@ def end_session():
     
     return workout_schema.jsonify(w_qry)
 
+@app.route('/end_workout', methods=['GET'])
+def end_workout():
+    clear_bag_map()
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
 # ----------- SUBSCRIPTION -----------
 @app.route('/subscription', methods=['POST'])
 def add_subscription():
@@ -976,27 +981,27 @@ def proiector():
     
     # DUMMY DEMO
 
-    #global dummy_score
-    #global dummy_count
+    global dummy_score
+    global dummy_count
 
-    #if dummy_score[1] > 3000:
-    #    dummy_count = [0] * 21
-    #    dummy_score = [0] * 21
-    #print(dummy_score)
-    #obj_list = []
-    #for i in range(6, 21):
-    #    obj = {}
+    if dummy_score[1] > 3000:
+        dummy_count = [0] * 21
+        dummy_score = [0] * 21
+    print(dummy_score)
+    obj_list = []
+    for i in range(6, 21):
+        obj = {}
     
-    #    obj['bag_id'] = i
+        obj['bag_id'] = i
     
-    #    dummy_score[i] += random.randint(1, 3)
-    #    obj['score'] = dummy_score[i]
+        dummy_score[i] += random.randint(1, 3)
+        obj['score'] = dummy_score[i]
     
-    #    dummy_count[i] += random.randint(1, 5)/10
-    #    obj['count'] = int(dummy_count[i])
+        dummy_count[i] += random.randint(1, 5)/10
+        obj['count'] = int(dummy_count[i])
     
-    #    obj['hr'] = random.randint(160, 175)
-    #    obj_list.append(obj)
+        obj['hr'] = random.randint(160, 175)
+        obj_list.append(obj)
 
     # DUMMY DEMO END
 
