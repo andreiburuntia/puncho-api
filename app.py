@@ -884,7 +884,16 @@ def link_bag():
     used_bags.append(bag_id)
     bag_map[bag_id] = user_id
     
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route('/bag/<user_id>', methods=['GET'])
+def bag(user_id):
+    bag = ""
+    for k in bag_map:
+        if bag_map[k] == user_id:
+            bag = k
+
+    return json.dumps({'success':True, 'bag_id': bag}), 200, {'ContentType':'application/json'}
     
 # ----------- END SESSION ------------
 @app.route('/end_session', methods=['POST'])
