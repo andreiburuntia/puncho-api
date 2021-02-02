@@ -1016,6 +1016,15 @@ def proiector():
 
     return str(obj_list)
 
+# get list of connected users
+@app.route('/connected-users', methods=['GET'])
+def connected_users():
+    users = []
+    for k in bag_map:
+        if bag_map[k] != "":
+            usr = User.query.get(int(bag_map[k]))
+            users.append(usr)
+    return users_schema.jsonify(users)
 
 # ---------- RECEPTIE ---------------
 
