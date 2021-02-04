@@ -604,6 +604,7 @@ def add_hr():
     return hr_schema.jsonify(hr)
 
 @app.route('/hr/bulk', methods=['POST'])
+def hr_bulk():
     user_id = request.json['user_id']
     rate = request.json['hr']
     timestamp = request.json['timestamp']
