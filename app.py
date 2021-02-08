@@ -1105,7 +1105,7 @@ def workout_joined(wid):
 
 @app.route('/office/upcoming-info')
 def upcoming_info():
-    w_qry = Workout.query.filter(Workout.end_time + datetime.timedelta(hours=2) > datetime.datetime.now()).order_by(Workout.start_time.asc()).first()
+    w_qry = Workout.query.filter(Workout.end_time + datetime.timedelta(hours=2) > datetime.datetime.now()).order_by(Workout.start_time.desc()).first()
     w_id = w_qry.id
 
     b_qry =  Booking.query.filter(Booking.workout_id==w_id).all()
