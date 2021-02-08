@@ -785,7 +785,7 @@ def get_user_workouts(user_id):
 
             pretty_workout_list.append({'workout_id': w_qry.id, 'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
         except:
-            #print('except')
+            print('except')
             #TODO REMOVE THIS HARD CODED SHIT
             #pretty_workout_list.append({'workout_id': w_qry.id, 'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": 141, 'max_hr': 161, 'kcals': 741, 'punch_score': 2111, 'punch_count': 531})
     
