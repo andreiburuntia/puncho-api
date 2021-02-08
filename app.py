@@ -901,13 +901,19 @@ def remove_booking():
     workout_id = request.json['workout_id']
     user_id = request.json['user_id']
 
-    Booking.query.filter(Booking.workout_id == workout_id, Booking.user_id == user_id).delete()
-    sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
-    #TODO UNCOMMENT
-    sub.entries_left += 1 
-    db.session.commit()
+    w_qry = Workout.query.get(int(workout_id))
+    if w_qry.start_time < datetime.datetime.now():
 
-    return Response('{"ok": "ok"}', status=200, mimetype='application/json')
+        Booking.query.filter(Booking.workout_id == workout_id, Booking.user_id == user_id).delete()
+        sub = Subscription.query.filter(Subscription.user_id == user_id, Subscription.start_time < datetime.datetime.now(), Subscription.end_time > datetime.datetime.now()).order_by(Subscription.id.desc()).first()
+        #TODO UNCOMMENT
+        sub.entries_left += 1 
+        db.session.commit()
+
+        return Response('{"ok": "ok"}', status=200, mimetype='application/json')
+
+    else:
+        return Response('{"error": "cancelation too late"}', status=409, mimetype='application/json')
 
 # ------------- BAG LINK ---------------
 
