@@ -771,6 +771,8 @@ def get_user_workouts(user_id):
             bulkhr = BulkHr.query.filter(BulkHr.user_id == user_id and BulkHr.workout_id == workout_id).first()
             bulkpunch = BulkPunch.query.filter(BulkPunch.user_id == user_id and BulkPunch.workout_id == workout_id).first()
 
+            print(bulkhr_schema.jsonify(bulkhr))
+
             avg = bulkhr.hr_avg
             min = bulkhr.hr_min
             max = bulkhr.hr_max
@@ -783,6 +785,7 @@ def get_user_workouts(user_id):
 
             pretty_workout_list.append({'workout_id': w_qry.id, 'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": avg, 'max_hr': max, 'kcals': 741, 'punch_score': p_score, 'punch_count': p_count})
         except:
+            print('except')
             #TODO REMOVE THIS HARD CODED SHIT
             pretty_workout_list.append({'workout_id': w_qry.id, 'name': w_name, 'start_time': w_start_time, 'end_time': w_end_time, 'type': w_type, "avg_hr": 141, 'max_hr': 161, 'kcals': 741, 'punch_score': 2111, 'punch_count': 531})
     
