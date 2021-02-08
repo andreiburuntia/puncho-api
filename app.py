@@ -53,6 +53,8 @@ from models.weigh_in import Weigh_In
 from models.workout import Workout
 from models.booking import Booking
 from models.subscription import Subscription
+from models.bulkhr import BulkHr
+from models.bulkpunch import BulkPunch
 
 db.create_all()
 db.session.commit()
@@ -113,6 +115,16 @@ class SubscriptionSchema(Schema):
     class Meta:
         fields = ('id', 'user_id', 'start_time', 'end_time', 'entries', 'entries_left')
 
+# BulkHr Schema
+class BulkHrSchema(Schema):
+    class Meta:
+        fields = ('id', 'hr_min', 'hr_max', 'hr_avg', 'user_id', 'workout_id')
+
+# BulkPunch Schema
+class BulkPunchSchema(Schema):
+    class Meta:
+        fields = ('id', 'score', 'count', 'user_id', 'workout_id')
+
 # Init schema
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
@@ -128,6 +140,10 @@ booking_schema = BookingSchema()
 bookings_schema = BookingSchema(many=True)
 subscription_schema = SubscriptionSchema()
 subscriptions_schema = SubscriptionSchema(many=True)
+bulkhr_schema = BulkHrSchema()
+bulkhrs_schema = BulkHrSchema(many=True)
+bulkpunch_schema = BulkPunchSchema()
+bulkpunches_schema = BulkPunchSchema(many=True)
 
 # BAG - USER ID MAP
 bag_map = {
@@ -544,6 +560,33 @@ def add_punch():
 
     return punch_schema.jsonify(punch)
 
+# Add Punch
+@app.route('/punch/bulk', methods=['POST'])
+def add_bulkpunch():
+    user_id = request.json['userId']
+    score = request.json['score']
+    count = request.json['count']
+    w_id = request.json['workoutId']
+
+    bulkpunch = BulkPunch(score, count, user_id, w_id)
+
+    db.session.add(bulkpunch)
+    db.session.commit()
+
+    #global bulk
+
+    #bulk.append(punch)
+
+    #print(len(bulk))
+    #if len(bulk) > 10:
+    #    db.session.add_all(bulk)
+    #    bulk = [] 
+    #    db.session.commit()
+
+    return bulkpunch_schema.jsonify(bulkpunch)
+
+
+
 # Get Punches for specific User
 @app.route('/punch/<user_id>', methods=['GET'])
 def get_punches_for_user(user_id):
@@ -605,13 +648,15 @@ def add_hr():
 
 @app.route('/hr/bulk', methods=['POST'])
 def hr_bulk():
-    user_id = request.json['user_id']
-    rate = request.json['hr']
-    timestamp = request.json['timestamp']
-
-    hr = Hr(rate, user_id, "0", timestamp)
-
-    db.session.add(hr)
+    user_id = request.json['userId']
+    hr_max = request.json['max']
+    hr_min = request.json['min']
+    hr_avg = request.json['avg']
+    w_id = request.json['workoutId']
+    
+    bulkhr = BulkHr(hr_min, hr_max, hr_avg, user_id, w_id)
+    
+    db.session.add(bulkhr)
     db.session.commit()
 
     #global bulk
@@ -624,7 +669,7 @@ def hr_bulk():
     #    bulk = [] 
     #    db.session.commit()
 
-    return hr_schema.jsonify(hr)
+    return bulkhr_schema.jsonify(bulkhr)
 
 
 # Get Latest Hr
