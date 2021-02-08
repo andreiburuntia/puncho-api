@@ -573,16 +573,6 @@ def add_bulkpunch():
     db.session.add(bulkpunch)
     db.session.commit()
 
-    #global bulk
-
-    #bulk.append(punch)
-
-    #print(len(bulk))
-    #if len(bulk) > 10:
-    #    db.session.add_all(bulk)
-    #    bulk = [] 
-    #    db.session.commit()
-
     return bulkpunch_schema.jsonify(bulkpunch)
 
 
@@ -756,7 +746,7 @@ def get_wourkouts():
 def get_user_workouts(user_id):
     #qry = Workout.query.filter(Workout.user_id == user_id).all()
     #return workouts_schema.jsonify(qry)
-    
+    user_id = int(user_id)
     user_bookings = Booking.query.filter(Booking.user_id == user_id).all()
 
     user_workouts = []
@@ -772,31 +762,22 @@ def get_user_workouts(user_id):
     for w_qry in user_workouts:
         try:
             w_start_time = w_qry.start_time
-            print(w_start_time)
+            #print(w_start_time)
             w_end_time = w_qry.end_time
-            print(w_end_time)
+            #print(w_end_time)
             
-            p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
-            #print(punch_schema.jsonify(p_qry))
-            hr_qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp > w_start_time, Hr.timestamp < w_end_time).order_by(Hr.id.desc())
-            #print(hr_schema.jsonify(hr_qry))
-            sum = 0
-            cnt = 1
-            max = 0
-            for h in hr_qry:
-                sum = sum + h.hr
-                cnt = cnt + 1
-                if max < h.hr:
-                    max = h.hr
-            avg = sum/cnt
-            
-            if p_qry is not None:
-                p_score = p_qry.score
-                p_count = p_qry.count
-            else:
-                p_score = 0
-                p_count = 0
+            workout_id = int(w_qry.id)
 
+            bulkhr = BulkHr.query.filter(BulkHr.user_id == user_id and BulkHr.workout_id == workout_id).first()
+            bulkpunch = BulkPunch.query.filter(BulkPunch.user_id == user_id and BulkPunch.workout_id == workout_id).first()
+
+            avg = bulkhr.hr_avg
+            min = bulkhr.hr_min
+            max = bulkhr.hr_max
+
+            p_score = bulkpunch.score
+            p_count = bulkpunch.count
+            
             w_name = w_qry.name
             w_type = w_qry.w_type
 
@@ -834,37 +815,26 @@ def get_upcoming_workout():
 # Get Workout Summary
 @app.route('/workout/summary', methods=['GET'])
 def get_workout_summary():
-    user_id = request.args.get('user_id')
-    workout_id = request.args.get('workout_id')
+    user_id = int(request.args.get('user_id'))
+    workout_id = int(request.args.get('workout_id'))
     
     w_qry= Workout.query.filter(Workout.id == workout_id).first()
     
     w_start_time = w_qry.start_time + datetime.timedelta(hours=2)
-    print(w_start_time)
+    #print(w_start_time)
     w_end_time = w_qry.end_time + datetime.timedelta(hours=2)
-    print(w_end_time)
+    #print(w_end_time)
     
-    p_qry = Punch.query.filter(Punch.user_id == user_id, Punch.timestamp > w_start_time, Punch.timestamp < w_end_time).order_by(Punch.id.desc()).first()
-    #print(punch_schema.jsonify(p_qry))
-    hr_qry =  Hr.query.filter(Hr.user_id == user_id, Hr.timestamp > w_start_time, Hr.timestamp < w_end_time).order_by(Hr.id.desc())
-    #print(hr_schema.jsonify(hr_qry))
-    sum = 0
-    cnt = 1
-    max = 0
-    for h in hr_qry:
-        sum = sum + h.hr
-        cnt = cnt + 1
-        if max < h.hr:
-            max = h.hr
-    avg = sum/cnt
-    
-    if p_qry is not None:
-        p_score = p_qry.scores
-        p_count = p_qry.count
-    else:
-        p_score = 0
-        p_count = 0
+    bulkhr = BulkHr.query.filter(BulkHr.user_id == user_id and BulkHr.workout_id == workout_id).first()
+    bulkpunch = BulkPunch.query.filter(BulkPunch.user_id == user_id and BulkPunch.workout_id == workout_id).first()
 
+    avg = bulkhr.hr_avg
+    min = bulkhr.hr_min
+    max = bulkhr.hr_max
+
+    p_score = bulkpunch.score
+    p_count = bulkpunch.count
+    
     w_name = w_qry.name
     w_type = w_qry.w_type
 
