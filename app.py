@@ -1172,7 +1172,7 @@ class WorkoutForm(FlaskForm):
     submit = SubmitField('Add Workout')
 
 
-@app.route('/office/workout', methods=['POST'])
+@app.route('/office/new_workout', methods=['GET', 'POST'])
 def office_workout():
     form = WorkoutForm()
     if request.method == 'POST':
