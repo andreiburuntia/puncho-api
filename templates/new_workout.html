@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Subscription</h1>
+    <br/>
+
+    <div class='col-4 d-flex justify-content-center'>
+        
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.name.label }}<br>
+                {{ form.name(size=32) }}
+            </div><br>
+
+            <div>
+                {{ form.description.label }}<br>
+                {{ form.description(size=32) }}
+            </div><br>
+
+            <div>
+                {{ form.start_time.label }}<br>
+                {{ form.start_time(size=32) }}
+            </div><br>
+
+            <div>
+                {{ form.w_type.label }}<br>
+                {{ form.w_type(size=32) }}
+            </div><br>
+            
+            <div>
+                {{ form.trainer.label }}<br>
+                {{ form.trainer(size=32) }}
+            </div><br>
+            <div>{{ form.submit(class_="btn btn-primary") }}</div>
+        </form>
+    
+    </div>
+{% endblock %}

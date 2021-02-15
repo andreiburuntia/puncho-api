@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextField, SubmitField, DateField, SelectField
+from wtforms import StringField, TextField, SubmitField, DateField, SelectField, DateTimeField
 from wtforms.validators import DataRequired, Length
 from flask import render_template, flash, redirect
 from dateutil.relativedelta import relativedelta
@@ -1162,6 +1162,39 @@ def office_sub():
             print('failed')
         
     return render_template('subscription.html', form=form)
+
+class WorkoutForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    description = StringField('Description (cum apare in app)', validators=[DataRequired()])
+    start_time = DateTimeField('Start Time (YYYY-mm-dd h:m:s', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
+    w_type = SelectField('Tip', choices = ['BOX', 'BIT', 'S&C'], validators = [DataRequired()])
+    trainer = StringField('Trainer', validators=[DataRequired()])
+    submit = SubmitField('Add Workout')
+
+
+@app.route('/office/workout', methods=['POST'])
+def office_workout():
+    form = WorkoutForm()
+    if request.method == 'POST':
+        try:
+            start_time = datetime.datetime.strptime(request.form.get('start_time'), '%Y-%m-%d %H:%M:%S') - datetime.timedelta(hours=2)
+            name = request.form.get('name')
+            description = request.form.get('description')
+            w_type = request.form.get('w_type')
+            trainer = request.form.get('trainer')
+            end_time = start_time + datetime.timedelta(hours=1)
+            rounds = '12'
+            rest_time = '30'
+
+            new_workout = Workout(name, description, start_time, end_time, w_type, rounds, rest_time, trainer)
+            db.session.add(new_workout)
+            db.session.commit()
+
+        except:
+            print('failed')
+
+        return render_template('new_workout.html', form=form)
+
 
 # ------------ PAYMENTS -----------------
 
