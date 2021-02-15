@@ -1193,7 +1193,7 @@ def office_workout():
         except:
             print('failed')
 
-        return render_template('new_workout.html', form=form)
+    return render_template('new_workout.html', form=form)
 
 
 # ------------ PAYMENTS -----------------
