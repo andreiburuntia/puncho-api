@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Subscription</h1>
+    <h1>Add Workout</h1>
     <br/>
 
     <div class='col-4 d-flex justify-content-center'>
@@ -32,6 +32,7 @@
                 {{ form.trainer.label }}<br>
                 {{ form.trainer(size=32) }}
             </div><br>
+
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>
     
