@@ -1177,7 +1177,7 @@ def office_workout():
     form = WorkoutForm()
     if request.method == 'POST':
         try:
-            start_time = datetime.datetime.strptime(request.form.get('start_time'), '%Y-%m-%d %H:%M:%S')
+            start_time = datetime.datetime.strptime(request.form.get('start_time'), '%Y-%m-%d %H:%M:%S') - datetime.timedelta(hours=2)
             name = request.form.get('name')
             description = request.form.get('description')
             w_type = request.form.get('w_type')
