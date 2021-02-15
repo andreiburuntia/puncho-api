@@ -1166,7 +1166,7 @@ def office_sub():
 class WorkoutForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description (cum apare in app)', validators=[DataRequired()])
-    start_time = DateTimeField('Start Time (YYYY-mm-dd h:m:s', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
+    start_time = DateTimeField('Start Time (YYYY-mm-dd h:m:s)', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
     w_type = SelectField('Tip', choices = ['BOX', 'BIT', 'S&C'], validators = [DataRequired()])
     trainer = StringField('Trainer', validators=[DataRequired()])
     submit = SubmitField('Add Workout')
