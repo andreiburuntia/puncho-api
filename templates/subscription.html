@@ -24,8 +24,12 @@
                 </div>
             </div><br>
             <div>
+                {{ form.end_date.label }}<br>
+                {{ form.end_date(size=32) }}
+            </div><br>
+            <div>
                 {{ form.entries.label }}<br>
-                {{ form.entries() }}
+                {{ form.entries(size=32) }}
             </div><br>
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>

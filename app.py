@@ -1131,7 +1131,8 @@ def upcoming_info():
 class SubscriptionForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     start_date = DateField('Start Date (dd/mm/yyyy - e.g. 21/08/2020', format='%d/%m/%Y', validators=[DataRequired()])
-    entries = SelectField('Entries', choices = ['1', '8', '12', '999'], validators = [DataRequired()])
+    end_date = DateField('End Date (dd/mm/yyyy - e.g. 21/08/2020', format='%d/%m/%Y', validators=[DataRequired()])
+    entries = StringField('Entries', validators = [DataRequired()])
     submit = SubmitField('Add Subscription')
 
 @app.route('/office/subscription', methods=['GET', 'POST'])
@@ -1140,6 +1141,7 @@ def office_sub():
     if request.method == 'POST':
         try:
             start_date = datetime.datetime.strptime(request.form.get('start_date'), '%d/%m/%Y')
+            end_date = datetime.datetime.strptime(request.form.get('end_date'), '%d/%m/%Y')
             email = request.form.get('email')
             entries = request.form.get('entries')
 
@@ -1148,7 +1150,7 @@ def office_sub():
 
             entries_left = entries
 
-            end_time = start_date + relativedelta(months=1)
+            end_time = end_date
             start_time = start_date
 
             new_sub = Subscription(user_id, start_time, end_time, entries, entries_left)
@@ -1189,6 +1191,8 @@ def office_workout():
             new_workout = Workout(name, description, start_time, end_time, w_type, rounds, rest_time, trainer)
             db.session.add(new_workout)
             db.session.commit()
+
+
 
         except:
             print('failed')
