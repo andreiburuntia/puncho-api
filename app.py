@@ -1071,8 +1071,10 @@ def connected_users():
     for k in bag_map:
         if bag_map[k] != "":
             usr = User.query.get(int(bag_map[k]))
-            users.append(usr)
-    return users_schema.jsonify(users)
+            tup = (k, usr)
+            users.append(tup)
+        
+    return Response(json.dumps(users), mimetype='application/json')
 
 # ---------- RECEPTIE ---------------
 
