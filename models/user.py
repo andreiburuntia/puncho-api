@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Integer, Date
 from sqlalchemy.orm import relationship
+import json
 
 from app import db
 
@@ -26,3 +27,6 @@ class User(db.Model):
         self.gender = gender
         self.nickname = nickname
         self.password_hash = password_hash
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
