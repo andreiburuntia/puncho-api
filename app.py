@@ -646,7 +646,8 @@ def hr_bulk():
     print(request.json)
     l = request.json['hrData']
     print(l)
-    # for e in l:
+    for e in l:
+        print(e)
     #     user_id = e['userId']
     #     hr_max = e['max']
     #     hr_min = e['min']
