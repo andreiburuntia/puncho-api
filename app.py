@@ -643,18 +643,20 @@ def add_hr():
 
 @app.route('/hr/bulk', methods=['POST'])
 def hr_bulk():
+    print(request.json)
     l = request.json['hrData']
-    for e in l:
-        user_id = e['userId']
-        hr_max = e['max']
-        hr_min = e['min']
-        hr_avg = e['avg']
-        w_id = e['workoutId']
+    print(l)
+    # for e in l:
+    #     user_id = e['userId']
+    #     hr_max = e['max']
+    #     hr_min = e['min']
+    #     hr_avg = e['avg']
+    #     w_id = e['workoutId']
         
-        bulkhr = BulkHr(hr_min, hr_max, hr_avg, user_id, w_id)
+    #     bulkhr = BulkHr(hr_min, hr_max, hr_avg, user_id, w_id)
         
-        db.session.add(bulkhr)
-    db.session.commit()
+    #     db.session.add(bulkhr)
+    # db.session.commit()
 
     #global bulk
 
