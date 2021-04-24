@@ -563,15 +563,12 @@ def add_punch():
 # Add Punch
 @app.route('/punch/bulk', methods=['POST'])
 def add_bulkpunch():
-    print(request.json)
     l = request.json['punchData']
-    print(l)
     for e in l:
-        print(e)
-        user_id = e['userId']
+        user_id = e['user_id']
         score = e['score']
         count = e['count']
-        w_id = e['workoutId']
+        w_id = e['workout_id']
 
         bulkpunch = BulkPunch(score, count, user_id, w_id)
 
@@ -643,21 +640,18 @@ def add_hr():
 
 @app.route('/hr/bulk', methods=['POST'])
 def hr_bulk():
-    print(request.json)
     l = request.json['hrData']
-    print(l)
     for e in l:
-        print(e)
-    #     user_id = e['userId']
-    #     hr_max = e['max']
-    #     hr_min = e['min']
-    #     hr_avg = e['avg']
-    #     w_id = e['workoutId']
+        user_id = e['user_id']
+        hr_max = e['max']
+        hr_min = e['min']
+        hr_avg = e['avg']
+        w_id = e['workout_id']
         
-    #     bulkhr = BulkHr(hr_min, hr_max, hr_avg, user_id, w_id)
+        bulkhr = BulkHr(hr_min, hr_max, hr_avg, user_id, w_id)
         
-    #     db.session.add(bulkhr)
-    # db.session.commit()
+        db.session.add(bulkhr)
+    db.session.commit()
 
     #global bulk
 
