@@ -563,8 +563,11 @@ def add_punch():
 # Add Punch
 @app.route('/punch/bulk', methods=['POST'])
 def add_bulkpunch():
+    print(request.json)
     l = request.json['punchData']
+    print(l)
     for e in l:
+        print(e)
         user_id = e['userId']
         score = e['score']
         count = e['count']
