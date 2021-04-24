@@ -563,17 +563,19 @@ def add_punch():
 # Add Punch
 @app.route('/punch/bulk', methods=['POST'])
 def add_bulkpunch():
-    user_id = request.json['userId']
-    score = request.json['score']
-    count = request.json['count']
-    w_id = request.json['workoutId']
+    l = request.json['punchData']
+    for e in l:
+        user_id = e['userId']
+        score = e['score']
+        count = e['count']
+        w_id = e['workoutId']
 
-    bulkpunch = BulkPunch(score, count, user_id, w_id)
+        bulkpunch = BulkPunch(score, count, user_id, w_id)
 
-    db.session.add(bulkpunch)
+        db.session.add(bulkpunch)
     db.session.commit()
 
-    return bulkpunch_schema.jsonify(bulkpunch)
+    return Response('{"ok": "ok"}', status=200, mimetype='application/json')
 
 
 
@@ -638,15 +640,17 @@ def add_hr():
 
 @app.route('/hr/bulk', methods=['POST'])
 def hr_bulk():
-    user_id = request.json['userId']
-    hr_max = request.json['max']
-    hr_min = request.json['min']
-    hr_avg = request.json['avg']
-    w_id = request.json['workoutId']
-    
-    bulkhr = BulkHr(hr_min, hr_max, hr_avg, user_id, w_id)
-    
-    db.session.add(bulkhr)
+    l = request.json['hrData']
+    for e in l:
+        user_id = e['userId']
+        hr_max = e['max']
+        hr_min = e['min']
+        hr_avg = e['avg']
+        w_id = e['workoutId']
+        
+        bulkhr = BulkHr(hr_min, hr_max, hr_avg, user_id, w_id)
+        
+        db.session.add(bulkhr)
     db.session.commit()
 
     #global bulk
@@ -659,7 +663,7 @@ def hr_bulk():
     #    bulk = [] 
     #    db.session.commit()
 
-    return bulkhr_schema.jsonify(bulkhr)
+    return Response('{"ok": "ok"}', status=200, mimetype='application/json')
 
 
 # Get Latest Hr
